@@ -1,13 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Text as RNText } from "react-native";
 
 import { Container } from "../ui/Container";
 import { Flex } from "../ui/Flex";
 import { Heading } from "../ui/Heading";
 import { Icon } from "../ui/Icon/Icon";
 import { CaretLeftIcon } from "../ui/Icon/Icons/CaretLeftIcon";
-import { BackButton, Left, Navbar } from "./style";
+import { BackButton, Left, Navbar, Right } from "./style";
+import { Text } from "../ui/Text";
+import { baseTheme } from "../ui/theme";
+import { useRouter } from "expo-router";
 
 interface ComponentProps {
   children?: React.ReactNode;
@@ -20,6 +22,7 @@ export default function Component(props: ComponentProps) {
   const { children, showBackPage = false, title, overrideBack = "" } = props;
 
   const navigation = useNavigation();
+  const router = useRouter();
 
   return (
     <Navbar>
@@ -30,25 +33,29 @@ export default function Component(props: ComponentProps) {
               <BackButton
                 onPress={() => {
                   overrideBack
-                    ? navigation.navigate(overrideBack as never)
+                    ? router.push(overrideBack as never)
                     : navigation.goBack();
                 }}
               >
                 <Icon size="small">
-                  <CaretLeftIcon color="white" />
+                  <CaretLeftIcon color={baseTheme.colors.success} />
                 </Icon>
-                <RNText>Volver</RNText>
+                <Text color={baseTheme.colors.success}>Volver</Text>
               </BackButton>
             </Left>
           )}
 
           {title ? (
             <Flex justify="center">
-              <Heading as="h5">{title}</Heading>
+              <Heading as="h5" color={baseTheme.colors.white}>
+                {title}
+              </Heading>
             </Flex>
           ) : (
             children
           )}
+
+          {!children && <Right></Right>}
         </Flex>
       </Container>
     </Navbar>

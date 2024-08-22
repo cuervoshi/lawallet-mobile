@@ -32,8 +32,11 @@ import { backgroundStyles } from ".";
 import { extractFirstTwoChars } from "@/utils";
 import ButtonCTA from "@/components/ButtonCTA";
 import { QrCodeIcon } from "@/components/ui/Icon/Icons/QrCode";
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   const identity = useIdentity();
   const balance = useBalance();
   const transactions = useTransactions();
@@ -175,6 +178,7 @@ export default function HomeScreen() {
             <Flex justify="center" align="center" gap={8}>
               <Button
                 // onClick={() => router.push("/deposit")}
+                onPress={() => router.push("/(tabs)/deposit")}
                 disabled={false}
               >
                 <Flex justify="center" align="center">

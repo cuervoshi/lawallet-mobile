@@ -32,12 +32,10 @@ export function Flex({
         style={[
           isRowDirection
             ? {
-                marginLeft: gap,
-                marginRight: gap,
+                marginLeft: index === 0 ? 0 : gap,
               }
             : {
-                marginTop: gap,
-                marginBottom: gap,
+                marginTop: index === 0 ? 0 : gap,
               },
         ]}
       >

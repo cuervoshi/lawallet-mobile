@@ -34,6 +34,12 @@ export default function TabLayout() {
             title: "Dashboard",
           }}
         />
+        <Tabs.Screen
+          name="deposit"
+          options={{
+            title: "Deposit",
+          }}
+        />
       </Tabs>
     </AuthProvider>
   );

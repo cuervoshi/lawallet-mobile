@@ -27,9 +27,7 @@ export default function Root({ children }: PropsWithChildren) {
         <style dangerouslySetInnerHTML={{ __html: responsiveBackground }} />
         {/* Add any additional <head> elements that you want globally available on web... */}
       </head>
-      <body style={{ backgroundColor: baseTheme.colors.background }}>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
@@ -50,6 +48,7 @@ const responsiveBackground = `
 
   body {
     overflow-x: hidden;
+    background-color: #000;
 
     display: flex;
     flex-direction: column;
@@ -64,9 +63,4 @@ const responsiveBackground = `
   a {
     text-decoration: none;
   }
-  
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #000;
-  }
-}`;
+`;

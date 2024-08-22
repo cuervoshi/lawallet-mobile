@@ -1,16 +1,13 @@
 import Logo from "@/components/Logo/Logo";
-import { Button } from "@/components/ui/Button";
 import { Divider } from "@/components/ui/Divider";
 import { Flex } from "@/components/ui/Flex";
 import { Text } from "@/components/ui/Text";
 import { baseTheme } from "@/components/ui/theme";
-import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { Loader } from "../ui/Loader/Loader";
 
-const index = () => {
-  const router = useRouter();
-
+export const SpinnerView = ({ loadingText }: { loadingText?: string }) => {
   return (
     <View style={backgroundStyles.container}>
       <Divider y={24} />
@@ -28,9 +25,10 @@ const index = () => {
 
         <Divider y={24} />
 
-        <Button size="small" onPress={() => router.push("/(tabs)/login")}>
-          <Text>Iniciar sesión</Text>
-        </Button>
+        <Flex flex={1} direction="column" justify="center" align="center">
+          <Loader />
+          <Text>{loadingText}</Text>
+        </Flex>
       </Flex>
 
       <Divider y={24} />
@@ -46,5 +44,3 @@ export const backgroundStyles = StyleSheet.create({
     minHeight: "100%",
   },
 });
-
-export default index;

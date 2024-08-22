@@ -10,6 +10,13 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { createConfig, LaWalletConfig } from "@lawallet/react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NativeProvider } from "@/components/ui/theme/NativeProvider";
+
+const config = createConfig({
+  storage: AsyncStorage,
+});
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -31,11 +38,13 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <LaWalletConfig config={config}>
+      <NativeProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </NativeProvider>
+    </LaWalletConfig>
   );
 }

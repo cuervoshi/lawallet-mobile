@@ -1,3 +1,4 @@
+import { baseTheme } from "@/components/ui/theme";
 import { ScrollViewStyleReset } from "expo-router/html";
 import { type PropsWithChildren } from "react";
 
@@ -26,15 +27,44 @@ export default function Root({ children }: PropsWithChildren) {
         <style dangerouslySetInnerHTML={{ __html: responsiveBackground }} />
         {/* Add any additional <head> elements that you want globally available on web... */}
       </head>
-      <body>{children}</body>
+      <body style={{ backgroundColor: baseTheme.colors.background }}>
+        {children}
+      </body>
     </html>
   );
 }
 
 const responsiveBackground = `
-body {
-  background-color: #fff;
+* {
+  box-sizing: border-box;
+  
+  margin: 0;
+  padding: 0;
 }
+
+ html {
+    overflow-x: hidden;
+
+    font-size: 20px;
+  }
+
+  body {
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
+    min-width: 100vw;
+    min-height: 100dvh;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+  }
+  
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #000;

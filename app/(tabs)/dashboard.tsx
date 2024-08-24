@@ -235,7 +235,7 @@ export default function HomeScreen() {
       </ScrollView>
 
       <ButtonCTA>
-        <Button color="secondary" onPress={() => null}>
+        <Button color="secondary" onPress={() => router.push("/(tabs)/scan")}>
           <QrCodeIcon color="black" />
         </Button>
         <Divider y={16} />

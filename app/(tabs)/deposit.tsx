@@ -27,7 +27,7 @@ import { Text } from "@/components/ui/Text";
 import { baseTheme } from "@/components/ui/theme";
 import { Alert, View } from "react-native";
 import { backgroundStyles } from ".";
-import Clipboard from "@react-native-clipboard/clipboard";
+import * as Clipboard from "expo-clipboard";
 
 export default function Page() {
   //   const router = useRouter();
@@ -50,8 +50,10 @@ export default function Page() {
     //     type: res ? "success" : "error",
     //   });
     // });
-    Clipboard.setString(text);
-    Alert.alert("OK", "Copiado con éxito");
+    // Clipboard.setString(text);
+    Clipboard.setStringAsync(text).then(() => {
+      Alert.alert("OK", "Copiado con éxito");
+    });
   };
 
   const LNURLEncoded: string = useMemo(

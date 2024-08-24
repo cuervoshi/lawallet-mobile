@@ -40,6 +40,12 @@ export default function TabLayout() {
             title: "Deposit",
           }}
         />
+        <Tabs.Screen
+          name="scan"
+          options={{
+            title: "Scanner",
+          }}
+        />
       </Tabs>
     </AuthProvider>
   );

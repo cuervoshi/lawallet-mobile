@@ -26,13 +26,14 @@ import {
   useSettings,
   useTransactions,
 } from "@lawallet/react";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { ScrollView, View } from "react-native";
 import { backgroundStyles } from ".";
 import { extractFirstTwoChars } from "@/utils";
 import ButtonCTA from "@/components/ButtonCTA";
 import { QrCodeIcon } from "@/components/ui/Icon/Icons/QrCode";
 import { useRouter } from "expo-router";
+import { TokenList } from "@/components/TokensList";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -150,23 +151,7 @@ export default function HomeScreen() {
 
             <Divider y={16} />
 
-            <Flex align="center" gap={4}>
-              {CurrenciesList.map((currency) => {
-                const selected: boolean = props.currency === currency;
-
-                return (
-                  <Button
-                    key={currency}
-                    variant={selected ? "bezeled" : "borderless"}
-                    size="small"
-                    onPress={() => changeCurrency(currency)}
-                    style={{ maxWidth: 80 }}
-                  >
-                    <Text color="white">{currency}</Text>
-                  </Button>
-                );
-              })}
-            </Flex>
+            <TokenList />
           </Flex>
 
           <Divider y={24} />

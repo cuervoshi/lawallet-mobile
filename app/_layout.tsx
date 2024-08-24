@@ -12,6 +12,7 @@ import {
   LaWalletProvider,
 } from "@lawallet/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const config = createConfig({
   storage: AsyncStorage,
@@ -37,13 +38,15 @@ export default function RootLayout() {
   }
 
   return (
-    <LaWalletProvider config={config}>
-      <NativeProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </NativeProvider>
-    </LaWalletProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <LaWalletProvider config={config}>
+        <NativeProvider>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </NativeProvider>
+      </LaWalletProvider>
+    </GestureHandlerRootView>
   );
 }

@@ -11,7 +11,7 @@ export function TokenList() {
 
   return (
     <TokenListStyle>
-      <Flex align="center">
+      <Flex align="center" gap={4}>
         {CurrenciesList.map((currency) => {
           const selected: boolean = settings.props.currency === currency;
 
@@ -21,7 +21,7 @@ export function TokenList() {
               variant={selected ? "bezeled" : "borderless"}
               size="small"
               onPress={() => settings.changeCurrency(currency)}
-              style={{ maxWidth: 80 }} // Se establece maxWidth directamente en el botón
+              style={{ maxWidth: 80 }}
             >
               <Text color="white">{currency}</Text>
             </Button>

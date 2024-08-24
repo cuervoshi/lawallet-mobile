@@ -14,7 +14,6 @@ export const BaseButton = styled(TouchableOpacity)<BaseButtonProps>`
   opacity: ${(props) => (props.disabled ? 0.6 : 1)};
 `;
 
-// Si necesitas un "gap" entre elementos, puedes hacerlo manualmente con márgenes:
 export const IconWrapper = styled.View`
-  margin-right: 8px; // Esto simula un gap entre el icono y el texto
+  margin-right: 8px;
 `;

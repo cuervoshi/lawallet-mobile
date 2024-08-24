@@ -18,14 +18,16 @@ import QRCode from "react-native-qrcode-svg";
 // import InvoiceSheet from "./components/InvoiceSheet";
 
 // Constans
-import { Flex } from "@/components/ui/Flex";
+import InvoiceSheet from "@/components/InvoiceSheet/InvoiceSheet";
+import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Divider } from "@/components/ui/Divider";
+import { Flex } from "@/components/ui/Flex";
 import { Text } from "@/components/ui/Text";
 import { baseTheme } from "@/components/ui/theme";
-import { Button } from "@/components/ui/Button";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { backgroundStyles } from ".";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 export default function Page() {
   //   const router = useRouter();
@@ -48,6 +50,8 @@ export default function Page() {
     //     type: res ? "success" : "error",
     //   });
     // });
+    Clipboard.setString(text);
+    Alert.alert("OK", "Copiado con éxito");
   };
 
   const LNURLEncoded: string = useMemo(
@@ -70,69 +74,64 @@ export default function Page() {
         title={"Depositar"}
       />
 
-      {!isOpenSheet ? (
-        <Container>
-          <Flex
-            flex={1}
-            direction="column"
-            justify="space-around"
-            align="center"
-          >
-            <View style={{ padding: 8, backgroundColor: "white" }}>
-              <QRCode
-                size={300}
-                logoBorderRadius={30}
-                value={("lightning:" + LNURLEncoded).toUpperCase()}
-              />
-            </View>
+      <Container>
+        <Flex flex={1} direction="column" justify="space-around" align="center">
+          <View style={{ padding: 8, backgroundColor: "white" }}>
+            <QRCode
+              size={300}
+              logoBorderRadius={30}
+              value={("lightning:" + LNURLEncoded).toUpperCase()}
+            />
+          </View>
 
-            <Flex justify="space-between" align="center">
-              <Flex direction="column" justify="flex-start">
-                <Text size="small" color={baseTheme.colors.gray50}>
-                  Dirección
-                </Text>
+          <Flex justify="space-between" align="center">
+            <Flex direction="column" justify="flex-start">
+              <Text size="small" color={baseTheme.colors.gray50}>
+                Dirección
+              </Text>
 
-                <Text>
-                  {identity.lud16
-                    ? identity.lud16
-                    : formatAddress(LNURLEncoded, 20)}
-                </Text>
-              </Flex>
-
-              <Flex align="center">
-                <Button
-                  size="small"
-                  variant="bezeled"
-                  onPress={() =>
-                    handleCopy(identity.lud16 ? identity.lud16 : LNURLEncoded)
-                  }
-                >
-                  <Text>Copiar</Text>
-                </Button>
-              </Flex>
+              <Text>
+                {identity.lud16
+                  ? identity.lud16
+                  : formatAddress(LNURLEncoded, 20)}
+              </Text>
             </Flex>
 
-            <Flex>
+            <Flex align="center">
               <Button
+                size="small"
                 variant="bezeled"
-                onPress={() => {
-                  setIsOpenSheet(true);
-                }}
+                onPress={() =>
+                  handleCopy(identity.lud16 ? identity.lud16 : LNURLEncoded)
+                }
               >
-                <Text>Crear factura</Text>
+                <Text>Copiar</Text>
               </Button>
             </Flex>
           </Flex>
-        </Container>
-      ) : null}
 
-      {/* {isOpenSheet && (
+          <Flex>
+            <Button
+              variant="bezeled"
+              onPress={() => {
+                setIsOpenSheet(true);
+              }}
+            >
+              <Text>Crear factura</Text>
+            </Button>
+          </Flex>
+        </Flex>
+      </Container>
+
+      {isOpenSheet && (
         <InvoiceSheet
           isOpen={isOpenSheet}
-          onClose={() => setIsOpenSheet(false)}
           handleCopy={handleCopy}
+          onClose={() => {
+            setIsOpenSheet(false);
+          }}
         />
-      )} */}
+      )}
     </View>
   );
 }

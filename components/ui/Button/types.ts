@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from "react";
 import { TouchableOpacityProps } from "react-native";
 
-type Color = "primary" | "secondary" | "error";
+type Color = "primary" | "secondary" | "error" | "success";
 type Variant = "filled" | "bezeled" | "bezeledGray" | "borderless";
 type Size = "small" | "normal";
 

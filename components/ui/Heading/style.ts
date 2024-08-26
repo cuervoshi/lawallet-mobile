@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 import { HeadingPrimitiveProps } from "./types";
 
 export const HeadingPrimitive = styled.Text<HeadingPrimitiveProps>`
+  font-family: ${(props) => props.theme.font.primary};
   color: ${(props) => props.$color || "black"};
   text-align: ${(props) => props.$align};
   font-size: ${(props) => {
@@ -19,7 +20,7 @@ export const HeadingPrimitive = styled.Text<HeadingPrimitiveProps>`
       case "h6":
         return "16px";
       default:
-        return "32px"; // Por defecto h1
+        return "32px";
     }
   }};
   line-height: ${(props) => {
@@ -37,7 +38,7 @@ export const HeadingPrimitive = styled.Text<HeadingPrimitiveProps>`
       case "h6":
         return "20px";
       default:
-        return "36px"; // Por defecto h1
+        return "36px";
     }
   }};
 `;

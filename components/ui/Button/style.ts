@@ -8,6 +8,7 @@ export const BaseButton = styled(TouchableOpacity)<BaseButtonProps>`
   flex: ${(props) => (props.$isSmall ? 0 : 1)};
   min-width: ${(props) => (props.$isSmall ? "40px" : "50px")};
   min-height: ${(props) => (props.$isSmall ? "40px" : "50px")};
+  width: "100%";
   padding: ${(props) => (props.$isSmall ? "4px 8px" : "12px 8px")};
   border-radius: ${(props) => props.theme.borders.buttonRadius};
   background-color: ${(props) => props.$background};

@@ -1,18 +1,13 @@
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { SplashScreen, Stack } from "expo-router";
 import "react-native-reanimated";
 
 import { NativeProvider } from "@/components/ui/theme/NativeProvider";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import {
-  createConfig,
-  LaWalletConfig,
-  LaWalletProvider,
-} from "@lawallet/react";
+import { createConfig, LaWalletProvider } from "@lawallet/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useFonts } from "expo-font";
+import { useEffect } from "react";
 
 const config = createConfig({
   storage: AsyncStorage,
@@ -22,23 +17,24 @@ const config = createConfig({
 // SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  // const colorScheme = useColorScheme();
-  // const [loaded] = useFonts({
-  //   SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  // });
+  const [loaded] = useFonts({
+    "IAAB3-Mono": require("../assets/fonts/IAAB3.ttf"),
+    "SF Pro Text": require("../assets/fonts/SF-Regular.ttf"),
+  });
 
-  // useEffect(() => {
-  //   if (loaded) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [loaded]);
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
 
-  // if (!loaded) {
-  //   return null;
-  // }
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <StatusBar style="dark" />
       <LaWalletProvider config={config}>
         <NativeProvider>
           <Stack>

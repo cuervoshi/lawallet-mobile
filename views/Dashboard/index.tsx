@@ -19,6 +19,7 @@ import { VisibleIcon } from "@/components/ui/Icon/Icons/VisibleIcon";
 import { HeroCard } from "@/components/ui/Layout/HeroCard";
 import { Text } from "@/components/ui/Text";
 import { baseTheme } from "@/components/ui/theme";
+import { globalStyles } from "@/constants/styles";
 import { extractFirstTwoChars } from "@/utils";
 import {
   formatToPreference,
@@ -30,7 +31,7 @@ import {
 } from "@lawallet/react";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 
 function DashboardView() {
   const router = useRouter();
@@ -39,7 +40,7 @@ function DashboardView() {
   const balance = useBalance();
   const transactions = useTransactions();
 
-  const { props, toggleHideBalance, changeCurrency } = useSettings();
+  const { props, toggleHideBalance } = useSettings();
 
   const { pricesData, convertCurrency } = useCurrencyConverter();
 
@@ -53,7 +54,7 @@ function DashboardView() {
   }, [balance, pricesData, props]);
 
   return (
-    <View style={backgroundStyles.container}>
+    <View style={globalStyles.container}>
       <ScrollView>
         <Divider y={24} />
         <HeroCard maxHeight={"30%"}>
@@ -179,6 +180,7 @@ function DashboardView() {
 
               <Button
                 // onClick={() => router.push("/transfer")}
+                onPress={() => router.push("/(lng)/transfer")}
                 color="secondary"
                 disabled={false}
               >
@@ -243,14 +245,5 @@ function DashboardView() {
     </View>
   );
 }
-
-const backgroundStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: baseTheme.colors.background,
-    maxWidth: "100%",
-    minHeight: "100%",
-  },
-});
 
 export default DashboardView;

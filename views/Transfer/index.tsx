@@ -1,0 +1,269 @@
+import {
+  detectTransferType,
+  formatLNURLData,
+  normalizeLNDomain,
+  removeDuplicateArray,
+  useConfig,
+  useTransactions,
+} from "@lawallet/react";
+import {
+  Transaction,
+  TransactionDirection,
+  TransferTypes,
+} from "@lawallet/react/types";
+import { useMemo, useState } from "react";
+
+// Hooks and utils
+import useErrors from "@/hooks/useErrors";
+import { lightningAddresses } from "@/utils/constants";
+
+// Components
+import Navbar from "@/components/Navbar";
+
+// Constans
+import { EMERGENCY_LOCK_TRANSFER } from "@/utils/constants";
+import { useRouter } from "expo-router";
+import { Container } from "@/components/ui/Container";
+import { Divider } from "@/components/ui/Divider";
+import { Flex } from "@/components/ui/Flex";
+import { InputGroup } from "@/components/ui/Input/InputGroup";
+import { InputGroupRight } from "@/components/ui/Input/InputGroupRight";
+import { Button } from "@/components/ui/Button";
+import { Feedback } from "@/components/ui/Input/Feedback";
+import { Text } from "@/components/ui/Text";
+import { baseTheme } from "@/components/ui/theme";
+import { Icon } from "@/components/ui/Icon/Icon";
+import { CaretRightIcon } from "@/components/ui/Icon/Icons/CaretRightIcon";
+import { StyleSheet, View } from "react-native";
+import { Input } from "@/components/ui/Input";
+import RecipientElement from "./components/RecipientElement";
+
+function TransferView() {
+  const router = useRouter();
+
+  if (EMERGENCY_LOCK_TRANSFER) {
+    router.push("/dashboard");
+    return null;
+  }
+
+  //   const t = useTranslations();
+  //   const params = useSearchParams();
+  const params = {};
+  const errors = useErrors();
+  const config = useConfig();
+
+  const transactions = useTransactions();
+
+  const [inputText, setInputText] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const initializeTransfer = async (data: string) => {
+    if (loading) return;
+    setLoading(true);
+
+    const cleanData: string = data.trim();
+    const type: TransferTypes = detectTransferType(cleanData);
+
+    switch (type) {
+      case TransferTypes.NONE:
+        errors.modifyError("INVALID_RECIPIENT");
+        setLoading(false);
+        return;
+
+      case TransferTypes.INVOICE:
+        // router.push(`/transfer/invoice/${cleanData}`);
+        return;
+    }
+
+    const formattedLNURLData = await formatLNURLData(cleanData);
+    if (
+      formattedLNURLData.type === TransferTypes.NONE ||
+      formattedLNURLData.type === TransferTypes.INVOICE
+    ) {
+      errors.modifyError("INVALID_RECIPIENT");
+      setLoading(false);
+      return;
+    }
+
+    // router.push(`/transfer/lnurl?data=${cleanData}`);
+    return;
+  };
+
+  const handleContinue = async () => {
+    if (!inputText.length) return errors.modifyError("EMPTY_RECIPIENT");
+    initializeTransfer(inputText);
+  };
+
+  const handlePasteInput = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setInputText(text);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const lastDestinations = useMemo(() => {
+    const receiversList: string[] = [];
+    transactions.forEach((tx: Transaction) => {
+      if (
+        tx.direction === TransactionDirection.OUTGOING &&
+        tx.metadata &&
+        tx.metadata.receiver &&
+        tx.metadata.receiver.includes("@") &&
+        tx.metadata.receiver.length < 40 &&
+        !receiversList.includes(tx.metadata.receiver)
+      )
+        receiversList.push(tx.metadata.receiver);
+    });
+
+    return receiversList;
+  }, [transactions]);
+
+  const autoCompleteData: string[] = useMemo(() => {
+    if (!inputText.length || inputText.length > 15) return [];
+
+    const data: string[] = lastDestinations.filter((dest) =>
+      dest.startsWith(inputText)
+    );
+    if (data.length >= 3) return data;
+
+    if (!inputText.includes("@"))
+      return removeDuplicateArray([
+        `${inputText}@${normalizeLNDomain(config.endpoints.lightningDomain)}`,
+        ...data,
+      ]);
+
+    const [username, domain] = inputText.split("@");
+    if (!domain)
+      data.push(
+        `${username}@${normalizeLNDomain(config.endpoints.lightningDomain)}`
+      );
+
+    const recommendations: string[] = [];
+    lightningAddresses.forEach((address) => {
+      if (address.startsWith(domain))
+        recommendations.push(`${username}@${address}`);
+    });
+
+    return removeDuplicateArray([...data, ...recommendations]);
+  }, [lastDestinations, inputText]);
+
+  return (
+    <View style={backgroundStyles.container}>
+      <Navbar
+        showBackPage={true}
+        title={"Transferir"}
+        overrideBack="/dashboard"
+      />
+
+      <Container>
+        <Divider y={16} />
+        <Flex direction="column" justify="center" align="center">
+          <InputGroup>
+            <Input
+              onChange={(e) => {
+                errors.resetError();
+                setInputText(e.target.value);
+              }}
+              placeholder={"Address"}
+              type="text"
+              value={inputText}
+              status={errors.errorInfo.visible ? "error" : undefined}
+              disabled={loading}
+            />
+            <InputGroupRight>
+              <Button
+                size="small"
+                variant="borderless"
+                onPress={handlePasteInput}
+                disabled={!!inputText}
+              >
+                <Text>Pegar</Text>
+              </Button>
+            </InputGroupRight>
+          </InputGroup>
+
+          <Feedback show={errors.errorInfo.visible} status={"error"}>
+            {errors.errorInfo.text}
+          </Feedback>
+
+          <Divider y={16} />
+          <Flex>
+            <Button
+              color="secondary"
+              variant="bezeled"
+              onPress={() => router.push("/scan")}
+            >
+              <Text>Escanear código QR</Text>
+            </Button>
+          </Flex>
+          <Divider y={16} />
+          {/* Ultimos 3 destinos */}
+          {Boolean(lastDestinations.length) && (
+            <>
+              <Text size="small" color={baseTheme.colors.gray50}>
+                Últimos destinos
+              </Text>
+
+              <Divider y={12} />
+
+              {lastDestinations.slice(0, 5).map((lud16) => {
+                return (
+                  <Flex
+                    key={lud16}
+                    // onPress={() => initializeTransfer(lud16)}
+                    direction="column"
+                  >
+                    <Divider y={8} />
+                    <Flex align="center">
+                      <RecipientElement lud16={lud16} />
+                      <Icon>
+                        <CaretRightIcon />
+                      </Icon>
+                    </Flex>
+                    <Divider y={8} />
+                  </Flex>
+                );
+              })}
+            </>
+          )}
+        </Flex>
+      </Container>
+
+      <Flex>
+        <Container size="small">
+          <Divider y={16} />
+          <Flex gap={8}>
+            <Button
+              variant="bezeledGray"
+              onPress={() => router.push("/dashboard")}
+            >
+              <Text>Cancelar</Text>
+            </Button>
+
+            <Button
+              onPress={handleContinue}
+              disabled={loading || inputText.length === 0}
+              loading={loading}
+            >
+              <Text>Continuar</Text>
+            </Button>
+          </Flex>
+          <Divider y={32} />
+        </Container>
+      </Flex>
+    </View>
+  );
+}
+
+const backgroundStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: baseTheme.colors.background,
+    maxWidth: "100%",
+    minHeight: "100%",
+  },
+});
+
+export default TransferView;

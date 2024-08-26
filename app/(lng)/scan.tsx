@@ -47,7 +47,7 @@ const Scan = () => {
         pValues.includes(config.modulePubkeys.card)
       ) {
         // router.push(
-        //   `/(tabs)/settings/cards/donation?event=${eventParameter}`
+        //   `/(app)/settings/cards/donation?event=${eventParameter}`
         // );
         return;
       } else {

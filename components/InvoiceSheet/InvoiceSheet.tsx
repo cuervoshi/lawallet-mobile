@@ -12,20 +12,19 @@ import {
 } from "@lawallet/react";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { baseTheme } from "../ui/theme";
+import { ActivityIndicator, View } from "react-native";
+import QRCode from "react-native-qrcode-svg";
+import { TokenList } from "../TokensList";
+import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
+import { Divider } from "../ui/Divider";
 import { Flex } from "../ui/Flex";
+import { Heading } from "../ui/Heading";
 import { Icon } from "../ui/Icon/Icon";
 import { SatoshiV2Icon } from "../ui/Icon/Icons/SatoshiIcon";
-import { Text } from "../ui/Text";
-import { Heading } from "../ui/Heading";
 import { Feedback } from "../ui/Input/Feedback";
-import { Divider } from "../ui/Divider";
-import { Button } from "../ui/Button";
-import QRCode from "react-native-qrcode-svg";
-import { BtnLoader } from "../ui/Loader/Loader";
-import { TokenList } from "../TokensList";
-import { View } from "react-native";
+import { Text } from "../ui/Text";
+import { baseTheme } from "../ui/theme";
 
 type SheetTypes = "amount" | "qr" | "finished";
 type InvoiceSheetTypes = {
@@ -172,7 +171,9 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
                   }
                   loading={invoice.loading}
                 >
-                  <Text>Generar</Text>
+                  <Flex flex={1} justify="center" align="center">
+                    <Text>Generar</Text>
+                  </Flex>
                 </Button>
               </Flex>
 
@@ -199,7 +200,10 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
             <Divider y={24} />
 
             <Flex direction="column" justify="center" align="center" gap={8}>
-              <BtnLoader />
+              <ActivityIndicator
+                size="large"
+                color={baseTheme.colors.primary}
+              />
               <Text size="small" color={baseTheme.colors.gray50}>
                 Esperando pago de
               </Text>

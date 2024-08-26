@@ -44,16 +44,7 @@ export default function Page() {
   const [isOpenSheet, setIsOpenSheet] = useState<boolean>(false);
 
   const handleCopy = (text: string) => {
-    // copy(text).then((res) => {
-    //   notifications.showAlert({
-    //     description: res ? t("SUCCESS_COPY") : t("ERROR_COPY"),
-    //     type: res ? "success" : "error",
-    //   });
-    // });
-    // Clipboard.setString(text);
-    Clipboard.setStringAsync(text).then(() => {
-      Alert.alert("OK", "Copiado con éxito");
-    });
+    Clipboard.setStringAsync(text);
   };
 
   const LNURLEncoded: string = useMemo(
@@ -72,7 +63,7 @@ export default function Page() {
 
       <Navbar
         showBackPage={true}
-        overrideBack="/(tabs)/dashboard"
+        overrideBack="/(lng)/dashboard"
         title={"Depositar"}
       />
 
@@ -119,7 +110,9 @@ export default function Page() {
                 setIsOpenSheet(true);
               }}
             >
-              <Text>Crear factura</Text>
+              <Flex flex={1} justify="center" align="center">
+                <Text>Crear factura</Text>
+              </Flex>
             </Button>
           </Flex>
         </Flex>

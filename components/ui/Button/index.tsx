@@ -1,8 +1,9 @@
 import React from "react";
-import { ButtonProps } from "./types";
-import { BaseButton } from "./style";
-import { BtnLoader } from "../Loader/Loader";
+import { ActivityIndicator } from "react-native";
 import { useTheme } from "styled-components/native";
+import { baseTheme } from "../theme";
+import { BaseButton } from "./style";
+import { ButtonProps } from "./types";
 
 export const Button = ({
   children,
@@ -11,7 +12,9 @@ export const Button = ({
   size = "normal",
   loading = false,
   disabled = false,
-  explicitLoader = <BtnLoader />,
+  explicitLoader = (
+    <ActivityIndicator size="large" color={baseTheme.colors.primary} />
+  ),
   ...props
 }: ButtonProps): JSX.Element => {
   const theme = useTheme();

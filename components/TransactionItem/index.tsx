@@ -1,4 +1,3 @@
-import React, { ReactNode, useMemo, useState } from "react";
 import {
   dateFormatter,
   defaultCurrency,
@@ -13,13 +12,13 @@ import {
   TransactionDirection,
   TransactionStatus,
 } from "@lawallet/react/types";
+import React, { ReactNode, useMemo, useState } from "react";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { Accordion } from "../ui/Accordion";
+import { AccordionBody } from "../ui/Accordion/AccordionBody";
 import { Flex } from "../ui/Flex";
 import { Text } from "../ui/Text";
-import { View, StyleSheet } from "react-native";
 import { baseTheme } from "../ui/theme";
-import { AccordionBody } from "../ui/Accordion/AccordionBody";
-import { BtnLoader } from "../ui/Loader/Loader";
 
 interface ComponentProps {
   transaction: Transaction;
@@ -178,7 +177,16 @@ export default function Component({ transaction }: ComponentProps) {
             <Text size="small" color={baseTheme.colors.gray50}>
               {isFromMe ? "A" : "Desde"}
             </Text>
-            <Text>{ludInfo.loading ? <BtnLoader /> : ludInfo.data}</Text>
+            <Text>
+              {ludInfo.loading ? (
+                <ActivityIndicator
+                  size="small"
+                  color={baseTheme.colors.primary}
+                />
+              ) : (
+                ludInfo.data
+              )}
+            </Text>
           </Flex>
         </ListItem>
 

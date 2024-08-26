@@ -4,8 +4,7 @@ import { Flex } from "@/components/ui/Flex";
 import { Text } from "@/components/ui/Text";
 import { baseTheme } from "@/components/ui/theme";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Loader } from "../ui/Loader/Loader";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 export const SpinnerView = ({ loadingText }: { loadingText?: string }) => {
   return (
@@ -26,7 +25,7 @@ export const SpinnerView = ({ loadingText }: { loadingText?: string }) => {
         <Divider y={24} />
 
         <Flex flex={1} direction="column" justify="center" align="center">
-          <Loader />
+          <ActivityIndicator size="large" color={baseTheme.colors.primary} />
           <Text>{loadingText}</Text>
         </Flex>
       </Flex>

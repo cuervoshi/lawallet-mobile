@@ -3,13 +3,13 @@ import { StoragedIdentityInfo } from "@/components/AppProviders/AuthProvider";
 // import { StoragedIdentityInfo } from "@/components/AppProvider/AuthProvider";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
 import { Divider } from "@/components/ui/Divider";
 import { Flex } from "@/components/ui/Flex";
 import { Heading } from "@/components/ui/Heading";
 import { Feedback } from "@/components/ui/Input/Feedback";
 import { Textarea } from "@/components/ui/Input/TextArea";
 import { Text } from "@/components/ui/Text";
+import { baseTheme } from "@/components/ui/theme";
 import useErrors from "@/hooks/useErrors";
 import { saveIdentityToStorage } from "@/utils";
 // import { saveIdentityToStorage } from "@/utils";
@@ -20,12 +20,12 @@ import { getPublicKey } from "nostr-tools";
 import { useState } from "react";
 import {
   NativeSyntheticEvent,
+  StyleSheet,
   TextInputChangeEventData,
   View,
 } from "react-native";
-import { backgroundStyles } from ".";
 
-export default function Page() {
+function LoginView() {
   const { initializeSigner } = useNostr();
 
   const [keyInput, setKeyInput] = useState<string>("");
@@ -128,3 +128,14 @@ export default function Page() {
     </View>
   );
 }
+
+const backgroundStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: baseTheme.colors.background,
+    maxWidth: "100%",
+    minHeight: "100%",
+  },
+});
+
+export default LoginView;

@@ -2,7 +2,7 @@ import { STORAGE_IDENTITY_KEY } from "@/utils/constants";
 import { parseContent, useIdentity, useNostr } from "@lawallet/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
-import { useRouter } from "expo-router";
+import { Href, useRouter } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { Text } from "../ui/Text";
 import { SpinnerView } from "../SpinnerView/SpinnerView";
@@ -14,20 +14,20 @@ interface RouterInfo {
 
 const AppRouter: RouterInfo = {
   disconnectedPaths: [
-    "/(tabs)/",
-    "/(tabs)/start",
-    "/(tabs)/signup",
-    "/(tabs)/login",
-    "/(tabs)/reset",
+    "/(lng)/",
+    "/(lng)/start",
+    "/(lng)/signup",
+    "/(lng)/login",
+    "/(lng)/reset",
   ],
   connectedPaths: [
-    "/(tabs)/dashboard",
-    "/(tabs)/deposit",
-    "/(tabs)/extensions",
-    "/(tabs)/scan",
-    "/(tabs)/settings",
-    "/(tabs)/transactions",
-    "/(tabs)/transfer",
+    "/(lng)/dashboard",
+    "/(lng)/deposit",
+    "/(lng)/extensions",
+    "/(lng)/scan",
+    "/(lng)/settings",
+    "/(lng)/transactions",
+    "/(lng)/transfer",
   ],
 };
 
@@ -50,7 +50,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const route = useRoute();
 
-  const pathname = route.name || "";
+  const pathname = useMemo(() => {
+    return route.name;
+  }, [route]);
   const params = route.params || {};
 
   const authenticate = async (privateKey: string) => {
@@ -99,19 +101,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       );
 
       const userConnected = Boolean(identity.pubkey.length);
-      // const cardParameter = params?.c || "";
 
       switch (true) {
-        // case userConnected && Boolean(cardParameter.length):
-        //   navigation.navigate("SettingsCards", { c: cardParameter });
-        //   break;
-
         case !userConnected && requireAuth:
-          router.push("/(tabs)/");
+          router.replace("/(lng)/" as Href);
           break;
 
         case userConnected && requireDisconnectedUser:
-          router.push("/(tabs)/dashboard");
+          router.replace("/(lng)/dashboard" as Href);
           break;
       }
     }

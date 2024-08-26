@@ -1,4 +1,6 @@
+import ButtonCTA from "@/components/ButtonCTA";
 import Navbar from "@/components/Navbar";
+import { TokenList } from "@/components/TokensList";
 import TransactionItem from "@/components/TransactionItem";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
@@ -9,16 +11,16 @@ import { Heading } from "@/components/ui/Heading";
 import { Icon } from "@/components/ui/Icon/Icon";
 import { GearIcon } from "@/components/ui/Icon/Icons/GearIcon";
 import { HiddenIcon } from "@/components/ui/Icon/Icons/HiddeIcon";
+import { QrCodeIcon } from "@/components/ui/Icon/Icons/QrCode";
 import { ReceiveIcon } from "@/components/ui/Icon/Icons/ReceiveIcon";
 import { SatoshiV2Icon } from "@/components/ui/Icon/Icons/SatoshiIcon";
 import { SendIcon } from "@/components/ui/Icon/Icons/SendIcon";
 import { VisibleIcon } from "@/components/ui/Icon/Icons/VisibleIcon";
 import { HeroCard } from "@/components/ui/Layout/HeroCard";
-import { BtnLoader } from "@/components/ui/Loader/Loader";
 import { Text } from "@/components/ui/Text";
 import { baseTheme } from "@/components/ui/theme";
+import { extractFirstTwoChars } from "@/utils";
 import {
-  CurrenciesList,
   formatToPreference,
   useBalance,
   useCurrencyConverter,
@@ -26,16 +28,11 @@ import {
   useSettings,
   useTransactions,
 } from "@lawallet/react";
-import React, { useCallback, useMemo, useRef } from "react";
-import { ScrollView, View } from "react-native";
-import { backgroundStyles } from ".";
-import { extractFirstTwoChars } from "@/utils";
-import ButtonCTA from "@/components/ButtonCTA";
-import { QrCodeIcon } from "@/components/ui/Icon/Icons/QrCode";
 import { useRouter } from "expo-router";
-import { TokenList } from "@/components/TokensList";
+import React, { useMemo } from "react";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 
-export default function HomeScreen() {
+function DashboardView() {
   const router = useRouter();
 
   const identity = useIdentity();
@@ -140,7 +137,10 @@ export default function HomeScreen() {
 
               <Heading color="white" align="center" key={convertedBalance}>
                 {balance.loading ? (
-                  <BtnLoader />
+                  <ActivityIndicator
+                    size="large"
+                    color={baseTheme.colors.primary}
+                  />
                 ) : props.hideBalance ? (
                   "*****"
                 ) : (
@@ -163,7 +163,7 @@ export default function HomeScreen() {
             <Flex justify="center" align="center" gap={8}>
               <Button
                 // onClick={() => router.push("/deposit")}
-                onPress={() => router.push("/(tabs)/deposit")}
+                onPress={() => router.push("/(lng)/deposit")}
                 disabled={false}
               >
                 <Flex justify="center" align="center">
@@ -235,7 +235,7 @@ export default function HomeScreen() {
       </ScrollView>
 
       <ButtonCTA>
-        <Button color="secondary" onPress={() => router.push("/(tabs)/scan")}>
+        <Button color="secondary" onPress={() => router.push("/(lng)/scan")}>
           <QrCodeIcon color="black" />
         </Button>
         <Divider y={16} />
@@ -243,3 +243,14 @@ export default function HomeScreen() {
     </View>
   );
 }
+
+const backgroundStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: baseTheme.colors.background,
+    maxWidth: "100%",
+    minHeight: "100%",
+  },
+});
+
+export default DashboardView;

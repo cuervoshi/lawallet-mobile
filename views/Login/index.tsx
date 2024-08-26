@@ -3,13 +3,13 @@ import { StoragedIdentityInfo } from "@/components/AppProviders/AuthProvider";
 // import { StoragedIdentityInfo } from "@/components/AppProvider/AuthProvider";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/Button";
+import MainContainer from "@/components/ui/Container/MainContainer";
 import { Divider } from "@/components/ui/Divider";
 import { Flex } from "@/components/ui/Flex";
 import { Heading } from "@/components/ui/Heading";
 import { Feedback } from "@/components/ui/Input/Feedback";
 import { Textarea } from "@/components/ui/Input/TextArea";
 import { Text } from "@/components/ui/Text";
-import { baseTheme } from "@/components/ui/theme";
 import useErrors from "@/hooks/useErrors";
 import { saveIdentityToStorage } from "@/utils";
 // import { saveIdentityToStorage } from "@/utils";
@@ -18,12 +18,7 @@ import { getUsername } from "@lawallet/react/actions";
 import { useRouter } from "expo-router";
 import { getPublicKey } from "nostr-tools";
 import { useState } from "react";
-import {
-  NativeSyntheticEvent,
-  StyleSheet,
-  TextInputChangeEventData,
-  View,
-} from "react-native";
+import { NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 
 function LoginView() {
   const { initializeSigner } = useNostr();
@@ -85,7 +80,7 @@ function LoginView() {
   };
 
   return (
-    <View style={backgroundStyles.container}>
+    <MainContainer>
       <Navbar />
 
       <Flex direction="column" justify="space-between" align="center">
@@ -125,17 +120,8 @@ function LoginView() {
       </Flex>
 
       {/* <Button onPress={authWithExtension}>Iniciar sesión con la extensión</Button> */}
-    </View>
+    </MainContainer>
   );
 }
-
-const backgroundStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: baseTheme.colors.background,
-    maxWidth: "100%",
-    minHeight: "100%",
-  },
-});
 
 export default LoginView;

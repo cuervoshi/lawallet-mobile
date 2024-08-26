@@ -1,7 +1,7 @@
 "use client";
 
 // Libraries
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // Hooks and utils
 // import { useNotifications } from "@/context/NotificationsContext";
@@ -28,6 +28,7 @@ import { baseTheme } from "@/components/ui/theme";
 import * as Clipboard from "expo-clipboard";
 import { View } from "react-native";
 import { globalStyles } from "@/constants/styles";
+import MainContainer from "@/components/ui/Container/MainContainer";
 
 function DepositView() {
   //   const router = useRouter();
@@ -57,10 +58,14 @@ function DepositView() {
     [identity]
   );
 
-  return (
-    <View style={globalStyles.container}>
-      <Divider y={16} />
+  useEffect(() => {
+    return () => {
+      setIsOpenSheet(false);
+    };
+  }, []);
 
+  return (
+    <MainContainer>
       <Navbar
         showBackPage={true}
         overrideBack="/(lng)/dashboard"
@@ -127,7 +132,7 @@ function DepositView() {
           }}
         />
       )}
-    </View>
+    </MainContainer>
   );
 }
 

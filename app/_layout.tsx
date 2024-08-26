@@ -2,12 +2,13 @@ import { SplashScreen, Stack } from "expo-router";
 import "react-native-reanimated";
 
 import { NativeProvider } from "@/components/ui/theme/NativeProvider";
+import { globalStyles } from "@/constants/styles";
 import { createConfig, LaWalletProvider } from "@lawallet/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StatusBar } from "expo-status-bar";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFonts } from "expo-font";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const config = createConfig({
   storage: AsyncStorage,
@@ -33,12 +34,17 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar style="dark" />
+    <GestureHandlerRootView style={globalStyles.layout}>
+      <StatusBar style="auto" />
       <LaWalletProvider config={config}>
         <NativeProvider>
           <Stack>
-            <Stack.Screen name="(lng)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="(lng)"
+              options={{
+                headerShown: false,
+              }}
+            />
             <Stack.Screen name="+not-found" />
           </Stack>
         </NativeProvider>

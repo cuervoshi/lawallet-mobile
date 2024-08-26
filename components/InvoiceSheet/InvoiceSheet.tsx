@@ -275,7 +275,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
               </Flex>
               <Flex gap={8}>
                 <Button variant="bezeledGray" onPress={handleCloseSheet}>
-                  Cerrar
+                  <Text>Cerrar</Text>
                 </Button>
               </Flex>
             </Container>

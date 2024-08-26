@@ -1,8 +1,10 @@
 import AuthProvider from "@/components/AppProviders/AuthProvider";
+import { baseTheme } from "@/components/ui/theme";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Tabs } from "expo-router";
 import React from "react";
+import { View } from "react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();

@@ -21,21 +21,21 @@ import { lightningAddresses } from "@/utils/constants";
 import Navbar from "@/components/Navbar";
 
 // Constans
-import { EMERGENCY_LOCK_TRANSFER } from "@/utils/constants";
-import { useRouter } from "expo-router";
+import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import MainContainer from "@/components/ui/Container/MainContainer";
 import { Divider } from "@/components/ui/Divider";
 import { Flex } from "@/components/ui/Flex";
-import { InputGroup } from "@/components/ui/Input/InputGroup";
-import { InputGroupRight } from "@/components/ui/Input/InputGroupRight";
-import { Button } from "@/components/ui/Button";
-import { Feedback } from "@/components/ui/Input/Feedback";
-import { Text } from "@/components/ui/Text";
-import { baseTheme } from "@/components/ui/theme";
 import { Icon } from "@/components/ui/Icon/Icon";
 import { CaretRightIcon } from "@/components/ui/Icon/Icons/CaretRightIcon";
-import { StyleSheet, View } from "react-native";
 import { Input } from "@/components/ui/Input";
+import { Feedback } from "@/components/ui/Input/Feedback";
+import { InputGroup } from "@/components/ui/Input/InputGroup";
+import { InputGroupRight } from "@/components/ui/Input/InputGroupRight";
+import { Text } from "@/components/ui/Text";
+import { baseTheme } from "@/components/ui/theme";
+import { EMERGENCY_LOCK_TRANSFER } from "@/utils/constants";
+import { useRouter } from "expo-router";
 import RecipientElement from "./components/RecipientElement";
 
 function TransferView() {
@@ -96,8 +96,8 @@ function TransferView() {
 
   const handlePasteInput = async () => {
     try {
-      const text = await navigator.clipboard.readText();
-      setInputText(text);
+      // const text = await navigator.clipboard.readText();
+      // setInputText(text);
     } catch (error) {
       console.log("error", error);
     }
@@ -150,7 +150,7 @@ function TransferView() {
   }, [lastDestinations, inputText]);
 
   return (
-    <View style={backgroundStyles.container}>
+    <MainContainer>
       <Navbar
         showBackPage={true}
         title={"Transferir"}
@@ -193,7 +193,7 @@ function TransferView() {
             <Button
               color="secondary"
               variant="bezeled"
-              onPress={() => router.push("/scan")}
+              onPress={() => router.navigate("/scan")}
             >
               <Text>Escanear código QR</Text>
             </Button>
@@ -253,17 +253,7 @@ function TransferView() {
           <Divider y={32} />
         </Container>
       </Flex>
-    </View>
+    </MainContainer>
   );
 }
-
-const backgroundStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: baseTheme.colors.background,
-    maxWidth: "100%",
-    minHeight: "100%",
-  },
-});
-
 export default TransferView;

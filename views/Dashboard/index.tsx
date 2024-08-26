@@ -5,6 +5,7 @@ import TransactionItem from "@/components/TransactionItem";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import MainContainer from "@/components/ui/Container/MainContainer";
 import { Divider } from "@/components/ui/Divider";
 import { Flex } from "@/components/ui/Flex";
 import { Heading } from "@/components/ui/Heading";
@@ -19,7 +20,6 @@ import { VisibleIcon } from "@/components/ui/Icon/Icons/VisibleIcon";
 import { HeroCard } from "@/components/ui/Layout/HeroCard";
 import { Text } from "@/components/ui/Text";
 import { baseTheme } from "@/components/ui/theme";
-import { globalStyles } from "@/constants/styles";
 import { extractFirstTwoChars } from "@/utils";
 import {
   formatToPreference,
@@ -54,9 +54,8 @@ function DashboardView() {
   }, [balance, pricesData, props]);
 
   return (
-    <View style={globalStyles.container}>
+    <MainContainer>
       <ScrollView>
-        <Divider y={24} />
         <HeroCard maxHeight={"30%"}>
           <Navbar>
             <Flex
@@ -236,13 +235,21 @@ function DashboardView() {
         </Container>
       </ScrollView>
 
-      <ButtonCTA>
-        <Button color="secondary" onPress={() => router.push("/(lng)/scan")}>
-          <QrCodeIcon color="black" />
-        </Button>
-        <Divider y={16} />
-      </ButtonCTA>
-    </View>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+          alignSelf: "center",
+        }}
+      >
+        <ButtonCTA>
+          <Button color="secondary" onPress={() => router.push("/(lng)/scan")}>
+            <QrCodeIcon color="black" />
+          </Button>
+          <Divider y={16} />
+        </ButtonCTA>
+      </View>
+    </MainContainer>
   );
 }
 

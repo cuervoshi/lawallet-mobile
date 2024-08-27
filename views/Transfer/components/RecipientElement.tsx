@@ -9,7 +9,9 @@ const RecipientElement = ({ lud16 }: { lud16: string }) => {
   return (
     <Flex align="center" gap={8}>
       <Avatar>
-        <Text size="small">{extractFirstTwoChars(username)}</Text>
+        <Text align="center" size="small">
+          {extractFirstTwoChars(username)}
+        </Text>
       </Avatar>
       <Flex align="center">
         <Text>{username}</Text>

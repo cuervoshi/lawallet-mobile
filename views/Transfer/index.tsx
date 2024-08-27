@@ -37,6 +37,7 @@ import { baseTheme } from "@/components/ui/theme";
 import { EMERGENCY_LOCK_TRANSFER } from "@/utils/constants";
 import { useRouter } from "expo-router";
 import RecipientElement from "./components/RecipientElement";
+import { TouchableOpacity, View } from "react-native";
 
 function TransferView() {
   const router = useRouter();
@@ -159,6 +160,7 @@ function TransferView() {
 
       <Container>
         <Divider y={16} />
+
         <Flex direction="column" justify="center" align="center">
           <InputGroup>
             <Input
@@ -189,7 +191,8 @@ function TransferView() {
           </Feedback>
 
           <Divider y={16} />
-          <Flex>
+
+          <Flex align="center">
             <Button
               color="secondary"
               variant="bezeled"
@@ -198,60 +201,60 @@ function TransferView() {
               <Text>Escanear código QR</Text>
             </Button>
           </Flex>
-          <Divider y={16} />
-          {/* Ultimos 3 destinos */}
-          {Boolean(lastDestinations.length) && (
-            <>
-              <Text size="small" color={baseTheme.colors.gray50}>
-                Últimos destinos
-              </Text>
-
-              <Divider y={12} />
-
-              {lastDestinations.slice(0, 5).map((lud16) => {
-                return (
-                  <Flex
-                    key={lud16}
-                    // onPress={() => initializeTransfer(lud16)}
-                    direction="column"
-                  >
-                    <Divider y={8} />
-                    <Flex align="center">
-                      <RecipientElement lud16={lud16} />
-                      <Icon>
-                        <CaretRightIcon />
-                      </Icon>
-                    </Flex>
-                    <Divider y={8} />
-                  </Flex>
-                );
-              })}
-            </>
-          )}
         </Flex>
+
+        <Divider y={24} />
+
+        {Boolean(lastDestinations.length) && (
+          <View style={{ width: "100%" }}>
+            {/* <Flex justify="flex-start"> */}
+            <Text size="small" color={baseTheme.colors.gray50}>
+              Últimos destinos
+            </Text>
+            {/* </Flex> */}
+
+            <Divider y={12} />
+
+            {lastDestinations.slice(0, 5).map((lud16) => {
+              return (
+                <TouchableOpacity
+                  key={lud16}
+                  onPress={() => initializeTransfer(lud16)}
+                >
+                  <Divider y={8} />
+                  <Flex align="center">
+                    <RecipientElement lud16={lud16} />
+                    <Icon>
+                      <CaretRightIcon />
+                    </Icon>
+                  </Flex>
+                  <Divider y={8} />
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        )}
+
+        <Divider y={16} />
       </Container>
 
-      <Flex>
-        <Container size="small">
-          <Divider y={16} />
-          <Flex gap={8}>
-            <Button
-              variant="bezeledGray"
-              onPress={() => router.push("/dashboard")}
-            >
-              <Text>Cancelar</Text>
-            </Button>
+      <Flex flex={1} justify="center" align="center">
+        <Flex gap={8}>
+          <Button
+            variant="bezeledGray"
+            onPress={() => router.push("/dashboard")}
+          >
+            <Text>Cancelar</Text>
+          </Button>
 
-            <Button
-              onPress={handleContinue}
-              disabled={loading || inputText.length === 0}
-              loading={loading}
-            >
-              <Text>Continuar</Text>
-            </Button>
-          </Flex>
-          <Divider y={32} />
-        </Container>
+          <Button
+            onPress={handleContinue}
+            disabled={loading || inputText.length === 0}
+            loading={loading}
+          >
+            <Text>Continuar</Text>
+          </Button>
+        </Flex>
       </Flex>
     </MainContainer>
   );

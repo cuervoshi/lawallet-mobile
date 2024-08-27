@@ -64,7 +64,7 @@ function DashboardView() {
               align="center"
               flex={1}
             >
-              <Flex direction="row" align="center" gap={8}>
+              <Flex align="center" gap={8}>
                 <Avatar>
                   <Text align="center" color="white" size="small">
                     {identity.username

@@ -56,7 +56,7 @@ function DashboardView() {
   return (
     <MainContainer>
       <ScrollView>
-        <HeroCard maxHeight={"30%"}>
+        <HeroCard maxHeight={"100%"}>
           <Navbar>
             <Flex
               direction="row"

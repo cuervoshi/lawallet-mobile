@@ -16,6 +16,7 @@ import { useMemo, useState } from "react";
 // Hooks and utils
 import useErrors from "@/hooks/useErrors";
 import { lightningAddresses } from "@/utils/constants";
+import Clipboard from "expo-clipboard";
 
 // Components
 import Navbar from "@/components/Navbar";
@@ -42,10 +43,10 @@ import { TouchableOpacity, View } from "react-native";
 function TransferView() {
   const router = useRouter();
 
-  if (EMERGENCY_LOCK_TRANSFER) {
-    router.push("/dashboard");
-    return null;
-  }
+  // if (EMERGENCY_LOCK_TRANSFER) {
+  //   router.push("/dashboard");
+  //   return null;
+  // }
 
   //   const t = useTranslations();
   //   const params = useSearchParams();
@@ -97,8 +98,8 @@ function TransferView() {
 
   const handlePasteInput = async () => {
     try {
-      // const text = await navigator.clipboard.readText();
-      // setInputText(text);
+      const text = await Clipboard.getStringAsync();
+      setInputText(text);
     } catch (error) {
       console.log("error", error);
     }
@@ -121,34 +122,34 @@ function TransferView() {
     return receiversList;
   }, [transactions]);
 
-  const autoCompleteData: string[] = useMemo(() => {
-    if (!inputText.length || inputText.length > 15) return [];
+  // const autoCompleteData: string[] = useMemo(() => {
+  //   if (!inputText.length || inputText.length > 15) return [];
 
-    const data: string[] = lastDestinations.filter((dest) =>
-      dest.startsWith(inputText)
-    );
-    if (data.length >= 3) return data;
+  //   const data: string[] = lastDestinations.filter((dest) =>
+  //     dest.startsWith(inputText)
+  //   );
+  //   if (data.length >= 3) return data;
 
-    if (!inputText.includes("@"))
-      return removeDuplicateArray([
-        `${inputText}@${normalizeLNDomain(config.endpoints.lightningDomain)}`,
-        ...data,
-      ]);
+  //   if (!inputText.includes("@"))
+  //     return removeDuplicateArray([
+  //       `${inputText}@${normalizeLNDomain(config.endpoints.lightningDomain)}`,
+  //       ...data,
+  //     ]);
 
-    const [username, domain] = inputText.split("@");
-    if (!domain)
-      data.push(
-        `${username}@${normalizeLNDomain(config.endpoints.lightningDomain)}`
-      );
+  //   const [username, domain] = inputText.split("@");
+  //   if (!domain)
+  //     data.push(
+  //       `${username}@${normalizeLNDomain(config.endpoints.lightningDomain)}`
+  //     );
 
-    const recommendations: string[] = [];
-    lightningAddresses.forEach((address) => {
-      if (address.startsWith(domain))
-        recommendations.push(`${username}@${address}`);
-    });
+  //   const recommendations: string[] = [];
+  //   lightningAddresses.forEach((address) => {
+  //     if (address.startsWith(domain))
+  //       recommendations.push(`${username}@${address}`);
+  //   });
 
-    return removeDuplicateArray([...data, ...recommendations]);
-  }, [lastDestinations, inputText]);
+  //   return removeDuplicateArray([...data, ...recommendations]);
+  // }, [lastDestinations, inputText]);
 
   return (
     <MainContainer>
@@ -164,9 +165,9 @@ function TransferView() {
         <Flex direction="column" justify="center" align="center">
           <InputGroup>
             <Input
-              onChange={(e) => {
+              onChange={(text) => {
                 errors.resetError();
-                setInputText(e.target.value);
+                setInputText(text);
               }}
               placeholder={"Address"}
               type="text"
@@ -207,11 +208,9 @@ function TransferView() {
 
         {Boolean(lastDestinations.length) && (
           <View style={{ width: "100%" }}>
-            {/* <Flex justify="flex-start"> */}
             <Text size="small" color={baseTheme.colors.gray50}>
               Últimos destinos
             </Text>
-            {/* </Flex> */}
 
             <Divider y={12} />
 

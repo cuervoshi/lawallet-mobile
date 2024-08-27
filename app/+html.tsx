@@ -1,4 +1,3 @@
-import { baseTheme } from "@/components/ui/theme";
 import { ScrollViewStyleReset } from "expo-router/html";
 import { type PropsWithChildren } from "react";
 

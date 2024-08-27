@@ -122,6 +122,12 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
         alignItems: "center",
       }}
     >
+      {sheetStep === "amount" && (
+        <Heading as="h4" align="center" color="white">
+          Ingresa el monto
+        </Heading>
+      )}
+
       <BottomSheetView
         style={{
           backgroundColor: baseTheme.colors.gray15,
@@ -132,7 +138,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
         }}
       >
         {sheetStep === "amount" && (
-          <Container size="small">
+          <View style={{ padding: 24 }}>
             <Flex direction="column" justify="center" align="center" gap={16}>
               <Flex align="center" gap={4}>
                 {currency === "SAT" ? (
@@ -181,7 +187,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
 
               <Keyboard numpadData={numpadData} />
             </Flex>
-          </Container>
+          </View>
         )}
 
         {sheetStep === "qr" && (

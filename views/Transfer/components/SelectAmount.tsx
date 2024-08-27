@@ -1,5 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { TokenList } from "@/components/TokensList";
+import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
+import { Divider } from "@/components/ui/Divider";
+import { Flex } from "@/components/ui/Flex";
+import { Heading } from "@/components/ui/Heading";
+import { Icon } from "@/components/ui/Icon/Icon";
+import { SatoshiV2Icon } from "@/components/ui/Icon/Icons/SatoshiIcon";
+import { Feedback } from "@/components/ui/Input/Feedback";
+import { Keyboard } from "@/components/ui/Keyboard";
+import { Text } from "@/components/ui/Text";
+import { baseTheme } from "@/components/ui/theme";
 import useErrors from "@/hooks/useErrors";
 import {
   decimalsToUse,
@@ -10,22 +22,9 @@ import {
   useSettings,
 } from "@lawallet/react";
 import { LNURLTransferType, TransferTypes } from "@lawallet/react/types";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { ScrollView } from "react-native";
 import CardWithData from "./CardWithData";
-import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
-import { Container } from "@/components/ui/Container";
-import { Divider } from "@/components/ui/Divider";
-import { Flex } from "@/components/ui/Flex";
-import { Icon } from "@/components/ui/Icon/Icon";
-import { SatoshiV2Icon } from "@/components/ui/Icon/Icons/SatoshiIcon";
-import { Heading } from "@/components/ui/Heading";
-import { baseTheme } from "@/components/ui/theme";
-import { Text } from "@/components/ui/Text";
-import { Feedback } from "@/components/ui/Input/Feedback";
-import { TokenList } from "@/components/TokensList";
-import { InputWithLabel } from "@/components/ui/Input/InputWithLabel";
-import { Button } from "@/components/ui/Button";
-import { Keyboard } from "@/components/ui/Keyboard";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 
 type SelectTransferAmountType = {
   transferInfo: LNURLTransferType;

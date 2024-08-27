@@ -172,8 +172,6 @@ const TransferWithLNURL = () => {
           : {}),
       };
 
-      console.log(new_info);
-
       setLNURLTransferInfo(new_info);
     }
   }, [LNURLInfo.transferInfo]);
@@ -190,7 +188,18 @@ const TransferWithLNURL = () => {
           title={
             LNURLTransferInfo.amount === 0 ? "Definir monto" : "Validar info"
           }
-          overrideBack={`/transfer`}
+          overrideBack={
+            LNURLTransferInfo.amount === 0
+              ? `/transfer`
+              : {
+                  pathname: "/(lng)/transfer/lnurl/[lnurlData]",
+                  params: {
+                    lnurlData: `${LNURLTransferInfo.data}&&${Date.now()}`,
+                    amount: LNURLTransferInfo.amount,
+                    comment: LNURLTransferInfo.comment,
+                  },
+                }
+          }
         />
       ) : (
         <Navbar />

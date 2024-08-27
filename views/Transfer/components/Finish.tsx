@@ -16,11 +16,7 @@ import {
   useFormatter,
   useSettings,
 } from "@lawallet/react";
-import {
-  AvailableLanguages,
-  TransferInformation,
-  TransferTypes,
-} from "@lawallet/react/types";
+import { TransferInformation, TransferTypes } from "@lawallet/react/types";
 import { useRouter } from "expo-router";
 import { useMemo } from "react";
 
@@ -57,10 +53,10 @@ export const FinishTransfer = ({
     <>
       <Navbar />
 
-      <Container size="small">
+      <Container>
         {/* <Confetti /> */}
         <Divider y={16} />
-        <Heading>Excelente!</Heading>
+        <Heading color="white">Excelente!</Heading>
         <Divider y={4} />
         <Text size="small">
           {transferInfo.type === TransferTypes.LNURLW
@@ -70,13 +66,15 @@ export const FinishTransfer = ({
         <Divider y={24} />
         <Flex align="center" gap={8}>
           <Avatar size="large">
-            <Text size="small">{extractFirstTwoChars(transferUsername)}</Text>
+            <Text align="center" size="small">
+              {extractFirstTwoChars(transferUsername)}
+            </Text>
           </Avatar>
           {transferInfo.type === TransferTypes.LNURLW ||
           transferInfo.type === TransferTypes.INVOICE ? (
-            <Text>{formatAddress(transferInfo.data, 25)}</Text>
+            <Text color="white">{formatAddress(transferInfo.data, 25)}</Text>
           ) : (
-            <Text>
+            <Text color="white">
               {transferUsername}@{transferDomain}
             </Text>
           )}
@@ -86,12 +84,12 @@ export const FinishTransfer = ({
           <Flex align="center" justify="center" gap={4}>
             {currency === "SAT" ? (
               <Icon size="small">
-                <SatoshiV2Icon />
+                <SatoshiV2Icon color={"white"} />
               </Icon>
             ) : (
               <Text>$</Text>
             )}
-            <Heading>{convertedAmount}</Heading>
+            <Heading color="white">{convertedAmount}</Heading>
             <Text>{currency}</Text>
           </Flex>
         ) : (
@@ -103,23 +101,19 @@ export const FinishTransfer = ({
             <Text>SAT</Text>
           </Flex>
         )}
-        <Divider y={24} />
-      </Container>
 
-      <Flex>
-        <Container size="small">
-          <Divider y={16} />
-          <Flex gap={8}>
-            <Button
-              variant="borderless"
-              onPress={() => router.push("/dashboard")}
-            >
-              Ir al inicio
-            </Button>
-          </Flex>
-          <Divider y={32} />
-        </Container>
-      </Flex>
+        <Divider y={24} />
+        <Divider y={24} />
+
+        <Flex justify="center" align="center">
+          <Button
+            variant="borderless"
+            onPress={() => router.push("/dashboard")}
+          >
+            <Text align="center">Ir al inicio</Text>
+          </Button>
+        </Flex>
+      </Container>
     </>
   );
 };

@@ -47,7 +47,7 @@ export const FinishTransfer = ({
 
   const router = useRouter();
   const [transferUsername, transferDomain] = splitHandle(transferInfo.data);
-  if (!transferInfo.data) router.push("/dashboard");
+  // if (!transferInfo.data) router.push("/dashboard");
 
   return (
     <>

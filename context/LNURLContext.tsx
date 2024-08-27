@@ -15,10 +15,11 @@ import { NDKTag } from "@nostr-dev-kit/ndk";
 import { createContext, useContext, useEffect, useState } from "react";
 
 // Constans
-import { EMERGENCY_LOCK_TRANSFER } from "@/utils/constants";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 interface ILNURLContext {
+  loading: boolean;
+  setLoading: (bool: boolean) => void;
   LNURLTransferInfo: LNURLTransferType;
   isLoading: boolean;
   isError: boolean;
@@ -34,11 +35,6 @@ const LNURLContext = createContext({} as ILNURLContext);
 export function LNURLProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
-  if (EMERGENCY_LOCK_TRANSFER) {
-    router.push("/dashboard");
-    return null;
-  }
-
   const params = useLocalSearchParams();
   const config = useConfig();
   const identity = useIdentity();
@@ -50,7 +46,9 @@ export function LNURLProvider({ children }: { children: React.ReactNode }) {
     lnurlOrAddress: LNURLTransferInfo.data,
     config,
   });
+
   const { signerInfo, signer, encrypt } = useNostr();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const {
     isLoading,
@@ -203,13 +201,15 @@ export function LNURLProvider({ children }: { children: React.ReactNode }) {
           },
         });
     }
-  }, [LNURLInfo]);
+  }, [LNURLInfo.transferInfo]);
 
   useEffect(() => {
     loadLNURLParam();
   }, []);
 
   const value = {
+    loading,
+    setLoading,
     LNURLTransferInfo,
     isLoading,
     isError,

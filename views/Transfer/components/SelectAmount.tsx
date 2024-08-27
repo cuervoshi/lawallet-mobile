@@ -31,16 +31,18 @@ type SelectTransferAmountType = {
   transferInfo: LNURLTransferType;
   setAmountToPay: (amount: number) => void;
   setComment: (comment: string) => void;
+  setLoading: (bool: boolean) => void;
+  loading: boolean;
 };
 
 export const SelectTransferAmount = ({
   transferInfo,
   setAmountToPay,
   setComment,
+  setLoading,
+  loading,
 }: SelectTransferAmountType) => {
   const [commentFocus, setCommentFocus] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-
   const balance = useBalance();
 
   const {
@@ -138,15 +140,11 @@ export const SelectTransferAmount = ({
 
       numpadData.updateNumpadAmount(convertedAmount.toString());
     }
-  }, [pricesData]);
+  }, [pricesData, transferInfo.amount]);
 
   const { formatAmount, customFormat } = useFormatter({
     currency: userCurrency,
     locale: "es",
-  });
-
-  useFocusEffect(() => {
-    setLoading(false);
   });
 
   return (

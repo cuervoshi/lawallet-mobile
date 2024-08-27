@@ -1,13 +1,14 @@
 import Navbar from "@/components/Navbar";
+import MainContainer from "@/components/ui/Container/MainContainer";
+import { TransferTypes } from "@lawallet/react/types";
 import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import { useLNURLContext } from "../../../context/LNURLContext";
 import { SelectTransferAmount } from "../components/SelectAmount";
-import { TransferTypes } from "@lawallet/react/types";
-import MainContainer from "@/components/ui/Container/MainContainer";
 
 const TransferWithLNURL = () => {
-  const { LNURLTransferInfo, setAmountToPay, setComment } = useLNURLContext();
+  const { LNURLTransferInfo, setAmountToPay, setComment, loading, setLoading } =
+    useLNURLContext();
   const router = useRouter();
 
   useEffect(() => {
@@ -22,10 +23,9 @@ const TransferWithLNURL = () => {
         pathname: "/(lng)/transfer/lnurl/summary/[lnurlData]",
         params: {
           lnurlData: LNURLTransferInfo.data.toLowerCase(),
-          amount: LNURLTransferInfo.amount,
         },
       });
-  }, [LNURLTransferInfo.amount]);
+  }, [LNURLTransferInfo]);
 
   return (
     <MainContainer>
@@ -37,6 +37,8 @@ const TransferWithLNURL = () => {
 
       <SelectTransferAmount
         transferInfo={LNURLTransferInfo}
+        loading={loading}
+        setLoading={setLoading}
         setAmountToPay={setAmountToPay}
         setComment={setComment}
       />

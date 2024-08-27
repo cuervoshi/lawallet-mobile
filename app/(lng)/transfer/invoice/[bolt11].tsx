@@ -1,2 +1,2 @@
-import InvoiceView from "@/views/Transfer/components/InvoiceView";
-export default InvoiceView;
+import TransferWithInvoice from "@/views/Transfer/invoice/InvoiceView";
+export default TransferWithInvoice;

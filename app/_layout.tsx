@@ -36,7 +36,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={globalStyles.layout}>
       <StatusBar style="auto" />
-      <LaWalletProvider config={config}>
+      <LaWalletProvider config={config} limits={{ transactionLimits: 50 }}>
         <NativeProvider>
           <Stack>
             <Stack.Screen

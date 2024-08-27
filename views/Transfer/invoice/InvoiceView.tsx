@@ -1,13 +1,12 @@
 "use client";
 import Navbar from "@/components/Navbar";
+import MainContainer from "@/components/ui/Container/MainContainer";
 import { useConfig, useInvoice, useTransfer } from "@lawallet/react";
 import { TransferTypes } from "@lawallet/react/types";
 import { useLocalSearchParams } from "expo-router";
-import { ErrorTransfer } from "./Error";
-import { FinishTransfer } from "./Finish";
-import { Summary } from "./Summary";
-import MainContainer from "@/components/ui/Container/MainContainer";
-import { useEffect } from "react";
+import { ErrorTransfer } from "../components/Error";
+import { FinishTransfer } from "../components/Finish";
+import { Summary } from "../components/Summary";
 
 const TransferWithInvoice = () => {
   const config = useConfig();
@@ -50,7 +49,7 @@ const TransferWithInvoice = () => {
         <>
           <Navbar
             showBackPage={true}
-            title={"Valida la información"}
+            title={"Validar info"}
             overrideBack="/transfer"
           />
           <Summary

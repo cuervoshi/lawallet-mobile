@@ -1,8 +1,6 @@
 import {
   detectTransferType,
   formatLNURLData,
-  normalizeLNDomain,
-  removeDuplicateArray,
   useConfig,
   useTransactions,
 } from "@lawallet/react";
@@ -15,7 +13,6 @@ import { useMemo, useState } from "react";
 
 // Hooks and utils
 import useErrors from "@/hooks/useErrors";
-import { lightningAddresses } from "@/utils/constants";
 import Clipboard from "expo-clipboard";
 
 // Components
@@ -35,10 +32,9 @@ import { InputGroup } from "@/components/ui/Input/InputGroup";
 import { InputGroupRight } from "@/components/ui/Input/InputGroupRight";
 import { Text } from "@/components/ui/Text";
 import { baseTheme } from "@/components/ui/theme";
-import { EMERGENCY_LOCK_TRANSFER } from "@/utils/constants";
-import { useRouter } from "expo-router";
-import RecipientElement from "./components/RecipientElement";
+import { useFocusEffect, useRouter } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
+import RecipientElement from "./components/RecipientElement";
 
 function TransferView() {
   const router = useRouter();
@@ -87,7 +83,11 @@ function TransferView() {
       return;
     }
 
-    // router.push(`/transfer/lnurl?data=${cleanData}`);
+    router.navigate({
+      pathname: "/(lng)/transfer/lnurl/[lnurlData]",
+      params: { lnurlData: cleanData.toLowerCase() },
+    });
+    setLoading(false);
     return;
   };
 
@@ -150,6 +150,10 @@ function TransferView() {
 
   //   return removeDuplicateArray([...data, ...recommendations]);
   // }, [lastDestinations, inputText]);
+
+  useFocusEffect(() => {
+    setLoading(false);
+  });
 
   return (
     <MainContainer>

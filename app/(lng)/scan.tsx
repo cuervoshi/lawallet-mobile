@@ -94,7 +94,10 @@ const Scan = () => {
         return;
       }
 
-      //   router.push(`/transfer/lnurl?data=${cleanScan.toLowerCase()}`);
+      router.navigate({
+        pathname: "/(lng)/transfer/lnurl/summary/[lnurlData]",
+        params: { lnurlData: cleanScan.toLowerCase() },
+      });
     }
   };
 

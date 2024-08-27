@@ -93,14 +93,14 @@ export const SelectTransferAmount = ({
     }
 
     setAmountToPay(satsAmount);
-    router.navigate({
-      pathname: "/(lng)/transfer/lnurl/summary/[lnurlData]",
-      params: {
-        lnurlData: transferInfo.data.toLowerCase(),
-        amount: transferInfo.amount,
-        comment: transferInfo.comment,
-      },
-    });
+    // router.navigate({
+    //   pathname: "/(lng)/transfer/lnurl/summary/[lnurlData]",
+    //   params: {
+    //     lnurlData: transferInfo.data.toLowerCase(),
+    //     amount: transferInfo.amount,
+    //     comment: transferInfo.comment,
+    //   },
+    // });
   };
 
   const handleChangeComment = (text: string) => {

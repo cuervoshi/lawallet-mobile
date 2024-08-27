@@ -9,13 +9,13 @@ import { CaretLeftIcon } from "../ui/Icon/Icons/CaretLeftIcon";
 import { BackButton, Left, Navbar, Right } from "./style";
 import { Text } from "../ui/Text";
 import { baseTheme } from "../ui/theme";
-import { useRouter } from "expo-router";
+import { Href, useRouter } from "expo-router";
 
 interface ComponentProps {
   children?: React.ReactNode;
   title?: string;
   showBackPage?: boolean;
-  overrideBack?: string;
+  overrideBack?: Href;
 }
 
 export default function Component(props: ComponentProps) {
@@ -33,7 +33,7 @@ export default function Component(props: ComponentProps) {
               <BackButton
                 onPress={() => {
                   overrideBack
-                    ? router.push(overrideBack as never)
+                    ? router.navigate(overrideBack as never)
                     : navigation.goBack();
                 }}
               >

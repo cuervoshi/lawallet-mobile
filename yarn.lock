@@ -1641,7 +1641,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nostr-dev-kit/ndk@2.10.0":
+"@nostr-dev-kit/ndk@2.10.0", "@nostr-dev-kit/ndk@^2.10.0":
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/@nostr-dev-kit/ndk/-/ndk-2.10.0.tgz#b8474b6af7cab5285e9415fd96bedd7f24934810"
   integrity sha512-TqCAAo6ylORraAXrzRkCGFN2xTMiFbdER8Y8CtUT0HwOpFG/Wn+PBNeDeDmqkl/6LaPdeyXmVwCWj2KcUjIwYA==

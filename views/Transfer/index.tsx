@@ -85,7 +85,10 @@ function TransferView() {
 
     router.navigate({
       pathname: "/(lng)/transfer/lnurl/[lnurlData]",
-      params: { lnurlData: cleanData.toLowerCase(), amount: 0 },
+      params: {
+        lnurlData: `${cleanData.toLowerCase()}&&${Date.now()}`,
+        amount: 0,
+      },
     });
     setLoading(false);
     return;

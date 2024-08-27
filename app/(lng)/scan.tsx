@@ -95,8 +95,8 @@ const Scan = () => {
       }
 
       router.navigate({
-        pathname: "/(lng)/transfer/lnurl/summary/[lnurlData]",
-        params: { lnurlData: cleanScan.toLowerCase() },
+        pathname: "/(lng)/transfer/lnurl/[lnurlData]",
+        params: { lnurlData: `${cleanScan.toLowerCase()}&&${Date.now()}` },
       });
     }
   };

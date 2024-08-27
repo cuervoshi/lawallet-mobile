@@ -1539,12 +1539,12 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@lawallet/react@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@lawallet/react/-/react-0.2.3.tgz#ef88d3e8b6c26fc46437f39d28b095a3e768c12b"
-  integrity sha512-1yn8HpGb/TQKC3wxaJ9ogAtDgxq6kK9HcBWk5dBfotuq+6ZUjGOqm9ZlHWBHydn6GSWw4hzZ+9QOEXuX3NMNqw==
+"@lawallet/react@^0.2.35":
+  version "0.2.35"
+  resolved "https://registry.yarnpkg.com/@lawallet/react/-/react-0.2.35.tgz#f1fa67d9db06c8ff7d2db2fd6847eb3157e7b242"
+  integrity sha512-fRkscwlWSqAp2ln2t+egl3dgdHjK+N+fxN/AmQiRNZYQOWEG4h8X4T8SCS2S9YtoSSeD3clePwgyV+6HTOxT6A==
   dependencies:
-    "@lawallet/utils" "0.2.3"
+    "@lawallet/utils" "0.2.35"
     "@nostr-dev-kit/ndk" "2.10.0"
     nostr-tools "npm:@lawallet/nostr-tools"
 
@@ -1556,20 +1556,12 @@
     "@nostr-dev-kit/ndk" "2.4.0"
     nostr-tools "^2.7.2"
 
-"@lawallet/utils@0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@lawallet/utils/-/utils-0.2.3.tgz#406791f918df61552b1b9b5851f2c923a10c262d"
-  integrity sha512-ubTeEsDrdl6nd02raPGy2DmwtlNdwS/O8z9umr2occlEDbUWTSksgS8jLztzSt2mhvcnpHPjAgH6QdwqDNTpeg==
+"@lawallet/utils@0.2.35":
+  version "0.2.35"
+  resolved "https://registry.yarnpkg.com/@lawallet/utils/-/utils-0.2.35.tgz#573849d66079cf6aa69094d3fc65fb9d4d31aac9"
+  integrity sha512-LY4ZGwpbQVVsBFEzeUJOBIaMtB1dEmkIt4OJ6SvpGjB8NBt7YI3c3Vqu73MprCVU5nv/L6l8BDLaCsDCG6GFMg==
   dependencies:
     "@nostr-dev-kit/ndk" "2.10.0"
-    date-fns "^3.6.0"
-
-"@lawallet/utils@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@lawallet/utils/-/utils-0.2.2.tgz#f7029cb4667db0d8e1206dbb9eb2927c90f84304"
-  integrity sha512-CAvVl4AROtJBxEBjdbJJXNYLqqwKNBEbtLx7N9LJhz5mO4f0iOMqVNKIj2bpRW6z79RgHoz91qZoNAd4YNmBmA==
-  dependencies:
-    "@nostr-dev-kit/ndk" "2.4.0"
     date-fns "^3.6.0"
 
 "@noble/ciphers@0.2.0":

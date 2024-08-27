@@ -34,10 +34,6 @@ const TransferWithInvoice = () => {
     });
   };
 
-  useEffect(() => {
-    console.log(txInfo);
-  }, [txInfo]);
-
   return (
     <MainContainer>
       {isError || isSuccess ? (

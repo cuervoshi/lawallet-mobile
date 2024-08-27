@@ -1,25 +1,18 @@
 import { regexURL } from "@/utils/constants";
-import { useConfig } from "@lawallet/react";
 import {
   detectTransferType,
   getMultipleTagsValues,
   getTagValue,
   LaWalletTags,
   removeLightningStandard,
-} from "@lawallet/utils";
-import { TransferTypes } from "@lawallet/utils/types";
+  useConfig,
+} from "@lawallet/react";
+import { TransferTypes } from "@lawallet/react/types";
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { BarCodeScanningResult } from "expo-camera/build/legacy/Camera.types";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import {
-  Alert,
-  Button,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Scan = () => {
   const [facing, setFacing] = useState<CameraType>("back");

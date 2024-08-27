@@ -94,8 +94,10 @@ const Scan = () => {
       if (scanType === TransferTypes.NONE) return;
 
       if (scanType === TransferTypes.INVOICE) {
-        Alert.alert("Scan detected: invoice", result.data);
-        // router.push(`/transfer/invoice/${cleanScan.toLowerCase()}`);
+        router.navigate({
+          pathname: "/(lng)/transfer/invoice/[bolt11]",
+          params: { bolt11: cleanScan.toLowerCase() },
+        });
         return;
       }
 
@@ -108,7 +110,6 @@ const Scan = () => {
   }
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet.
     return (
       <View style={styles.container}>
         <Text style={styles.message}>

@@ -73,7 +73,7 @@ function TransferView() {
         return;
 
       case TransferTypes.INVOICE:
-        // router.push(`/transfer/invoice/${cleanData}`);
+        router.push(`/transfer/invoice/${cleanData}`);
         return;
     }
 

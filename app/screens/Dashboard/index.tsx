@@ -30,10 +30,12 @@ import {
   useTransactions,
 } from "@lawallet/react";
 import { useRouter } from "expo-router";
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import { ActivityIndicator, ScrollView, View } from "react-native";
+import LottieView from "lottie-react-native";
 
 function DashboardView() {
+  const animationRef = useRef<LottieView>(null);
   const router = useRouter();
 
   const identity = useIdentity();
@@ -198,9 +200,31 @@ function DashboardView() {
 
           <Divider y={16} />
 
-          {transactions.length === 0 ? (
-            <Flex direction="column" justify="center" align="center" flex={1}>
-              <Text size="small">No hay transacciones aún</Text>
+          {transactions.length !== 0 ? (
+            <Flex
+              direction="column"
+              justify="space-between"
+              align="center"
+              gap={16}
+            >
+              <LottieView
+                ref={animationRef}
+                source={require("@/assets/bitcoin-trade.json")}
+                autoPlay={true}
+                loop={true}
+                resizeMode="contain"
+                style={{
+                  width: 200,
+                  height: 200,
+                }}
+              />
+
+              <Heading as="h4" color="white">
+                Bitcoin es dinero digital.
+              </Heading>
+
+              <Divider y={4} />
+              <Text size="small">Proba moviendo tus primeros SATs.</Text>
             </Flex>
           ) : (
             <>

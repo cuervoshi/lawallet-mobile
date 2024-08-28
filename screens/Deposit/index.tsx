@@ -1,5 +1,3 @@
-"use client";
-
 // Libraries
 import { useEffect, useMemo, useState } from "react";
 

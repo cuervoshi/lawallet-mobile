@@ -1,5 +1,3 @@
-"use client";
-
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";

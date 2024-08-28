@@ -1,5 +1,3 @@
-"use client";
-
 import Navbar from "@/components/Navbar";
 import TransactionItem from "@/components/TransactionItem";
 import { Container } from "@/components/ui/Container";

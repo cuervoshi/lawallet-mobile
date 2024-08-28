@@ -1,4 +1,3 @@
-"use client";
 import Navbar from "@/components/Navbar";
 import MainContainer from "@/components/ui/Container/MainContainer";
 import { useConfig, useInvoice, useTransfer } from "@lawallet/react";

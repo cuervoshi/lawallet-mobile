@@ -1,6 +1,4 @@
-"use client";
 import { StoragedIdentityInfo } from "@/components/AppProviders/AuthProvider";
-// import { StoragedIdentityInfo } from "@/components/AppProvider/AuthProvider";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/Button";
 import MainContainer from "@/components/ui/Container/MainContainer";
@@ -12,13 +10,13 @@ import { Textarea } from "@/components/ui/Input/TextArea";
 import { Text } from "@/components/ui/Text";
 import useErrors from "@/hooks/useErrors";
 import { saveIdentityToStorage } from "@/utils";
-// import { saveIdentityToStorage } from "@/utils";
 import { useConfig, useIdentity, useNostr } from "@lawallet/react";
 import { getUsername } from "@lawallet/react/actions";
 import { useRouter } from "expo-router";
 import { getPublicKey } from "nostr-tools";
 import { useState } from "react";
 import { NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
+import { hexToBytes } from "@noble/hashes/utils";
 
 function LoginView() {
   const { initializeSigner } = useNostr();
@@ -47,7 +45,7 @@ function LoginView() {
     setLoading(true);
 
     try {
-      const pubkey: string = getPublicKey(keyInput);
+      const pubkey: string = getPublicKey(hexToBytes(keyInput));
       const username: string = await getUsername(pubkey, config);
 
       if (!username.length) {
@@ -105,9 +103,6 @@ function LoginView() {
 
         <Flex justify="space-between" align="center">
           <Flex gap={8}>
-            <Button variant="bezeledGray" onPress={() => router.push("/")}>
-              <Text>Cancelar</Text>
-            </Button>
             <Button
               onPress={handleRecoveryAccount}
               disabled={!keyInput.length || loading}

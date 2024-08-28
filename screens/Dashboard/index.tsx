@@ -105,7 +105,7 @@ function DashboardView() {
                 <Button
                   variant="bezeled"
                   size="small"
-                  // onClick={() => router.push("/settings")}
+                  onPress={() => router.push("/settings")}
                 >
                   <Icon size="small">
                     <GearIcon color={"white"} />

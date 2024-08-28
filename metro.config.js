@@ -6,13 +6,4 @@ const config = getDefaultConfig(__dirname, {
   isCSSEnabled: false,
 });
 
-module.exports = {
-  ...config,
-  resolver: {
-    ...config.resolver,
-    extraNodeModules: {
-      ...config.resolver.extraNodeModules,
-      crypto: require.resolve("expo-crypto"),
-    },
-  },
-};
+module.exports = config;

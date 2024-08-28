@@ -2,7 +2,7 @@ import { STORAGE_IDENTITY_KEY } from "@/utils/constants";
 import { parseContent, useIdentity, useNostr } from "@lawallet/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
-import { Href, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { SpinnerView } from "../SpinnerView/SpinnerView";
 
@@ -86,32 +86,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     loadIdentityFromStorage();
   }, []);
-
-  useEffect(() => {
-    if (!isLoading) {
-      const pathSegment = `/${String(pathname.split("/")[0] ?? "")}/`;
-      const requireAuth = isProtectedRoute(
-        pathSegment,
-        AppRouter.connectedPaths
-      );
-      const requireDisconnectedUser = isProtectedRoute(
-        pathSegment,
-        AppRouter.disconnectedPaths
-      );
-
-      const userConnected = Boolean(identity.pubkey.length);
-
-      switch (true) {
-        case !userConnected && requireAuth:
-          router.replace("/(router)/" as Href);
-          break;
-
-        case userConnected && requireDisconnectedUser:
-          router.replace("/(router)/dashboard" as Href);
-          break;
-      }
-    }
-  }, [pathname, identity, isLoading]);
 
   const hydrateApp = useMemo(() => {
     if (isLoading) return false;

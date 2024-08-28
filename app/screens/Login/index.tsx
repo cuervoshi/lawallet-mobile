@@ -91,6 +91,8 @@ function LoginView() {
 
           <Textarea
             placeholder="Introduce tu clave privada"
+            secureTextEntry
+            multiline={false}
             onChange={handleChangeInput}
           />
 

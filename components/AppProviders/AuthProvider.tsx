@@ -4,7 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
 import { Href, useRouter } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
-import { Text } from "../ui/Text";
 import { SpinnerView } from "../SpinnerView/SpinnerView";
 
 interface RouterInfo {
@@ -14,20 +13,20 @@ interface RouterInfo {
 
 const AppRouter: RouterInfo = {
   disconnectedPaths: [
-    "/(lng)/",
-    "/(lng)/start",
-    "/(lng)/signup",
-    "/(lng)/login",
-    "/(lng)/reset",
+    "/(router)/",
+    "/(router)/start",
+    "/(router)/signup",
+    "/(router)/login",
+    "/(router)/reset",
   ],
   connectedPaths: [
-    "/(lng)/dashboard",
-    "/(lng)/deposit",
-    "/(lng)/extensions",
-    "/(lng)/scan",
-    "/(lng)/settings",
-    "/(lng)/transactions",
-    "/(lng)/transfer",
+    "/(router)/dashboard",
+    "/(router)/deposit",
+    "/(router)/extensions",
+    "/(router)/scan",
+    "/(router)/settings",
+    "/(router)/transactions",
+    "/(router)/transfer",
   ],
 };
 
@@ -104,11 +103,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       switch (true) {
         case !userConnected && requireAuth:
-          router.replace("/(lng)/" as Href);
+          router.replace("/(router)/" as Href);
           break;
 
         case userConnected && requireDisconnectedUser:
-          router.replace("/(lng)/dashboard" as Href);
+          router.replace("/(router)/dashboard" as Href);
           break;
       }
     }

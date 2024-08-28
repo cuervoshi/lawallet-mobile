@@ -5,7 +5,7 @@ import { InputBox, InputIcon, InputPrimitive } from "./style";
 import { ActivityIndicator } from "react-native";
 import { CheckIcon } from "../Icon/Icons/CheckIcon";
 import { AlertIcon } from "../Icon/Icons/AlertIcon";
-import { baseTheme } from "../theme";
+import { appTheme } from "../../../utils/theme";
 
 export function Input(props: InputProps) {
   const theme = useTheme();
@@ -38,7 +38,7 @@ export function Input(props: InputProps) {
         id={id}
         name={name}
         placeholder={placeholder}
-        placeholderTextColor={baseTheme.colors.gray50}
+        placeholderTextColor={appTheme.colors.gray50}
         type={type}
         value={value}
         onBlur={(e) => {

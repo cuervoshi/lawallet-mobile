@@ -1,7 +1,7 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
 import { useTheme } from "styled-components/native";
-import { baseTheme } from "../theme";
+import { appTheme } from "../../../utils/theme";
 import { BaseButton } from "./style";
 import { ButtonProps } from "./types";
 
@@ -13,7 +13,7 @@ export const Button = ({
   loading = false,
   disabled = false,
   explicitLoader = (
-    <ActivityIndicator size="large" color={baseTheme.colors.primary} />
+    <ActivityIndicator size="large" color={appTheme.colors.primary} />
   ),
   ...props
 }: ButtonProps): JSX.Element => {

@@ -1,8 +1,8 @@
 import { SplashScreen, Stack } from "expo-router";
 import "react-native-reanimated";
 
-import { NativeProvider } from "@/components/ui/theme/NativeProvider";
-import { globalStyles } from "@/constants/styles";
+import { NativeProvider } from "@/components/ui/NativeProvider";
+import { globalStyles } from "@/utils/constants";
 import { createConfig, LaWalletProvider } from "@lawallet/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
@@ -40,7 +40,7 @@ export default function RootLayout() {
         <NativeProvider>
           <Stack>
             <Stack.Screen
-              name="(lng)"
+              name="(router)"
               options={{
                 headerShown: false,
               }}

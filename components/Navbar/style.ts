@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { View, TouchableOpacity } from "react-native";
-import { baseTheme } from "../ui/theme";
+import { appTheme } from "../../utils/theme";
 interface NavbarProps {}
 
 export const Navbar = styled(View)<NavbarProps>`
@@ -8,7 +8,7 @@ export const Navbar = styled(View)<NavbarProps>`
   height: 60px;
   position: relative;
   z-index: 10;
-  background-color: ${baseTheme.colors.background};
+  background-color: ${appTheme.colors.background};
 `;
 
 export const BackButton = styled(TouchableOpacity)`
@@ -16,7 +16,7 @@ export const BackButton = styled(TouchableOpacity)`
   align-items: center;
   background-color: transparent;
   border: none;
-  color: ${baseTheme.colors.primary};
+  color: ${appTheme.colors.primary};
 `;
 
 const BoxIcons = styled(View)`

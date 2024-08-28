@@ -1,15 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 
+import { Href, useRouter } from "expo-router";
+import { appTheme } from "../../utils/theme";
 import { Container } from "../ui/Container";
 import { Flex } from "../ui/Flex";
 import { Heading } from "../ui/Heading";
 import { Icon } from "../ui/Icon/Icon";
 import { CaretLeftIcon } from "../ui/Icon/Icons/CaretLeftIcon";
-import { BackButton, Left, Navbar, Right } from "./style";
 import { Text } from "../ui/Text";
-import { baseTheme } from "../ui/theme";
-import { Href, useRouter } from "expo-router";
+import { BackButton, Left, Navbar, Right } from "./style";
 
 interface ComponentProps {
   children?: React.ReactNode;
@@ -38,16 +38,16 @@ export default function Component(props: ComponentProps) {
                 }}
               >
                 <Icon size="small">
-                  <CaretLeftIcon color={baseTheme.colors.success} />
+                  <CaretLeftIcon color={appTheme.colors.success} />
                 </Icon>
-                <Text color={baseTheme.colors.success}>Volver</Text>
+                <Text color={appTheme.colors.success}>Volver</Text>
               </BackButton>
             </Left>
           )}
 
           {title ? (
             <Flex justify="center">
-              <Heading as="h5" color={baseTheme.colors.white}>
+              <Heading as="h5" color={appTheme.colors.white}>
                 {title}
               </Heading>
             </Flex>

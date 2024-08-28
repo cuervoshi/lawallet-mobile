@@ -18,7 +18,7 @@ import { Accordion } from "../ui/Accordion";
 import { AccordionBody } from "../ui/Accordion/AccordionBody";
 import { Flex } from "../ui/Flex";
 import { Text } from "../ui/Text";
-import { baseTheme } from "../ui/theme";
+import { appTheme } from "../../utils/theme";
 
 interface ComponentProps {
   transaction: Transaction;
@@ -135,15 +135,15 @@ export default function Component({ transaction }: ComponentProps) {
             <Text
               color={
                 hideBalance
-                  ? baseTheme.colors.text
+                  ? appTheme.colors.text
                   : transaction.status === TransactionStatus.ERROR ||
                     transaction.status === TransactionStatus.REVERTED
-                  ? baseTheme.colors.error
+                  ? appTheme.colors.error
                   : transaction.status === TransactionStatus.PENDING
-                  ? baseTheme.colors.warning
+                  ? appTheme.colors.warning
                   : isFromMe
-                  ? baseTheme.colors.text
-                  : baseTheme.colors.success
+                  ? appTheme.colors.text
+                  : appTheme.colors.success
               }
             >
               {hideBalance ? (
@@ -158,7 +158,7 @@ export default function Component({ transaction }: ComponentProps) {
                 </>
               )}
             </Text>
-            <Text size="small" color={baseTheme.colors.gray50}>
+            <Text size="small" color={appTheme.colors.gray50}>
               {hideBalance
                 ? "*****"
                 : `$${customFormat({
@@ -174,14 +174,14 @@ export default function Component({ transaction }: ComponentProps) {
       <AccordionBody>
         <ListItem isFirst>
           <Flex align="center" justify="space-between">
-            <Text size="small" color={baseTheme.colors.gray50}>
+            <Text size="small" color={appTheme.colors.gray50}>
               {isFromMe ? "A" : "Desde"}
             </Text>
             <Text>
               {ludInfo.loading ? (
                 <ActivityIndicator
                   size="small"
-                  color={baseTheme.colors.primary}
+                  color={appTheme.colors.primary}
                 />
               ) : (
                 ludInfo.data
@@ -192,7 +192,7 @@ export default function Component({ transaction }: ComponentProps) {
 
         <ListItem>
           <Flex align="center" justify="space-between">
-            <Text size="small" color={baseTheme.colors.gray50}>
+            <Text size="small" color={appTheme.colors.gray50}>
               Fecha
             </Text>
             <Flex direction="column" align="flex-end">
@@ -203,7 +203,7 @@ export default function Component({ transaction }: ComponentProps) {
                   "HH:mm"
                 )}
               </Text>
-              <Text size="small" color={baseTheme.colors.gray50}>
+              <Text size="small" color={appTheme.colors.gray50}>
                 {dateFormatter(
                   "es",
                   new Date(Number(transaction.createdAt)),
@@ -217,7 +217,7 @@ export default function Component({ transaction }: ComponentProps) {
         {transaction.memo ? (
           <ListItem>
             <Flex align="center" justify="space-between">
-              <Text size="small" color={baseTheme.colors.gray50}>
+              <Text size="small" color={appTheme.colors.gray50}>
                 Mensaje
               </Text>
               <Text>{unescapingText(transaction.memo)}</Text>
@@ -227,7 +227,7 @@ export default function Component({ transaction }: ComponentProps) {
 
         <ListItem isLast>
           <Flex align="center" justify="space-between">
-            <Text size="small" color={baseTheme.colors.gray50}>
+            <Text size="small" color={appTheme.colors.gray50}>
               Estado
             </Text>
             <Text>{status}</Text>
@@ -244,10 +244,10 @@ const styles = StyleSheet.create({
   },
   borderTop: {
     borderTopWidth: 1,
-    borderTopColor: baseTheme.colors.gray20,
+    borderTopColor: appTheme.colors.gray20,
   },
   borderBottom: {
     borderBottomWidth: 1,
-    borderBottomColor: baseTheme.colors.gray20,
+    borderBottomColor: appTheme.colors.gray20,
   },
 });

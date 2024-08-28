@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import { Flex } from "../Flex";
-import { baseTheme } from "../theme";
+import { appTheme } from "../../../utils/theme";
 import { Button } from "../Button";
 import { formatAddress } from "@lawallet/react";
 
@@ -24,7 +24,7 @@ export default function Component(props: ComponentProps) {
     <View>
       <Flex justify="space-between" align="center" gap={8}>
         <Flex direction="column" gap={8}>
-          <Text style={[styles.text, { color: baseTheme.colors.gray50 }]}>
+          <Text style={[styles.text, { color: appTheme.colors.gray50 }]}>
             {title}
           </Text>
           <Text style={styles.valueText}>{formatAddress(value, 20)}</Text>

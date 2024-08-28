@@ -1,4 +1,4 @@
-import { globalStyles } from "@/constants/styles";
+import { globalStyles } from "@/utils/constants";
 import React, { ReactNode } from "react";
 import { View } from "react-native";
 

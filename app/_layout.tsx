@@ -9,6 +9,7 @@ import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native";
 
 const config = createConfig({
   storage: AsyncStorage,
@@ -34,21 +35,23 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={globalStyles.layout}>
-      <StatusBar style="auto" />
-      <LaWalletProvider config={config} limits={{ transactionLimits: 50 }}>
-        <NativeProvider>
-          <Stack>
-            <Stack.Screen
-              name="(router)"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </NativeProvider>
-      </LaWalletProvider>
-    </GestureHandlerRootView>
+    <SafeAreaView style={globalStyles.layout}>
+      <GestureHandlerRootView>
+        <StatusBar style="auto" />
+        <LaWalletProvider config={config} limits={{ transactionLimits: 50 }}>
+          <NativeProvider>
+            <Stack>
+              <Stack.Screen
+                name="(router)"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </NativeProvider>
+        </LaWalletProvider>
+      </GestureHandlerRootView>
+    </SafeAreaView>
   );
 }

@@ -241,11 +241,9 @@ function TransferView() {
           </View>
         )}
 
-        <Divider y={16} />
-      </Container>
+        <Divider y={32} />
 
-      <Flex flex={1} justify="center" align="center">
-        <Flex gap={8}>
+        <Flex justify="center" align="center" gap={8}>
           <Button
             variant="bezeledGray"
             onPress={() => router.push("/dashboard")}
@@ -261,7 +259,7 @@ function TransferView() {
             <Text>Continuar</Text>
           </Button>
         </Flex>
-      </Flex>
+      </Container>
     </MainContainer>
   );
 }

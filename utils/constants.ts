@@ -38,13 +38,14 @@ export const globalStyles = StyleSheet.create({
   layout: {
     flex: 1,
     backgroundColor: appTheme.colors.background,
-    maxWidth: "100%",
+    minWidth: "100%",
     minHeight: "100%",
     fontWeight: 400,
     fontFamily: appTheme.font.secondary,
     paddingTop: Constants.statusBarHeight,
   },
   container: {
+    flex: 1,
     backgroundColor: appTheme.colors.background,
     width: "100%",
     height: "100%",

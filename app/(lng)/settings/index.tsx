@@ -70,8 +70,9 @@ export default function Page() {
     <MainContainer>
       <Navbar showBackPage={true} title={"Ajustes"} overrideBack="/dashboard" />
 
+      <Divider y={16} />
+
       <Container>
-        <Divider y={16} />
         <Text size="small" color={baseTheme.colors.gray50}>
           Mi cuenta
         </Text>
@@ -105,9 +106,7 @@ export default function Page() {
         </Text>
         <Divider y={8} />
         <Flex direction="column" gap={4}>
-          <LinkSetting
-          //   onPress={() => router.push("/settings/recovery")}
-          >
+          <LinkSetting onClick={() => router.push("/settings/recovery")}>
             <Text>Respaldar cuenta</Text>
           </LinkSetting>
         </Flex>

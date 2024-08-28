@@ -31,3 +31,14 @@ export const extractFirstTwoChars = (str: string): string => {
     return "--";
   }
 };
+
+export const getUserStoragedKey = async (
+  storage: BaseStorage,
+  index: number = 0
+) => {
+  const storagedKey = await storage.getItem(STORAGE_IDENTITY_KEY);
+  if (!storagedKey) return "";
+
+  const Identity: StoragedIdentityInfo[] = parseContent(storagedKey);
+  return Identity[index]?.privateKey ?? "";
+};

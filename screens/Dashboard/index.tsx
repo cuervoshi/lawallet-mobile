@@ -214,7 +214,7 @@ function DashboardView() {
                 <Button
                   size="small"
                   variant="borderless"
-                  // onClick={() => router.push("/transactions")}
+                  onPress={() => router.push("/transactions")}
                 >
                   <Text color={baseTheme.colors.success} isBold>
                     Ver todo

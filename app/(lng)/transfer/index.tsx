@@ -1,2 +1,2 @@
-import TransferView from "@/views/Transfer";
+import TransferView from "@/screens/Transfer";
 export default TransferView;

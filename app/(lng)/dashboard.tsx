@@ -1,2 +1,2 @@
-import DashboardView from "@/views/Dashboard";
+import DashboardView from "@/screens/Dashboard";
 export default DashboardView;

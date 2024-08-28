@@ -1,2 +1,2 @@
-import DepositView from "@/views/Deposit";
+import DepositView from "@/screens/Deposit";
 export default DepositView;

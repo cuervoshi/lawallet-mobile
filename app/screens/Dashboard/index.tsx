@@ -200,7 +200,7 @@ function DashboardView() {
 
           <Divider y={16} />
 
-          {transactions.length !== 0 ? (
+          {transactions.length === 0 ? (
             <Flex
               direction="column"
               justify="space-between"

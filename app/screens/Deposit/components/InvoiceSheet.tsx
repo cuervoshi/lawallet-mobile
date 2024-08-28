@@ -26,6 +26,7 @@ import { Feedback } from "@/components/ui/Input/Feedback";
 import { Text } from "@/components/ui/Text";
 import { appTheme } from "@/utils/theme";
 import { CheckIcon } from "@/components/ui/Icon/Icons/CheckIcon";
+import Confetti from "@/components/Confetti";
 
 type SheetTypes = "amount" | "qr" | "finished";
 type InvoiceSheetTypes = {
@@ -246,7 +247,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
 
         {sheetStep === "finished" && (
           <>
-            {/* <Confetti /> */}
+            <Confetti />
             <Flex
               flex={1}
               direction="column"

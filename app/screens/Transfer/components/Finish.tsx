@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import Confetti from "@/components/Confetti";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -18,6 +18,7 @@ import {
 } from "@lawallet/react";
 import { TransferInformation, TransferTypes } from "@lawallet/react/types";
 import { useRouter } from "expo-router";
+import LottieView from "lottie-react-native";
 import { useMemo } from "react";
 
 export const FinishTransfer = ({
@@ -51,10 +52,11 @@ export const FinishTransfer = ({
 
   return (
     <>
-      <Navbar />
+      <Confetti />
 
       <Container>
         {/* <Confetti /> */}
+
         <Divider y={16} />
         <Heading color="white">Excelente!</Heading>
         <Divider y={4} />

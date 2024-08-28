@@ -20,6 +20,7 @@ import { ErrorTransfer } from "../components/Error";
 import { FinishTransfer } from "../components/Finish";
 import { SelectTransferAmount } from "../components/SelectAmount";
 import { Summary } from "../components/Summary";
+import { Divider } from "@/components/ui/Divider";
 
 const TransferWithLNURL = () => {
   const router = useRouter();
@@ -202,13 +203,11 @@ const TransferWithLNURL = () => {
           }
         />
       ) : (
-        <Navbar />
+        <Divider y={32} />
       )}
 
       {isSuccess || isError ? (
         <>
-          <Navbar />
-
           {isError ? (
             <ErrorTransfer />
           ) : (

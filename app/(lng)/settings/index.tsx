@@ -76,9 +76,7 @@ export default function Page() {
         </Text>
         <Divider y={8} />
         <Flex direction="column" gap={4}>
-          <LinkSetting
-          //   onPress={() => router.push("/settings/cards")}
-          >
+          <LinkSetting onClick={() => router.push("/settings/cards")}>
             <Text>Mis tarjetas</Text>
           </LinkSetting>
         </Flex>

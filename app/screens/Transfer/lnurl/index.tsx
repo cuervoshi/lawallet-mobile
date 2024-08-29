@@ -29,6 +29,8 @@ const TransferWithLNURL = () => {
   const config = useConfig();
   const identity = useIdentity();
 
+  const [showSummary, setShowSummary] = useState(false);
+
   const [LNURLTransferInfo, setLNURLTransferInfo] =
     useState<LNURLTransferType>(defaultLNURLTransfer);
 
@@ -57,6 +59,8 @@ const TransferWithLNURL = () => {
       ...LNURLTransferInfo,
       amount,
     });
+
+    setShowSummary(true);
   };
 
   const setComment = (comment: string) => {
@@ -186,11 +190,9 @@ const TransferWithLNURL = () => {
       {Boolean(!isSuccess && !isError) ? (
         <Navbar
           showBackPage={true}
-          title={
-            LNURLTransferInfo.amount === 0 ? "Definir monto" : "Validar info"
-          }
+          title={!showSummary ? "Definir monto" : "Validar info"}
           overrideBack={
-            LNURLTransferInfo.amount === 0
+            !showSummary
               ? `/transfer`
               : {
                   pathname: "/(router)/transfer/lnurl/[lnurlData]",
@@ -214,7 +216,7 @@ const TransferWithLNURL = () => {
             <FinishTransfer transferInfo={LNURLTransferInfo} />
           )}
         </>
-      ) : LNURLTransferInfo.amount === 0 ? (
+      ) : !showSummary ? (
         <SelectTransferAmount
           transferInfo={LNURLTransferInfo}
           loading={loading}

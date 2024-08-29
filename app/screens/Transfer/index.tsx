@@ -172,7 +172,7 @@ function TransferView() {
         <Flex direction="column" justify="center" align="center">
           <InputGroup>
             <Input
-              onChange={(text) => {
+              onChangeText={(text) => {
                 errors.resetError();
                 setInputText(text);
               }}

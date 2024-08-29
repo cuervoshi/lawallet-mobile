@@ -74,7 +74,7 @@ export const Summary = ({
   }, [balance.amount, amount]);
 
   return (
-    <Container>
+    <>
       <CardWithData type={type} data={data} />
 
       <Divider y={24} />
@@ -169,6 +169,6 @@ export const Summary = ({
         </Flex>
         <Divider y={32} />
       </Flex>
-    </Container>
+    </>
   );
 };

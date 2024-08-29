@@ -1,3 +1,9 @@
+import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
+import MainContainer from "@/components/ui/Container/MainContainer";
+import { Divider } from "@/components/ui/Divider";
+import { Flex } from "@/components/ui/Flex";
 import { regexURL } from "@/utils/constants";
 import {
   detectTransferType,
@@ -12,7 +18,7 @@ import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { BarCodeScanningResult } from "expo-camera/build/legacy/Camera.types";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Scan = () => {
   const [facing, setFacing] = useState<CameraType>("back");
@@ -107,12 +113,26 @@ const Scan = () => {
 
   if (!permission.granted) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.message}>
-          We need your permission to show the camera
-        </Text>
-        <Button onPress={requestPermission} title="grant permission" />
-      </View>
+      <MainContainer>
+        <Navbar showBackPage={true} title="Scanner" />
+        <Divider y={24} />
+
+        <Container>
+          <Flex direction="column" align="center" gap={8}>
+            <Text style={styles.message}>
+              We need your permission to show the camera
+            </Text>
+
+            <Flex>
+              <Button onPress={requestPermission}>
+                <Text>Grant permission</Text>
+              </Button>
+            </Flex>
+          </Flex>
+        </Container>
+
+        <Divider y={24} />
+      </MainContainer>
     );
   }
 
@@ -143,6 +163,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   message: {
+    color: "white",
     textAlign: "center",
     paddingBottom: 10,
   },

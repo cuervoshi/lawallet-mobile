@@ -1,6 +1,19 @@
+import Confetti from "@/components/Confetti";
+import { TokenList } from "@/components/TokensList";
+import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
+import { Divider } from "@/components/ui/Divider";
+import { Flex } from "@/components/ui/Flex";
+import { Heading } from "@/components/ui/Heading";
+import { Icon } from "@/components/ui/Icon/Icon";
+import { CheckIcon } from "@/components/ui/Icon/Icons/CheckIcon";
+import { SatoshiV2Icon } from "@/components/ui/Icon/Icons/SatoshiIcon";
+import { Feedback } from "@/components/ui/Input/Feedback";
 import { Keyboard } from "@/components/ui/Keyboard";
+import { Text } from "@/components/ui/Text";
 import useErrors from "@/hooks/useErrors";
 import { MAX_INVOICE_AMOUNT } from "@/utils/constants";
+import { appTheme } from "@/utils/theme";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import {
   useCurrencyConverter,
@@ -14,19 +27,6 @@ import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
-import { TokenList } from "@/components/TokensList";
-import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
-import { Divider } from "@/components/ui/Divider";
-import { Flex } from "@/components/ui/Flex";
-import { Heading } from "@/components/ui/Heading";
-import { Icon } from "@/components/ui/Icon/Icon";
-import { SatoshiV2Icon } from "@/components/ui/Icon/Icons/SatoshiIcon";
-import { Feedback } from "@/components/ui/Input/Feedback";
-import { Text } from "@/components/ui/Text";
-import { appTheme } from "@/utils/theme";
-import { CheckIcon } from "@/components/ui/Icon/Icons/CheckIcon";
-import Confetti from "@/components/Confetti";
 
 type SheetTypes = "amount" | "qr" | "finished";
 type InvoiceSheetTypes = {
@@ -93,14 +93,12 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
   }, []);
 
   const handleCloseSheet = () => {
-    if (sheetStep === "finished" || !identity.username.length) {
-      router.push("/dashboard");
-    } else {
-      numpadData.resetAmount();
-      setSheetStep("amount");
-      resetInvoice();
-      onClose();
-    }
+    numpadData.resetAmount();
+    setSheetStep("amount");
+    resetInvoice();
+    onClose();
+
+    if (sheetStep === "finished") router.push("/dashboard");
   };
 
   useEffect(() => {
@@ -139,6 +137,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
           marginTop: 20,
         }}
       >
+        {sheetStep === "finished" && <Confetti />}
         <ScrollView>
           {sheetStep === "amount" && (
             <View style={{ padding: 24 }}>
@@ -194,7 +193,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
           )}
 
           {sheetStep === "qr" && (
-            <Container size="small">
+            <Container>
               <Flex justify="center" align="center">
                 <View
                   style={{
@@ -256,7 +255,6 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
 
           {sheetStep === "finished" && (
             <>
-              <Confetti />
               <Flex
                 flex={1}
                 direction="column"
@@ -271,6 +269,8 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
 
                   <Text>OK</Text>
                 </Flex>
+
+                <Divider y={24} />
 
                 <Text size="small" color={appTheme.colors.gray50}>
                   Pago recibido
@@ -291,7 +291,8 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
                     )}
                   </Heading>
                 </Flex>
-                <Divider y={16} />
+
+                <Divider y={24} />
 
                 <Flex gap={16}>
                   <Button variant="bezeledGray" onPress={handleCloseSheet}>

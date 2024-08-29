@@ -34,7 +34,6 @@ function DepositView() {
 
   const config = useConfig();
   const identity = useIdentity();
-  //   const notifications = useNotifications();
 
   const [isOpenSheet, setIsOpenSheet] = useState<boolean>(false);
 

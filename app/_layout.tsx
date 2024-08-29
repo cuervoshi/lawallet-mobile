@@ -10,6 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native";
+import MainContainer from "@/components/ui/Container/MainContainer";
 
 const config = createConfig({
   storage: AsyncStorage,
@@ -40,15 +41,17 @@ export default function RootLayout() {
         <StatusBar style="auto" />
         <LaWalletProvider config={config} limits={{ transactionLimits: 50 }}>
           <NativeProvider>
-            <Stack>
-              <Stack.Screen
-                name="(router)"
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen name="+not-found" />
-            </Stack>
+            <MainContainer>
+              <Stack>
+                <Stack.Screen
+                  name="(router)"
+                  options={{
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </MainContainer>
           </NativeProvider>
         </LaWalletProvider>
       </GestureHandlerRootView>

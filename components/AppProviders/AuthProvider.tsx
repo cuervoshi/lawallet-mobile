@@ -105,7 +105,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return Boolean(!requireAuth && !requireDisconnectedUser);
   }, [isLoading, pathname, identity]);
 
-  return !hydrateApp ? <SpinnerView /> : <>{children}</>;
+  return !hydrateApp ? <SpinnerView /> : children;
 };
 
 export default AuthProvider;

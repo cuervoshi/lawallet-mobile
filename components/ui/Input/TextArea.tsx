@@ -44,19 +44,19 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 8,
     paddingLeft: 12,
-    backgroundColor: "#f1f1f1", // Assuming gray15 corresponds to this
+    backgroundColor: "#f1f1f1",
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#dcdcdc", // Assuming gray20 corresponds to this
-    color: "#333", // Assuming this is the text color
+    borderColor: "#dcdcdc",
+    color: "#333",
     fontSize: 14,
-    textAlignVertical: "top", // To ensure the text starts from the top
+    verticalAlign: "top",
   },
   success: {
-    borderColor: "green", // Replace with actual theme color
+    borderColor: "green",
   },
   error: {
-    borderColor: "red", // Replace with actual theme color
+    borderColor: "red",
   },
   default: {
     borderColor: "#dcdcdc",

@@ -4,11 +4,12 @@ import { Flex } from "@/components/ui/Flex";
 import { Text } from "@/components/ui/Text";
 import { appTheme } from "@/utils/theme";
 import React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator } from "react-native";
+import MainContainer from "../ui/Container/MainContainer";
 
 export const SpinnerView = ({ loadingText }: { loadingText?: string }) => {
   return (
-    <View style={backgroundStyles.container}>
+    <MainContainer>
       <Divider y={24} />
 
       <Flex flex={1} direction="column" justify="space-between" align="center">
@@ -31,15 +32,6 @@ export const SpinnerView = ({ loadingText }: { loadingText?: string }) => {
       </Flex>
 
       <Divider y={24} />
-    </View>
+    </MainContainer>
   );
 };
-
-export const backgroundStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: appTheme.colors.background,
-    maxWidth: "100%",
-    minHeight: "100%",
-  },
-});

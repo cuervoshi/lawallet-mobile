@@ -10,15 +10,17 @@ import { appTheme } from "@/utils/theme";
 import AddNewCardModal from "./components/AddCard";
 import DebitCard from "./components/DebitCard";
 import EmptyCards from "./components/EmptyCards";
+import { useTranslations } from "@/i18n/I18nProvider";
 // import EmptyCards from "./components/EmptyCards";
 
 function CardsView() {
   const { cardsData, cardsConfig, loadInfo, toggleCardStatus } =
     useCardsContext();
 
+  const { i18n } = useTranslations();
+
   const handleToggleStatus = async (uuid: string) => {
     const toggled: boolean = await toggleCardStatus(uuid);
-    // if (toggled) Alert.alert("", "Estado cambiado");
 
     return toggled;
   };
@@ -26,7 +28,7 @@ function CardsView() {
   return (
     <MainContainer>
       <Navbar
-        title={"Mis tarjetas"}
+        title={i18n.t("MY_CARDS")}
         showBackPage={true}
         overrideBack={"/settings"}
       />

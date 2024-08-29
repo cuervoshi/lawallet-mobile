@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import MainContainer from "@/components/ui/Container/MainContainer";
+import { Divider } from "@/components/ui/Divider";
+import { useTranslations } from "@/i18n/I18nProvider";
 import {
   claimLNURLw,
   defaultLNURLTransfer,
@@ -20,9 +22,9 @@ import { ErrorTransfer } from "../components/Error";
 import { FinishTransfer } from "../components/Finish";
 import { SelectTransferAmount } from "../components/SelectAmount";
 import { Summary } from "../components/Summary";
-import { Divider } from "@/components/ui/Divider";
 
 const TransferWithLNURL = () => {
+  const { i18n } = useTranslations();
   const router = useRouter();
 
   const params = useLocalSearchParams();
@@ -190,7 +192,9 @@ const TransferWithLNURL = () => {
       {Boolean(!isSuccess && !isError) ? (
         <Navbar
           showBackPage={true}
-          title={!showSummary ? "Definir monto" : "Validar info"}
+          title={
+            !showSummary ? i18n.t("DEFINE_AMOUNT") : i18n.t("VALIDATE_INFO")
+          }
           overrideBack={
             !showSummary
               ? `/transfer`

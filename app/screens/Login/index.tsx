@@ -17,9 +17,12 @@ import { getPublicKey } from "nostr-tools";
 import { useState } from "react";
 import { NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 import { hexToBytes } from "@noble/hashes/utils";
+import { useTranslations } from "@/i18n/I18nProvider";
 
 function LoginView() {
   const { initializeSigner } = useNostr();
+
+  const { i18n } = useTranslations();
 
   const [keyInput, setKeyInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,7 +41,7 @@ function LoginView() {
 
   const handleRecoveryAccount = async () => {
     if (keyInput.length < 32) {
-      errors.modifyError("La clave debe tener al menos 32 caracteres.");
+      errors.modifyError("KEY_LENGTH_ERROR");
       return;
     }
 
@@ -49,7 +52,7 @@ function LoginView() {
       const username: string = await getUsername(pubkey, config);
 
       if (!username.length) {
-        errors.modifyError("Clave pública no encontrada.");
+        errors.modifyError("NOT_FOUND_PUBKEY");
         setLoading(false);
         return;
       }
@@ -71,7 +74,7 @@ function LoginView() {
         }
       });
     } catch (err) {
-      errors.modifyError("Error inesperado al recuperar la cuenta.");
+      errors.modifyError("UNEXPECTED_RECEOVERY_ERROR");
     }
 
     setLoading(false);
@@ -84,13 +87,13 @@ function LoginView() {
       <Flex direction="column" justify="space-between" align="center">
         <Flex direction="column" justify="center" align="center">
           <Heading as="h2" color="white">
-            Iniciar sesión
+            {i18n.t("LOGIN_TITLE")}
           </Heading>
 
           <Divider y={16} />
 
           <Textarea
-            placeholder="Introduce tu clave privada"
+            placeholder={i18n.t("INSERT_PRIVATE_KEY")}
             secureTextEntry
             multiline={false}
             onChange={handleChangeInput}
@@ -110,13 +113,11 @@ function LoginView() {
               disabled={!keyInput.length || loading}
               loading={loading}
             >
-              <Text>Iniciar sesión</Text>
+              <Text>{i18n.t("LOGIN")}</Text>
             </Button>
           </Flex>
         </Flex>
       </Flex>
-
-      {/* <Button onPress={authWithExtension}>Iniciar sesión con la extensión</Button> */}
     </MainContainer>
   );
 }

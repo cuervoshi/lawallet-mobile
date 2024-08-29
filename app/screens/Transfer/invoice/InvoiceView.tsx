@@ -6,8 +6,10 @@ import { useLocalSearchParams } from "expo-router";
 import { ErrorTransfer } from "../components/Error";
 import { FinishTransfer } from "../components/Finish";
 import { Summary } from "../components/Summary";
+import { useTranslations } from "@/i18n/I18nProvider";
 
 const TransferWithInvoice = () => {
+  const { i18n } = useTranslations();
   const config = useConfig();
   const params = useLocalSearchParams();
   if (!params.bolt11) return null;
@@ -48,7 +50,7 @@ const TransferWithInvoice = () => {
         <>
           <Navbar
             showBackPage={true}
-            title={"Validar info"}
+            title={i18n.t("VALIDATE_INFO")}
             overrideBack="/transfer"
           />
           <Summary

@@ -1,6 +1,5 @@
 import { TokenList } from "@/components/TokensList";
 import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
 import { Divider } from "@/components/ui/Divider";
 import { Flex } from "@/components/ui/Flex";
 import { Heading } from "@/components/ui/Heading";
@@ -8,6 +7,7 @@ import { Icon } from "@/components/ui/Icon/Icon";
 import { SatoshiV2Icon } from "@/components/ui/Icon/Icons/SatoshiIcon";
 import { Feedback } from "@/components/ui/Input/Feedback";
 import { Text } from "@/components/ui/Text";
+import { useTranslations } from "@/i18n/I18nProvider";
 import {
   useBalance,
   useCurrencyConverter,
@@ -41,6 +41,7 @@ export const Summary = ({
   expired = false,
   onClick,
 }: SummaryProps) => {
+  const { i18n } = useTranslations();
   const router = useRouter();
   const [insufficientBalance, setInsufficientBalance] =
     useState<boolean>(false);
@@ -132,8 +133,8 @@ export const Summary = ({
           <Feedback show={true} status={"error"}>
             <Text>
               {expired
-                ? "Factura de pago expirada"
-                : "No tienes saldo suficiente para pagar"}
+                ? i18n.t("INVOICE_EXPIRED")
+                : i18n.t("INSUFFICIENT_BALANCE")}
             </Text>
           </Feedback>
         </Flex>
@@ -147,7 +148,7 @@ export const Summary = ({
             variant="bezeledGray"
             onPress={() => router.push("/dashboard")}
           >
-            <Text>Cancelar</Text>
+            <Text>{i18n.t("CANCEL")}</Text>
           </Button>
 
           <Button
@@ -163,7 +164,9 @@ export const Summary = ({
             loading={isLoading || isPending}
           >
             <Text>
-              {type === TransferTypes.LNURLW ? "Reclamar" : "Transferir"}
+              {type === TransferTypes.LNURLW
+                ? i18n.t("CLAIM")
+                : i18n.t("TRANSFER")}
             </Text>
           </Button>
         </Flex>

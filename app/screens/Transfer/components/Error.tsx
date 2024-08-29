@@ -4,9 +4,11 @@ import { Divider } from "@/components/ui/Divider";
 import { Flex } from "@/components/ui/Flex";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { useRouter } from "expo-router";
 
 export const ErrorTransfer = () => {
+  const { i18n } = useTranslations();
   const router = useRouter();
 
   return (
@@ -15,10 +17,7 @@ export const ErrorTransfer = () => {
         <Divider y={16} />
         <Heading>Error</Heading>
         <Divider y={4} />
-        <Text size="small">
-          Ocurrió un error al enviar la transferencia, los fondos han sido
-          reintegrados
-        </Text>
+        <Text size="small">{i18n.t("DETAIL_FAILED_TRANSACTION")}</Text>
       </Container>
 
       <Flex>
@@ -29,7 +28,7 @@ export const ErrorTransfer = () => {
               variant="borderless"
               onPress={() => router.push("/dashboard")}
             >
-              Ir al inicio
+              {i18n.t("GO_HOME")}
             </Button>
           </Flex>
           <Divider y={32} />

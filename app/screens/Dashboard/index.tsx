@@ -33,8 +33,10 @@ import { useRouter } from "expo-router";
 import React, { useMemo, useRef } from "react";
 import { ActivityIndicator, ScrollView, View } from "react-native";
 import LottieView from "lottie-react-native";
+import { useTranslations } from "@/i18n/I18nProvider";
 
 function DashboardView() {
+  const { i18n } = useTranslations();
   const animationRef = useRef<LottieView>(null);
   const router = useRouter();
 
@@ -77,14 +79,14 @@ function DashboardView() {
 
                 <Flex direction="column">
                   <Text size="small" color={appTheme.colors.gray50}>
-                    Hola,{" "}
+                    {i18n.t("HELLO")},{" "}
                   </Text>
                   <Text size="small" color={appTheme.colors.white}>
                     {identity.loading
                       ? "--"
                       : identity.lud16
                       ? identity.lud16
-                      : "Anonimo"}
+                      : i18n.t("ANONYMOUS")}
                   </Text>
                 </Flex>
               </Flex>
@@ -121,7 +123,7 @@ function DashboardView() {
 
           <Flex direction="column" align="center" justify="center">
             <Text size="small" color={appTheme.colors.gray50}>
-              Balance
+              {i18n.t("BALANCE")}
             </Text>
 
             <Divider y={8} />
@@ -174,7 +176,7 @@ function DashboardView() {
                   </Icon>
 
                   <Text color={appTheme.colors.gray15} isBold>
-                    Depositar
+                    {i18n.t("DEPOSIT")}
                   </Text>
                 </Flex>
               </Button>
@@ -191,7 +193,7 @@ function DashboardView() {
                   </Icon>
 
                   <Text color={appTheme.colors.gray15} isBold>
-                    Transferir
+                    {i18n.t("TRANSFER")}
                   </Text>
                 </Flex>
               </Button>
@@ -220,17 +222,17 @@ function DashboardView() {
               />
 
               <Heading as="h4" color="white">
-                Bitcoin es dinero digital.
+                {i18n.t("EMPTY_TRANSACTIONS_TITLE")}
               </Heading>
 
               <Divider y={4} />
-              <Text size="small">Proba moviendo tus primeros SATs.</Text>
+              <Text size="small">{i18n.t("EMPTY_TRANSACTIONS_DESC")}</Text>
             </Flex>
           ) : (
             <>
               <Flex justify="space-between" align="center">
                 <Text size="small" color={appTheme.colors.gray50}>
-                  ÚLTIMA ACTIVIDAD
+                  {i18n.t("LAST_ACTIVITY").toUpperCase()}
                 </Text>
 
                 <Divider y={24} />
@@ -241,7 +243,7 @@ function DashboardView() {
                   onPress={() => router.push("/transactions")}
                 >
                   <Text color={appTheme.colors.success} isBold>
-                    Ver todo
+                    {i18n.t("SEE_ALL")}
                   </Text>
                 </Button>
               </Flex>

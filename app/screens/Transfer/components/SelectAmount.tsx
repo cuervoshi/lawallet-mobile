@@ -11,8 +11,9 @@ import { SatoshiV2Icon } from "@/components/ui/Icon/Icons/SatoshiIcon";
 import { Feedback } from "@/components/ui/Input/Feedback";
 import { Keyboard } from "@/components/ui/Keyboard";
 import { Text } from "@/components/ui/Text";
-import { appTheme } from "@/utils/theme";
 import useErrors from "@/hooks/useErrors";
+import { useTranslations } from "@/i18n/I18nProvider";
+import { appTheme } from "@/utils/theme";
 import {
   decimalsToUse,
   useBalance,
@@ -23,7 +24,7 @@ import {
 } from "@lawallet/react";
 import { LNURLTransferType, TransferTypes } from "@lawallet/react/types";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import CardWithData from "./CardWithData";
 
 type SelectTransferAmountType = {
@@ -41,6 +42,7 @@ export const SelectTransferAmount = ({
   setLoading,
   loading,
 }: SelectTransferAmountType) => {
+  const { i18n } = useTranslations();
   const [commentFocus, setCommentFocus] = useState<boolean>(false);
   const balance = useBalance();
 
@@ -178,7 +180,7 @@ export const SelectTransferAmount = ({
               <Flex align="center" gap={4}>
                 <Heading as="h6" color={appTheme.colors.gray50}>
                   {userCurrency !== "SAT" && "$"}
-                  {formatAmount(maxAvailableAmount)} disponible.
+                  {formatAmount(maxAvailableAmount)} {i18n.t("AVAILABLE")}.
                 </Heading>
               </Flex>
             )}
@@ -192,17 +194,16 @@ export const SelectTransferAmount = ({
             <Flex align="center">
               {transferInfo.request && (
                 <Feedback show={true} status={"success"}>
-                  Puedes enviar entre{" "}
-                  {customFormat({
-                    amount: transferInfo.request.minSendable! / 1000,
-                    currency: "SAT",
-                  })}{" "}
-                  y{" "}
-                  {customFormat({
-                    amount: transferInfo.request.maxSendable! / 1000,
-                    currency: "SAT",
-                  })}{" "}
-                  SATs
+                  {i18n.t("SENDABLE_AMOUNT", {
+                    minSendable: customFormat({
+                      amount: transferInfo.request.minSendable! / 1000,
+                      currency: "SAT",
+                    }),
+                    maxSendable: customFormat({
+                      amount: transferInfo.request.maxSendable! / 1000,
+                      currency: "SAT",
+                    }),
+                  })}
                 </Feedback>
               )}
             </Flex>
@@ -229,7 +230,7 @@ export const SelectTransferAmount = ({
                   }
                   loading={loading}
                 >
-                  <Text align="center">Continuar</Text>
+                  <Text align="center">{i18n.t("CONTINUE")}</Text>
                 </Button>
               </Flex>
 

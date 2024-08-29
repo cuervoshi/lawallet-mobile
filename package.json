@@ -33,6 +33,7 @@
     "expo-updates": "~0.25.24",
     "expo-web-browser": "~13.0.3",
     "fast-text-encoding": "^1.0.6",
+    "i18n-js": "^4.4.3",
     "lottie-react-native": "6.7.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

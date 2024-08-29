@@ -1,7 +1,6 @@
 import {
   detectTransferType,
   formatLNURLData,
-  useConfig,
   useTransactions,
 } from "@lawallet/react";
 import {
@@ -31,6 +30,7 @@ import { Feedback } from "@/components/ui/Input/Feedback";
 import { InputGroup } from "@/components/ui/Input/InputGroup";
 import { InputGroupRight } from "@/components/ui/Input/InputGroupRight";
 import { Text } from "@/components/ui/Text";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { appTheme } from "@/utils/theme";
 import { useFocusEffect, useRouter } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
@@ -44,11 +44,9 @@ function TransferView() {
   //   return null;
   // }
 
-  //   const t = useTranslations();
   //   const params = useSearchParams();
-  const params = {};
+  const { i18n } = useTranslations();
   const errors = useErrors();
-  const config = useConfig();
 
   const transactions = useTransactions();
 
@@ -139,7 +137,7 @@ function TransferView() {
   //       ...data,
   //     ]);
 
-  //   const [username, domain] = inputText.split("@");
+  //   const [username, domain] = inputText.splii18n.t("@");
   //   if (!domain)
   //     data.push(
   //       `${username}@${normalizeLNDomain(config.endpoints.lightningDomain)}`
@@ -162,7 +160,7 @@ function TransferView() {
     <MainContainer>
       <Navbar
         showBackPage={true}
-        title={"Transferir"}
+        title={i18n.t("TRANSFER_MONEY")}
         overrideBack="/dashboard"
       />
 
@@ -176,7 +174,7 @@ function TransferView() {
                 errors.resetError();
                 setInputText(text);
               }}
-              placeholder={"Address"}
+              placeholder={i18n.t("TRANSFER_DATA_PLACEHOLDER")}
               type="text"
               value={inputText}
               status={errors.errorInfo.visible ? "error" : undefined}
@@ -189,7 +187,7 @@ function TransferView() {
                 onPress={handlePasteInput}
                 disabled={!!inputText}
               >
-                <Text>Pegar</Text>
+                <Text>{i18n.t("PASTE")}</Text>
               </Button>
             </InputGroupRight>
           </InputGroup>
@@ -206,7 +204,7 @@ function TransferView() {
               variant="bezeled"
               onPress={() => router.navigate("/scan")}
             >
-              <Text>Escanear código QR</Text>
+              <Text>{i18n.t("SCAN_QR_CODE")}</Text>
             </Button>
           </Flex>
         </Flex>
@@ -216,7 +214,7 @@ function TransferView() {
         {Boolean(lastDestinations.length) && (
           <View style={{ width: "100%" }}>
             <Text size="small" color={appTheme.colors.gray50}>
-              Últimos destinos
+              {i18n.t("LAST_RECIPIENTS")}
             </Text>
 
             <Divider y={12} />
@@ -248,7 +246,7 @@ function TransferView() {
             variant="bezeledGray"
             onPress={() => router.push("/dashboard")}
           >
-            <Text>Cancelar</Text>
+            <Text>{i18n.t("CANCEL")}</Text>
           </Button>
 
           <Button
@@ -256,7 +254,7 @@ function TransferView() {
             disabled={loading || inputText.length === 0}
             loading={loading}
           >
-            <Text>Continuar</Text>
+            <Text>{i18n.t("CONTINUE")}</Text>
           </Button>
         </Flex>
       </Container>

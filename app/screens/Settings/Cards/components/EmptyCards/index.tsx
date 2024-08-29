@@ -3,8 +3,11 @@ import EmptySvg from "./EmptySvg";
 import { Flex } from "@/components/ui/Flex";
 import { Text } from "@/components/ui/Text";
 import { appTheme } from "@/utils/theme";
+import { useTranslations } from "@/i18n/I18nProvider";
 
 const EmptyCards = () => {
+  const { i18n } = useTranslations();
+
   return (
     <Container size="medium">
       <Flex
@@ -16,9 +19,9 @@ const EmptyCards = () => {
       >
         <EmptySvg />
         <Flex direction="column" gap={4} align="center">
-          <Text isBold={true}>No tienes tarjetas</Text>
+          <Text isBold={true}>{i18n.t("NO_HAVE_CARDS")}</Text>
           <Text size="small" color={appTheme.colors.gray50}>
-            No se encontraron tarjetas
+            {i18n.t("NOT_FOUND_CARD")}
           </Text>
         </Flex>
       </Flex>

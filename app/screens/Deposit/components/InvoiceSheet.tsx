@@ -12,6 +12,7 @@ import { Feedback } from "@/components/ui/Input/Feedback";
 import { Keyboard } from "@/components/ui/Keyboard";
 import { Text } from "@/components/ui/Text";
 import useErrors from "@/hooks/useErrors";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { MAX_INVOICE_AMOUNT } from "@/utils/constants";
 import { appTheme } from "@/utils/theme";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
@@ -39,6 +40,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
   const errors = useErrors();
   const [sheetStep, setSheetStep] = useState<SheetTypes>("amount");
 
+  const { i18n } = useTranslations();
   const identity = useIdentity();
 
   const {
@@ -122,11 +124,13 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
         alignItems: "center",
       }}
     >
-      {sheetStep === "amount" && (
-        <Heading as="h4" align="center" color="white">
-          Ingresa el monto
-        </Heading>
-      )}
+      <Heading as="h4" align="center" color="white">
+        {sheetStep === "amount"
+          ? i18n.t("DEFINE_AMOUNT")
+          : sheetStep === "qr"
+          ? i18n.t("WAITING_PAYMENT")
+          : i18n.t("PAYMENT_RECEIVED")}
+      </Heading>
 
       <BottomSheetView
         style={{
@@ -180,7 +184,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
                     loading={invoice.loading}
                   >
                     <Flex flex={1} justify="center" align="center">
-                      <Text>Generar</Text>
+                      <Text>{i18n.t("GENERATE")}</Text>
                     </Flex>
                   </Button>
                 </Flex>
@@ -216,7 +220,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
                   color={appTheme.colors.primary}
                 />
                 <Text size="small" color={appTheme.colors.gray50}>
-                  Esperando pago de
+                  {i18n.t("WAITING_PAYMENT_OF")}
                 </Text>
                 <Flex align="center" gap={4}>
                   {currency === "SAT" ? (
@@ -241,13 +245,13 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
 
               <Flex justify="center" gap={16}>
                 <Button variant="bezeledGray" onPress={handleCloseSheet}>
-                  <Text>Cancelar</Text>
+                  <Text>{i18n.t("CANCEL")}</Text>
                 </Button>
                 <Button
                   variant="bezeled"
                   onPress={() => handleCopy(invoice.bolt11)}
                 >
-                  <Text>Copiar</Text>
+                  <Text>{i18n.t("COPY")}</Text>
                 </Button>
               </Flex>
             </Container>

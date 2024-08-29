@@ -14,10 +14,13 @@ import { CACHE_BACKUP_KEY, STORAGE_IDENTITY_KEY } from "@/utils/constants";
 import { useConfig, useIdentity } from "@lawallet/react";
 import { useRouter } from "expo-router";
 import { Alert } from "react-native";
+import { useTranslations } from "@/i18n/I18nProvider";
+import { Icon } from "@/components/ui/Icon/Icon";
+import { CaretRightIcon } from "@/components/ui/Icon/Icons/CaretRightIcon";
 
 function SettingsView() {
+  const { i18n, changeLanguage } = useTranslations();
   const config = useConfig();
-
   const identity = useIdentity();
 
   //   const [sheetLanguage, setSheetLanguage] = useState<boolean>(false);
@@ -41,67 +44,74 @@ function SettingsView() {
       errors.modifyError("ERROR_MADE_BACKUP");
       return;
     }
-    Alert.alert(
-      "Cerrar sesión",
-      "¿Estás seguro de que quieres cerrar sesión?",
-      [
-        {
-          text: "Cancelar",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
+    Alert.alert("", i18n.t("CONFIRM_LOGOUT"), [
+      {
+        text: "Cancelar",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: async () => {
+          await config.storage.removeItem(STORAGE_IDENTITY_KEY);
+          identity.reset();
+          router.push("/login");
         },
-        {
-          text: "OK",
-          onPress: async () => {
-            await config.storage.removeItem(STORAGE_IDENTITY_KEY);
-            identity.reset();
-            router.push("/login");
-          },
-        },
-      ]
-    );
+      },
+    ]);
   };
 
   return (
     <MainContainer>
-      <Navbar showBackPage={true} title={"Ajustes"} overrideBack="/dashboard" />
+      <Navbar
+        showBackPage={true}
+        title={i18n.t("SETTINGS")}
+        overrideBack="/dashboard"
+      />
 
       <Divider y={16} />
 
       <Container>
         <Text size="small" color={appTheme.colors.gray50}>
-          Mi cuenta
+          {i18n.t("ACCOUNT")}
         </Text>
         <Divider y={8} />
         <Flex direction="column" gap={4}>
           <LinkSetting onClick={() => router.push("/settings/cards")}>
-            <Text>Mis tarjetas</Text>
+            <Text>{i18n.t("MY_CARDS")}</Text>
           </LinkSetting>
         </Flex>
         <Divider y={8} />
 
-        {/* <Flex direction="column" gap={4}>
-          <Button onClick={() => setSheetLanguage(!sheetLanguage)}>
-            {t("LANGUAGE")}
+        <Flex direction="column" gap={4}>
+          <LinkSetting
+            // onPress={() => setSheetLanguage(!sheetLanguage)}
+            onClick={() => {
+              i18n.locale === "en"
+                ? changeLanguage("es")
+                : changeLanguage("en");
+            }}
+          >
+            {i18n.t("LANGUAGE")}
 
-            <Flex flex={1} align="end" justify="end">
-              <Text isBold={true}>{lng.toUpperCase()}</Text>
+            <Flex flex={1} align="flex-end" justify="flex-end">
+              <Text isBold={true}>{i18n.locale.toUpperCase()}</Text>
             </Flex>
 
             <Icon size="small" color={appTheme.colors.gray40}>
               <CaretRightIcon />
             </Icon>
-          </ButtonSetting>
-        </Flex> */}
+          </LinkSetting>
+        </Flex>
 
         <Divider y={16} />
         <Text size="small" color={appTheme.colors.gray50}>
-          Seguridad
+          {i18n.t("SECURITY")}
         </Text>
         <Divider y={8} />
         <Flex direction="column" gap={4}>
           <LinkSetting onClick={() => router.push("/settings/recovery")}>
-            <Text>Respaldar cuenta</Text>
+            <Text>{i18n.t("BACKUP_ACCOUNT")}</Text>
           </LinkSetting>
         </Flex>
 
@@ -124,7 +134,7 @@ function SettingsView() {
 
         <Flex justify="center">
           <Button color="error" variant="bezeled" onPress={logoutSession}>
-            <Text color={appTheme.colors.error}>Cerrar sesión</Text>
+            <Text color={appTheme.colors.error}>{i18n.t("LOGOUT")}</Text>
           </Button>
         </Flex>
         <Divider y={16} />

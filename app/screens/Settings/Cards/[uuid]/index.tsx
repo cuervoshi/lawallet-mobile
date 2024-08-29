@@ -14,6 +14,7 @@ import { InputWithLabel } from "@/components/ui/Input/InputWithLabel";
 import { Label } from "@/components/ui/Label";
 import { Text } from "@/components/ui/Text";
 import useErrors from "@/hooks/useErrors";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { regexComment } from "@/utils/constants";
 import { appTheme } from "@/utils/theme";
 import { roundToDown, useFormatter } from "@lawallet/react";
@@ -46,6 +47,7 @@ const NAME_MAX_LENGTH = 32;
 const DESC_MAX_LENGTH = 64;
 
 const ConfigCardView = () => {
+  const { i18n } = useTranslations();
   const errors = useErrors();
   const router = useRouter();
   const params = useLocalSearchParams();
@@ -161,7 +163,9 @@ const ConfigCardView = () => {
     <MainContainer>
       <Navbar
         showBackPage={true}
-        title={loadInfo.loading ? "Cargando..." : cardsData[uuid].design.name}
+        title={
+          loadInfo.loading ? i18n.t("LOADING") : cardsData[uuid].design.name
+        }
         overrideBack="/settings/cards"
       />
 
@@ -179,8 +183,8 @@ const ConfigCardView = () => {
                 })
               }
               name="card-name"
-              label={"Nombre"}
-              placeholder={"Nombre"}
+              label={i18n.t("NAME")}
+              placeholder={i18n.t("NAME")}
               value={newConfig.name}
             />
 
@@ -192,8 +196,8 @@ const ConfigCardView = () => {
                 length: `${DESC_MAX_LENGTH}`,
               })}
               name="card-desc"
-              label={"Descripción"}
-              placeholder={"Descripción"}
+              label={i18n.t("DESCRIPTION")}
+              placeholder={i18n.t("DESCRIPTION")}
               value={newConfig.description}
             />
 
@@ -201,15 +205,20 @@ const ConfigCardView = () => {
 
             <Flex direction="column">
               <Heading as="h5" color={appTheme.colors.text}>
-                Limites
+                {i18n.t("LIMITS")}
               </Heading>
 
               <Flex justify="space-between" align="center">
-                <Text isBold={true}>Tipo de limite</Text>
+                <Text isBold={true}>{i18n.t("LIMIT_TYPE")}</Text>
 
                 <Flex align="center" flex={0} gap={8}>
-                  <Label>Transacción</Label>
+                  <Label>{i18n.t("TX_LIMIT")}</Label>
                   <Switch
+                    trackColor={{
+                      false: appTheme.colors.gray50,
+                      true: appTheme.colors.success,
+                    }}
+                    thumbColor={appTheme.colors.white}
                     value={selectedLimit === "daily"}
                     onValueChange={(bool) => {
                       setNewConfig({
@@ -228,7 +237,7 @@ const ConfigCardView = () => {
                       });
                     }}
                   />
-                  <Label>Diario</Label>
+                  <Label>{i18n.t("DAILY_LIMIT")}</Label>
                 </Flex>
               </Flex>
 
@@ -255,21 +264,17 @@ const ConfigCardView = () => {
 
             <Flex justify="center">
               <Text color={appTheme.colors.warning}>
-                {/* {newConfig.limits.length && Number(newConfig.limits[0].amount) > 0
-                ? t(`LIMIT_CARD_PER_${selectedLimit === "tx" ? "TX" : "DAY"}`, {
-                    sats: formatAmount(
-                      Number(newConfig.limits[0].amount) / 1000
-                    ),
-                  })
-                : t("NO_LIMIT_SET")} */}
                 {newConfig.limits.length &&
                 Number(newConfig.limits[0].amount) > 0
-                  ? `Tu tarjeta tendrá un limite de ${formatAmount(
-                      Number(newConfig.limits[0].amount) / 1000
-                    )} ${
-                      selectedLimit === "tx" ? "en un único pago" : "por día"
-                    }`
-                  : "No hay limites definidos"}
+                  ? i18n.t(
+                      `LIMIT_CARD_PER_${selectedLimit === "tx" ? "TX" : "DAY"}`,
+                      {
+                        sats: formatAmount(
+                          Number(newConfig.limits[0].amount) / 1000
+                        ),
+                      }
+                    )
+                  : i18n.t("NO_LIMIT_SET")}
               </Text>
             </Flex>
           </Flex>
@@ -289,10 +294,10 @@ const ConfigCardView = () => {
             variant="bezeledGray"
             onPress={() => router.push("/settings/cards")}
           >
-            <Text>Cancelar</Text>
+            <Text>{i18n.t("CANCEL")}</Text>
           </Button>
           <Button onPress={handleSaveConfig}>
-            <Text>Guardar</Text>
+            <Text>{i18n.t("SAVE")}</Text>
           </Button>
         </Flex>
       </Container>

@@ -23,15 +23,15 @@ import { appTheme } from "@/utils/theme";
 import * as Clipboard from "expo-clipboard";
 import { View } from "react-native";
 import InvoiceSheet from "./components/InvoiceSheet";
+import { useTranslations } from "@/i18n/I18nProvider";
 
 function DepositView() {
-  //   const router = useRouter();
-
   //   if (EMERGENCY_LOCK_DEPOSIT) {
   //     router.push("/dashboard");
   //     return null;
   //   }
 
+  const { i18n } = useTranslations();
   const config = useConfig();
   const identity = useIdentity();
 
@@ -62,7 +62,7 @@ function DepositView() {
       <Navbar
         showBackPage={true}
         overrideBack="/(router)/dashboard"
-        title={"Depositar"}
+        title={i18n.t("DEPOSIT")}
       />
 
       <Container>
@@ -78,7 +78,7 @@ function DepositView() {
           <Flex justify="space-between" align="center">
             <Flex direction="column" justify="flex-start">
               <Text size="small" color={appTheme.colors.gray50}>
-                Dirección
+                {i18n.t("USER")}
               </Text>
 
               <Text>
@@ -96,7 +96,7 @@ function DepositView() {
                   handleCopy(identity.lud16 ? identity.lud16 : LNURLEncoded)
                 }
               >
-                <Text>Copiar</Text>
+                <Text>{i18n.t("COPY")}</Text>
               </Button>
             </Flex>
           </Flex>
@@ -109,7 +109,7 @@ function DepositView() {
               }}
             >
               <Flex flex={1} justify="center" align="center">
-                <Text>Crear factura</Text>
+                <Text>{i18n.t("CREATE_INVOICE")}</Text>
               </Flex>
             </Button>
           </Flex>

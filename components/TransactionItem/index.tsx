@@ -19,6 +19,7 @@ import { AccordionBody } from "../ui/Accordion/AccordionBody";
 import { Flex } from "../ui/Flex";
 import { Text } from "../ui/Text";
 import { appTheme } from "../../utils/theme";
+import { useTranslations } from "@/i18n/I18nProvider";
 
 interface ComponentProps {
   transaction: Transaction;
@@ -60,6 +61,8 @@ export default function Component({ transaction }: ComponentProps) {
 
   const { status, type } = transaction;
 
+  const { i18n } = useTranslations();
+
   const {
     props: { hideBalance, currency },
   } = useSettings();
@@ -75,9 +78,9 @@ export default function Component({ transaction }: ComponentProps) {
   });
 
   const listTypes = {
-    CARD: { icon: null, label: "Pagaste" },
-    INTERNAL: { icon: null, label: "Transferiste" },
-    LN: { icon: null, label: "Enviaste" },
+    CARD: { icon: null, label: i18n.t("YOU_PAID") },
+    INTERNAL: { icon: null, label: i18n.t("YOU_TRANSFER") },
+    LN: { icon: null, label: i18n.t("YOU_SEND") },
   };
 
   const convertedFiatAmount = useMemo(
@@ -121,14 +124,16 @@ export default function Component({ transaction }: ComponentProps) {
           <Flex align="center" gap={8}>
             <Text color="white">
               {transaction.status === TransactionStatus.REVERTED
-                ? "Revertida"
+                ? i18n.t("TX_REVERTED")
                 : transaction.status === TransactionStatus.ERROR
-                ? "Transacción fallida"
+                ? i18n.t("FAILED_TRANSACTION")
                 : transaction.status === TransactionStatus.PENDING
-                ? `Pendiente ${!isFromMe ? "depósito" : "retiro"}`
+                ? i18n.t(
+                    `PENDING_${!isFromMe ? "INBOUND" : "OUTBOUND"}_TRANSACTION`
+                  )
                 : isFromMe
                 ? listTypes[type].label
-                : "Recibiste"}
+                : i18n.t("YOU_RECEIVE")}
             </Text>
           </Flex>
           <Flex direction="column" align="flex-end">
@@ -175,7 +180,7 @@ export default function Component({ transaction }: ComponentProps) {
         <ListItem isFirst>
           <Flex align="center" justify="space-between">
             <Text size="small" color={appTheme.colors.gray50}>
-              {isFromMe ? "A" : "Desde"}
+              {isFromMe ? i18n.t("TO") : i18n.t("FROM")}
             </Text>
             <Text>
               {ludInfo.loading ? (
@@ -193,7 +198,7 @@ export default function Component({ transaction }: ComponentProps) {
         <ListItem>
           <Flex align="center" justify="space-between">
             <Text size="small" color={appTheme.colors.gray50}>
-              Fecha
+              {i18n.t("DATE")}
             </Text>
             <Flex direction="column" align="flex-end">
               <Text>
@@ -218,7 +223,7 @@ export default function Component({ transaction }: ComponentProps) {
           <ListItem>
             <Flex align="center" justify="space-between">
               <Text size="small" color={appTheme.colors.gray50}>
-                Mensaje
+                {i18n.t("MESSAGE")}
               </Text>
               <Text>{unescapingText(transaction.memo)}</Text>
             </Flex>
@@ -228,9 +233,9 @@ export default function Component({ transaction }: ComponentProps) {
         <ListItem isLast>
           <Flex align="center" justify="space-between">
             <Text size="small" color={appTheme.colors.gray50}>
-              Estado
+              {i18n.t("STATUS")}
             </Text>
-            <Text>{status}</Text>
+            <Text>{i18n.t(status)}</Text>
           </Flex>
         </ListItem>
       </AccordionBody>

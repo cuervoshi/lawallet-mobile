@@ -8,6 +8,7 @@ import { Heading } from "@/components/ui/Heading";
 import { Icon } from "@/components/ui/Icon/Icon";
 import { SatoshiV2Icon } from "@/components/ui/Icon/Icons/SatoshiIcon";
 import { Text } from "@/components/ui/Text";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { extractFirstTwoChars } from "@/utils";
 import {
   formatAddress,
@@ -18,7 +19,6 @@ import {
 } from "@lawallet/react";
 import { TransferInformation, TransferTypes } from "@lawallet/react/types";
 import { useRouter } from "expo-router";
-import LottieView from "lottie-react-native";
 import { useMemo } from "react";
 
 export const FinishTransfer = ({
@@ -26,6 +26,7 @@ export const FinishTransfer = ({
 }: {
   transferInfo: TransferInformation;
 }) => {
+  const { i18n } = useTranslations();
   const {
     props: { currency },
   } = useSettings();
@@ -58,12 +59,12 @@ export const FinishTransfer = ({
         {/* <Confetti /> */}
 
         <Divider y={16} />
-        <Heading color="white">Excelente!</Heading>
+        <Heading color="white">{i18n.t("FINISH_TRANSFER_TITLE")}</Heading>
         <Divider y={4} />
         <Text size="small">
           {transferInfo.type === TransferTypes.LNURLW
-            ? "Reclamaste la factura con éxito"
-            : "Le transferiste a"}
+            ? i18n.t("SUCCESS_CLAIM")
+            : i18n.t("TRANSFER_TO")}
         </Text>
         <Divider y={24} />
         <Flex align="center" gap={8}>
@@ -112,7 +113,7 @@ export const FinishTransfer = ({
             variant="borderless"
             onPress={() => router.push("/dashboard")}
           >
-            <Text align="center">Ir al inicio</Text>
+            <Text align="center">{i18n.t("GO_HOME")}</Text>
           </Button>
         </Flex>
       </Container>

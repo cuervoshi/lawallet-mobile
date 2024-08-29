@@ -10,14 +10,14 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native";
-import MainContainer from "@/components/ui/Container/MainContainer";
+import { I18nProvider } from "@/i18n/I18nProvider";
 
 const config = createConfig({
   storage: AsyncStorage,
 });
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-// SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -41,7 +41,7 @@ export default function RootLayout() {
         <StatusBar style="auto" />
         <LaWalletProvider config={config} limits={{ transactionLimits: 50 }}>
           <NativeProvider>
-            <MainContainer>
+            <I18nProvider>
               <Stack>
                 <Stack.Screen
                   name="(router)"
@@ -51,7 +51,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen name="+not-found" />
               </Stack>
-            </MainContainer>
+            </I18nProvider>
           </NativeProvider>
         </LaWalletProvider>
       </GestureHandlerRootView>

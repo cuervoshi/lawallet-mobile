@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n/I18nProvider";
 import { ReplacementParams } from "@lawallet/react/types";
 import { useState } from "react";
 
@@ -19,11 +20,11 @@ export const initialErrorState: IError = {
 };
 
 export default function useErrors(): IUseErrors {
+  const { i18n } = useTranslations();
   const [errorInfo, setErrorInfo] = useState<IError>(initialErrorState);
 
   const getError = (errorCode: string, params?: ReplacementParams): string => {
-    // const text: string = t(errorCode, params);
-    const text: string = errorCode;
+    const text: string = i18n.t(errorCode, params);
     return text.toString();
   };
 

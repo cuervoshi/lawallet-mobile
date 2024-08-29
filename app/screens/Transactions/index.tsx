@@ -5,22 +5,22 @@ import MainContainer from "@/components/ui/Container/MainContainer";
 import { Divider } from "@/components/ui/Divider";
 import { Flex } from "@/components/ui/Flex";
 import { Text } from "@/components/ui/Text";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { appTheme } from "@/utils/theme";
 import { useTransactions } from "@lawallet/react";
 import { differenceInCalendarDays } from "date-fns";
-import { useRouter } from "expo-router";
 import React from "react";
 import { ScrollView } from "react-native";
 
 let dateToRender: Date | null = null;
 
 function TransactionsView() {
-  const router = useRouter();
+  const { i18n } = useTranslations();
   const transactions = useTransactions();
 
   return (
     <MainContainer>
-      <Navbar showBackPage={true} title={"Actividad"} />
+      <Navbar showBackPage={true} title={i18n.t("ACTIVITY")} />
       <ScrollView>
         <Container>
           <Flex direction="column" gap={4}>
@@ -45,9 +45,9 @@ function TransactionsView() {
                     <Divider y={8} />
                     <Text size="small" color={appTheme.colors.gray50}>
                       {isToday
-                        ? "Hoy"
+                        ? i18n.t("TODAY")
                         : isYesterday
-                        ? "Ayer"
+                        ? i18n.t("YESTERDAY")
                         : txDate.toLocaleDateString()}
                     </Text>
 

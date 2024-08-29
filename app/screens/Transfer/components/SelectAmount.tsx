@@ -156,7 +156,7 @@ export const SelectTransferAmount = ({
     <>
       <CardWithData type={transferInfo.type} data={transferInfo.data} />
 
-      <Divider y={16} />
+      <Divider y={12} />
 
       <Container>
         <View style={{ padding: 24 }}>
@@ -183,11 +183,11 @@ export const SelectTransferAmount = ({
               </Flex>
             )}
 
-            <Divider y={16} />
+            <Divider y={12} />
 
             <TokenList />
 
-            <Divider y={16} />
+            <Divider y={12} />
 
             <Flex align="center">
               {transferInfo.request && (
@@ -207,7 +207,7 @@ export const SelectTransferAmount = ({
               )}
             </Flex>
 
-            <Divider y={16} />
+            <Divider y={12} />
 
             <Feedback show={errors.errorInfo.visible} status={"error"}>
               {errors.errorInfo.text}
@@ -233,7 +233,7 @@ export const SelectTransferAmount = ({
                 </Button>
               </Flex>
 
-              <Divider y={24} />
+              <Divider y={20} />
 
               <Keyboard numpadData={numpadData} />
             </Flex>

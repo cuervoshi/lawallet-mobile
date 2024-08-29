@@ -141,7 +141,7 @@ export const Summary = ({
 
       <Divider y={24} />
 
-      <Flex justify="center" align="center">
+      <Flex flex={1} justify="center" align="center" gap={8}>
         <Flex gap={8}>
           <Button
             variant="bezeledGray"

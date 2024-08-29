@@ -23,7 +23,7 @@ import {
 } from "@lawallet/react";
 import { LNURLTransferType, TransferTypes } from "@lawallet/react/types";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import CardWithData from "./CardWithData";
 
 type SelectTransferAmountType = {
@@ -74,6 +74,12 @@ export const SelectTransferAmount = ({
       numpadData.intAmount["SAT"] > balance.amount
         ? balance.amount
         : numpadData.intAmount["SAT"];
+
+    if (satsAmount === 0) {
+      errors.modifyError("EMPTY_AMOUNT_ERROR");
+      setLoading(false);
+      return;
+    }
 
     if (transferInfo.type === TransferTypes.LUD16 && transferInfo.request) {
       const mSats = satsAmount * 1000;
@@ -147,76 +153,93 @@ export const SelectTransferAmount = ({
   });
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-      keyboardDismissMode="on-drag"
-    >
+    <>
       <CardWithData type={transferInfo.type} data={transferInfo.data} />
 
-      <Divider y={32} />
+      <Divider y={16} />
 
       <Container>
-        <Flex
-          direction="column"
-          gap={8}
-          flex={1}
-          justify="center"
-          align="center"
-        >
-          <Flex align="center" gap={4}>
-            {userCurrency === "SAT" ? (
-              <Icon size="small">
-                <SatoshiV2Icon color="white" />
-              </Icon>
-            ) : (
-              <Text color="white">$</Text>
-            )}
-            <Heading color="white">
-              {formatAmount(numpadData.intAmount[numpadData.usedCurrency])}
-            </Heading>
-          </Flex>
-
-          <Divider y={8} />
-
-          {!hideBalance && (
+        <View style={{ padding: 24 }}>
+          <Flex direction="column" align="center" gap={8}>
             <Flex align="center" gap={4}>
-              <Heading as="h6" color={appTheme.colors.gray50}>
-                {userCurrency !== "SAT" && "$"}
-                {formatAmount(maxAvailableAmount)} disponible.
+              {userCurrency === "SAT" ? (
+                <Icon size="small">
+                  <SatoshiV2Icon color="white" />
+                </Icon>
+              ) : (
+                <Text color="white">$</Text>
+              )}
+              <Heading color="white">
+                {formatAmount(numpadData.intAmount[numpadData.usedCurrency])}
               </Heading>
             </Flex>
-          )}
 
-          <TokenList />
+            {!hideBalance && (
+              <Flex align="center" gap={4}>
+                <Heading as="h6" color={appTheme.colors.gray50}>
+                  {userCurrency !== "SAT" && "$"}
+                  {formatAmount(maxAvailableAmount)} disponible.
+                </Heading>
+              </Flex>
+            )}
 
-          {transferInfo.request && (
+            <Divider y={16} />
+
+            <TokenList />
+
+            <Divider y={16} />
+
             <Flex align="center">
-              <Feedback show={true} status={"success"}>
-                Puedes enviar entre{" "}
-                {customFormat({
-                  amount: transferInfo.request.minSendable! / 1000,
-                  currency: "SAT",
-                })}{" "}
-                y{" "}
-                {customFormat({
-                  amount: transferInfo.request.maxSendable! / 1000,
-                  currency: "SAT",
-                })}{" "}
-                SATs
-              </Feedback>
+              {transferInfo.request && (
+                <Feedback show={true} status={"success"}>
+                  Puedes enviar entre{" "}
+                  {customFormat({
+                    amount: transferInfo.request.minSendable! / 1000,
+                    currency: "SAT",
+                  })}{" "}
+                  y{" "}
+                  {customFormat({
+                    amount: transferInfo.request.maxSendable! / 1000,
+                    currency: "SAT",
+                  })}{" "}
+                  SATs
+                </Feedback>
+              )}
             </Flex>
-          )}
-        </Flex>
 
-        <Feedback show={errors.errorInfo.visible} status={"error"}>
-          {errors.errorInfo.text}
-        </Feedback>
+            <Divider y={16} />
 
-        {/* <Flex align="center" flex={1}>
+            <Feedback show={errors.errorInfo.visible} status={"error"}>
+              {errors.errorInfo.text}
+            </Feedback>
+
+            <Flex
+              direction="column"
+              justify="space-between"
+              align="center"
+              gap={16}
+            >
+              <Flex>
+                <Button
+                  onPress={handleClick}
+                  disabled={
+                    loading ||
+                    balance.amount === 0 ||
+                    numpadData.intAmount["SAT"] === 0
+                  }
+                  loading={loading}
+                >
+                  <Text align="center">Continuar</Text>
+                </Button>
+              </Flex>
+
+              <Divider y={24} />
+
+              <Keyboard numpadData={numpadData} />
+            </Flex>
+          </Flex>
+
+          {/* <Flex align="center" flex={1}>
           <Flex align="center">
             <InputWithLabel
               label="Mensaje"
@@ -229,29 +252,8 @@ export const SelectTransferAmount = ({
             />
           </Flex>
         </Flex> */}
-
-        <Flex direction="column" justify="space-between" align="center">
-          <Flex>
-            <Button
-              onPress={handleClick}
-              disabled={
-                loading ||
-                balance.amount === 0 ||
-                numpadData.intAmount["SAT"] === 0
-              }
-              loading={loading}
-            >
-              <Text align="center">Continuar</Text>
-            </Button>
-          </Flex>
-
-          <Divider y={32} />
-
-          <Keyboard numpadData={numpadData} />
-        </Flex>
-
-        <Divider y={32} />
+        </View>
       </Container>
-    </ScrollView>
+    </>
   );
 };

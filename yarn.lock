@@ -1519,10 +1519,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@lawallet/react@^0.2.38":
-  version "0.2.38"
-  resolved "https://registry.yarnpkg.com/@lawallet/react/-/react-0.2.38.tgz#7dfa16cadd949b0789967f7cc9ae724fdff9dce4"
-  integrity sha512-IDTsRlhqiGcQxGiBpksuCXT7oG3vFFapuhukAGVn4pBHJXqSbWOiuPh121Luvsz/Kq7BngQkOZS68Oblc+VlFw==
+"@lawallet/react@^0.2.39":
+  version "0.2.39"
+  resolved "https://registry.yarnpkg.com/@lawallet/react/-/react-0.2.39.tgz#5b29fb1557ddb43a01b742a67a93eba493da3ffc"
+  integrity sha512-Mzacbwxfpg38yAU9rTwePCZHfJPu5G7ntLBA/sfJU291FPuE9pVCVTXpv6bN/vYpLpOXAX9W0JMZz70zuxl35A==
   dependencies:
     "@lawallet/utils" "0.2.38"
     "@nostr-dev-kit/ndk" "2.10.0"

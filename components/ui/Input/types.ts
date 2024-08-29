@@ -1,6 +1,7 @@
-import { ReactNode, InputHTMLAttributes } from "react";
+import { ReactNode } from "react";
+import { TextInputProps } from "react-native";
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends TextInputProps {
   placeholder: string;
   value?: string;
   type?: "text" | "password" | "number" | "email";
@@ -8,9 +9,9 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name?: string;
   status?: "success" | "error";
   autoFocus?: boolean;
-  onChange?: (e: any) => void;
-  onFocus?: (e: any) => void;
-  onBlur?: (e: any) => void;
+  onChangeText?: (text: string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   isLoading?: boolean;
   isChecked?: boolean;
   isError?: boolean;

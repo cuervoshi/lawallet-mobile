@@ -11,6 +11,7 @@ import { CardPayload, CardStatus, Design } from "@lawallet/react/types";
 import { TouchableOpacity, View } from "react-native";
 import Card from "../Card";
 import { CardImage, ConfigCard } from "./style";
+import { useRouter } from "expo-router";
 // import SettingsSheet from "../Sheets/SettingsSheet";
 
 export type CardProps = {
@@ -27,6 +28,8 @@ interface ComponentProps {
 export default function Component(props: ComponentProps) {
   const { card, toggleCardStatus } = props;
   const [handleSelected, setHandleSelected] = useState(false);
+
+  const router = useRouter();
 
   // ActionSheet
   const [showConfiguration, setShowConfiguration] = useState(false);
@@ -71,7 +74,15 @@ export default function Component(props: ComponentProps) {
                 </Flex>
               )}
               <Flex>
-                <Button onPress={toggleShowConfig} variant="bezeledGray">
+                <Button
+                  onPress={() =>
+                    router.navigate({
+                      pathname: "/(router)/settings/cards/uuid/[uuid]",
+                      params: { uuid: card.uuid },
+                    })
+                  }
+                  variant="bezeledGray"
+                >
                   <GearIcon color="white" />
                 </Button>
               </Flex>

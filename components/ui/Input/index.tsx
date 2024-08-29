@@ -19,7 +19,7 @@ export function Input(props: InputProps) {
     name = "",
     status,
     autoFocus = false,
-    onChange,
+    onChangeText,
     onFocus,
     onBlur,
     isLoading = false,
@@ -41,14 +41,10 @@ export function Input(props: InputProps) {
         placeholderTextColor={appTheme.colors.gray50}
         type={type}
         value={value}
-        onBlur={(e) => {
-          setIsFocused(false);
-          if (onBlur) onBlur(e);
-        }}
-        onChangeText={onChange}
-        onFocus={(e) => {
+        onChangeText={onChangeText}
+        onFocus={() => {
           setIsFocused(true);
-          if (onFocus) onFocus(e);
+          if (onFocus) onFocus();
         }}
         style={{
           borderColor: isFocused ? theme.colors.primary : theme.colors.gray20,

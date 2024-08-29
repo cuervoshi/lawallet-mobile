@@ -41,6 +41,7 @@ export const InputGroupPrimitive = styled(View)`
 
 export const InputGroupRightPrimitive = styled(View)`
   display: flex;
+  justify-content: center;
   align-items: center;
   min-height: 50px;
   padding: 0 4px;

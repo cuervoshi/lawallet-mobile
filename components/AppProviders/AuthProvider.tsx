@@ -3,8 +3,9 @@ import { parseContent, useIdentity, useNostr } from "@lawallet/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
 import { useRouter } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SpinnerView } from "../SpinnerView/SpinnerView";
+import { Alert, AppState, AppStateStatus } from "react-native";
 
 interface RouterInfo {
   disconnectedPaths: string[]; // Routes that require you to NOT have a connected account
@@ -42,11 +43,33 @@ const isProtectedRoute = (path: string, paths: string[]): boolean => {
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const identity = useIdentity();
-  const { initializeSigner } = useNostr();
+  const { validateRelaysStatus, initializeSigner } = useNostr();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [appState, setAppState] = useState(AppState.currentState);
 
-  const router = useRouter();
+  const handleAppStateChange = useCallback(
+    (nextAppState: AppStateStatus) => {
+      if (appState.match(/inactive|background/) && nextAppState === "active") {
+        validateRelaysStatus();
+      }
+
+      setAppState(nextAppState);
+    },
+    [appState]
+  );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+      "change",
+      handleAppStateChange
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, [handleAppStateChange]);
+
   const route = useRoute();
 
   const pathname = useMemo(() => {

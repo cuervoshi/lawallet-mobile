@@ -40,7 +40,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
   const errors = useErrors();
   const [sheetStep, setSheetStep] = useState<SheetTypes>("amount");
 
-  const { i18n } = useTranslations();
+  const { i18n, lng } = useTranslations();
   const identity = useIdentity();
 
   const {
@@ -54,7 +54,7 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
 
   const { formatAmount } = useFormatter({
     currency,
-    locale: "es",
+    locale: lng,
   });
 
   const numpadData = useNumpad(currency);

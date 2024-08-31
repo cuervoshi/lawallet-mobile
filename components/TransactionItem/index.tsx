@@ -61,7 +61,7 @@ export default function Component({ transaction }: ComponentProps) {
 
   const { status, type } = transaction;
 
-  const { i18n } = useTranslations();
+  const { i18n, lng } = useTranslations();
 
   const {
     props: { hideBalance, currency },
@@ -93,7 +93,7 @@ export default function Component({ transaction }: ComponentProps) {
     [pricesData, currency]
   );
 
-  const { customFormat } = useFormatter({ locale: "es" as AvailableLanguages });
+  const { customFormat } = useFormatter({ locale: lng as AvailableLanguages });
 
   const handleOpenAccordion = async () => {
     setLudInfo({ ...ludInfo, loading: true });
@@ -203,14 +203,14 @@ export default function Component({ transaction }: ComponentProps) {
             <Flex direction="column" align="flex-end">
               <Text>
                 {dateFormatter(
-                  "es",
+                  lng,
                   new Date(Number(transaction.createdAt)),
                   "HH:mm"
                 )}
               </Text>
               <Text size="small" color={appTheme.colors.gray50}>
                 {dateFormatter(
-                  "es",
+                  lng,
                   new Date(Number(transaction.createdAt)),
                   "MMMM d, yyyy"
                 )}

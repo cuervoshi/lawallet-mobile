@@ -47,7 +47,7 @@ const NAME_MAX_LENGTH = 32;
 const DESC_MAX_LENGTH = 64;
 
 const ConfigCardView = () => {
-  const { i18n } = useTranslations();
+  const { i18n, lng } = useTranslations();
   const errors = useErrors();
   const router = useRouter();
   const params = useLocalSearchParams();
@@ -156,7 +156,7 @@ const ConfigCardView = () => {
     setNewConfig(preloadConfig);
   }, [cardsConfig.cards]);
 
-  const { formatAmount } = useFormatter({ currency: "SAT", locale: "es" });
+  const { formatAmount } = useFormatter({ currency: "SAT", locale: lng });
   if (!loadInfo.loading && !cardsData?.[uuid]) return null;
 
   return (

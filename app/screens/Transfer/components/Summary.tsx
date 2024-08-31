@@ -41,7 +41,7 @@ export const Summary = ({
   expired = false,
   onClick,
 }: SummaryProps) => {
-  const { i18n } = useTranslations();
+  const { i18n, lng } = useTranslations();
   const router = useRouter();
   const [insufficientBalance, setInsufficientBalance] =
     useState<boolean>(false);
@@ -55,7 +55,7 @@ export const Summary = ({
   const balance = useBalance();
   const { formatAmount } = useFormatter({
     currency,
-    locale: "es",
+    locale: lng,
   });
 
   const convertedAmount: string = useMemo(() => {

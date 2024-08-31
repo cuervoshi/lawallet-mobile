@@ -26,7 +26,7 @@ export const FinishTransfer = ({
 }: {
   transferInfo: TransferInformation;
 }) => {
-  const { i18n } = useTranslations();
+  const { i18n, lng } = useTranslations();
   const {
     props: { currency },
   } = useSettings();
@@ -34,7 +34,7 @@ export const FinishTransfer = ({
   const { pricesData, convertCurrency } = useCurrencyConverter();
   const { formatAmount } = useFormatter({
     currency,
-    locale: "es",
+    locale: lng,
   });
 
   const convertedAmount: string = useMemo(() => {

@@ -7,15 +7,17 @@ import { Flex } from "@/components/ui/Flex";
 import InfoCopy from "@/components/ui/InfoCopy";
 import { Label } from "@/components/ui/Label";
 import { Text } from "@/components/ui/Text";
-import { appTheme } from "@/utils/theme";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { getUserStoragedKey } from "@/utils";
 import { CACHE_BACKUP_KEY } from "@/utils/constants";
+import { appTheme } from "@/utils/theme";
 import { useConfig, useIdentity } from "@lawallet/react";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Switch, View } from "react-native";
 
 function RecoveryView() {
+  const { i18n } = useTranslations();
   const config = useConfig();
   const router = useRouter();
 
@@ -45,7 +47,7 @@ function RecoveryView() {
   return (
     <MainContainer>
       <Navbar
-        title={"Respaldar cuenta"}
+        title={i18n.t("BACKUP_ACCOUNT")}
         showBackPage={true}
         overrideBack={"/settings"}
       />
@@ -56,7 +58,7 @@ function RecoveryView() {
             <Divider y={24} />
 
             <InfoCopy
-              title={"Clave privada"}
+              title={i18n.t("PRIVATE_KEY")}
               value={userStoragedKey}
               onCopy={async () => {
                 await config.storage.setItem(
@@ -76,7 +78,7 @@ function RecoveryView() {
                   variant="bezeledGray"
                   onPress={() => router.push("/dashboard")}
                 >
-                  <Text>Cancelar</Text>
+                  <Text>{i18n.t("CANCEL")}</Text>
                 </Button>
               </Flex>
               <Divider y={32} />
@@ -88,12 +90,12 @@ function RecoveryView() {
           <View style={{ flex: 1, margin: "auto", padding: 16 }}>
             <Divider y={16} />
             <Text size="small" color={appTheme.colors.gray50}>
-              Entiendo que...
+              {i18n.t("UNDERSTAND_WHAT")}
             </Text>
             <Divider y={8} />
             <Flex direction="column" justify="space-between" gap={16}>
               <Flex justify="space-between" align="center">
-                <Label>Si pierdo mi clave privada perdere mis fondos</Label>
+                <Label>{i18n.t("LOSE_KEY")}</Label>
 
                 <Switch
                   trackColor={{
@@ -106,9 +108,7 @@ function RecoveryView() {
                 />
               </Flex>
               <Flex justify="space-between" align="center">
-                <Label>
-                  Si comparto mi clave privada pueden robar mis fondos
-                </Label>
+                <Label>{i18n.t("SHARE_KEY")}</Label>
 
                 <Switch
                   trackColor={{
@@ -131,14 +131,14 @@ function RecoveryView() {
               variant="bezeledGray"
               onPress={() => router.push("/dashboard")}
             >
-              <Text>Cancelar</Text>
+              <Text>{i18n.t("CANCEL")}</Text>
             </Button>
 
             <Button
               onPress={handleShowRecovery}
               disabled={!switchOne || !switchTwo}
             >
-              <Text>Continuar</Text>
+              <Text>{i18n.t("CONFIRM")}</Text>
             </Button>
           </Flex>
 

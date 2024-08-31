@@ -42,7 +42,7 @@ export const SelectTransferAmount = ({
   setLoading,
   loading,
 }: SelectTransferAmountType) => {
-  const { i18n } = useTranslations();
+  const { i18n, lng } = useTranslations();
   const [commentFocus, setCommentFocus] = useState<boolean>(false);
   const balance = useBalance();
 
@@ -151,7 +151,7 @@ export const SelectTransferAmount = ({
 
   const { formatAmount, customFormat } = useFormatter({
     currency: userCurrency,
-    locale: "es",
+    locale: lng,
   });
 
   return (

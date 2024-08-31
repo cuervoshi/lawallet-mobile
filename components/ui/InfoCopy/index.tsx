@@ -5,6 +5,7 @@ import { Flex } from "../Flex";
 import { appTheme } from "../../../utils/theme";
 import { Button } from "../Button";
 import { formatAddress } from "@lawallet/react";
+import { useTranslations } from "@/i18n/I18nProvider";
 
 interface ComponentProps {
   title: string;
@@ -14,6 +15,7 @@ interface ComponentProps {
 
 export default function Component(props: ComponentProps) {
   const { title, value, onCopy = null } = props;
+  const { i18n } = useTranslations();
 
   const handleCopy = () => {
     Clipboard.setStringAsync(value);
@@ -32,7 +34,7 @@ export default function Component(props: ComponentProps) {
 
         <Flex align="center">
           <Button size="small" variant="filled" onPress={handleCopy}>
-            <Text>Copiar</Text>
+            <Text>{i18n.t("COPY")}</Text>
           </Button>
         </Flex>
       </Flex>

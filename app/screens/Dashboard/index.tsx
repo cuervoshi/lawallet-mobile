@@ -36,7 +36,7 @@ import LottieView from "lottie-react-native";
 import { useTranslations } from "@/i18n/I18nProvider";
 
 function DashboardView() {
-  const { i18n } = useTranslations();
+  const { i18n, lng } = useTranslations();
   const animationRef = useRef<LottieView>(null);
   const router = useRouter();
 
@@ -54,7 +54,7 @@ function DashboardView() {
       "SAT",
       props.currency
     );
-    return formatToPreference(props.currency, amount, "es");
+    return formatToPreference(props.currency, amount, lng);
   }, [balance, pricesData, props]);
 
   return (

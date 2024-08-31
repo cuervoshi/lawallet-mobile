@@ -11,8 +11,6 @@ import useErrors from "@/hooks/useErrors";
 import { CACHE_BACKUP_KEY, STORAGE_IDENTITY_KEY } from "@/utils/constants";
 import { appTheme } from "@/utils/theme";
 
-import { Icon } from "@/components/ui/Icon/Icon";
-import { CaretRightIcon } from "@/components/ui/Icon/Icons/CaretRightIcon";
 import { useTranslations } from "@/i18n/I18nProvider";
 import { useConfig, useIdentity } from "@lawallet/react";
 import { useRouter } from "expo-router";

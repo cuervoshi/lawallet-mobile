@@ -29,36 +29,3 @@ export default function Root({ children }: PropsWithChildren) {
     </html>
   );
 }
-
-const responsiveBackground = `
-* {
-  box-sizing: border-box;
-  
-  margin: 0;
-  padding: 0;
-}
-
- html {
-    overflow-x: hidden;
-
-    font-size: 20px;
-  }
-
-  body {
-    overflow-x: hidden;
-    background-color: #000;
-
-    display: flex;
-    flex-direction: column;
-    min-width: 100vw;
-    min-height: 100dvh;
-  }
-
-  ul {
-    list-style: none;
-  }
-
-  a {
-    text-decoration: none;
-  }
-`;

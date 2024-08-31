@@ -957,7 +957,7 @@
     node-forge "^1.2.1"
     nullthrows "^1.1.1"
 
-"@expo/config-plugins@8.0.8", "@expo/config-plugins@~8.0.0-beta.0", "@expo/config-plugins@~8.0.8":
+"@expo/config-plugins@8.0.8", "@expo/config-plugins@~8.0.0", "@expo/config-plugins@~8.0.0-beta.0", "@expo/config-plugins@~8.0.8":
   version "8.0.8"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-8.0.8.tgz#294a71905a498ea02c8b79bea950b5e37ab5d748"
   integrity sha512-Fvu6IO13EUw0R9WeqxUO37FkM62YJBNcZb9DyJAOgMz7Ez/vaKQGEjKt9cwT+Q6uirtCATMgaq6VWAW7YW8xXw==
@@ -7295,6 +7295,13 @@ react-native-helmet-async@2.0.4:
     invariant "^2.2.4"
     react-fast-compare "^3.2.2"
     shallowequal "^1.1.0"
+
+react-native-nfc-manager@^3.15.1:
+  version "3.15.1"
+  resolved "https://registry.yarnpkg.com/react-native-nfc-manager/-/react-native-nfc-manager-3.15.1.tgz#2e4dedd3820c81eb55acfd62b153cb04f5bcfc1d"
+  integrity sha512-By685fhyU531FFOcIWEEdkhEbyq5iDMoN82URqltthPerPYaMkE5ZTKxMH0reuX64znTu96EwoHy4zdTiDGVHQ==
+  dependencies:
+    "@expo/config-plugins" "~8.0.0"
 
 react-native-qrcode-svg@^6.3.2:
   version "6.3.2"

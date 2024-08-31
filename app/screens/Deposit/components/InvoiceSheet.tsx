@@ -12,11 +12,14 @@ import { Feedback } from "@/components/ui/Input/Feedback";
 import { Keyboard } from "@/components/ui/Keyboard";
 import { Text } from "@/components/ui/Text";
 import useErrors from "@/hooks/useErrors";
+import { useNdef } from "@/hooks/useNdef";
 import { useTranslations } from "@/i18n/I18nProvider";
 import { MAX_INVOICE_AMOUNT } from "@/utils/constants";
 import { appTheme } from "@/utils/theme";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import {
+  claimLNURLw,
+  useConfig,
   useCurrencyConverter,
   useFormatter,
   useIdentity,
@@ -24,10 +27,15 @@ import {
   useSettings,
   useZap,
 } from "@lawallet/react";
+import { getPayRequest } from "@lawallet/react/actions";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, View } from "react-native";
-import { gestureHandlerRootHOC } from "react-native-gesture-handler";
+import {
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
 type SheetTypes = "amount" | "qr" | "finished";
@@ -37,12 +45,18 @@ type InvoiceSheetTypes = {
   onClose: () => void;
 };
 
+const lnurlwToHttps = (lnurlw: string) => {
+  const URLWithdrawRequest: string = lnurlw.replace("lnurlw://", "https://");
+  return URLWithdrawRequest;
+};
+
 const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
   const errors = useErrors();
   const [sheetStep, setSheetStep] = useState<SheetTypes>("amount");
 
   const { i18n, lng } = useTranslations();
   const identity = useIdentity();
+  const config = useConfig();
 
   const {
     props: { currency },
@@ -90,6 +104,39 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
       setSheetStep("qr");
     });
   };
+
+  const handleScanNdef = async (decodedPayload: string) => {
+    if (!decodedPayload.startsWith("lnurlw://")) return;
+    const amountSats: number = numpadData.intAmount["SAT"];
+
+    const wRequest = await getPayRequest(lnurlwToHttps(decodedPayload));
+    if (
+      !wRequest ||
+      !wRequest.callback ||
+      !wRequest.k1 ||
+      wRequest.maxWithdrawable! < amountSats
+    )
+      return;
+
+    const claimed: boolean = await claimLNURLw(
+      identity.npub,
+      wRequest.callback,
+      wRequest.k1,
+      amountSats,
+      config
+    );
+
+    if (claimed) setSheetStep("finished");
+  };
+
+  const handleScanError = (err?: string) => {
+    console.log("error on scan tag: ", err);
+  };
+
+  const { nfcSupported, startReadTag, stopReadTag, isReading } = useNdef({
+    onScan: handleScanNdef,
+    onError: handleScanError,
+  });
 
   const handleSheetChanges = useCallback((index: number) => {
     if (index === -1) handleCloseSheet();
@@ -242,7 +289,24 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
                 </Flex>
               </Flex>
 
-              <Divider y={24} />
+              <Divider y={12} />
+
+              {isReading ? (
+                <>
+                  <TouchableOpacity onPress={stopReadTag}>
+                    <Text>Stop scan</Text>
+                  </TouchableOpacity>
+                  <Text>Acerque la tarjeta al lector nfc</Text>
+                </>
+              ) : (
+                nfcSupported && (
+                  <TouchableOpacity onPress={startReadTag}>
+                    <Text>Scan NFC</Text>
+                  </TouchableOpacity>
+                )
+              )}
+
+              <Divider y={12} />
 
               <Flex justify="center" gap={16}>
                 <Button variant="bezeledGray" onPress={handleCloseSheet}>

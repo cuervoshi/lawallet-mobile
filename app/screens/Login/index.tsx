@@ -9,15 +9,15 @@ import { Feedback } from "@/components/ui/Input/Feedback";
 import { Textarea } from "@/components/ui/Input/TextArea";
 import { Text } from "@/components/ui/Text";
 import useErrors from "@/hooks/useErrors";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { saveIdentityToStorage } from "@/utils";
 import { useConfig, useIdentity, useNostr } from "@lawallet/react";
 import { getUsername } from "@lawallet/react/actions";
+import { hexToBytes } from "@noble/hashes/utils";
 import { useRouter } from "expo-router";
 import { getPublicKey } from "nostr-tools";
 import { useState } from "react";
-import { NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
-import { hexToBytes } from "@noble/hashes/utils";
-import { useTranslations } from "@/i18n/I18nProvider";
+import * as Clipboard from "expo-clipboard";
 
 function LoginView() {
   const { initializeSigner } = useNostr();
@@ -32,11 +32,9 @@ function LoginView() {
   const errors = useErrors();
   const identity = useIdentity();
 
-  const handleChangeInput = (
-    e: NativeSyntheticEvent<TextInputChangeEventData>
-  ) => {
+  const handleChangeInput = (text: string) => {
     errors.resetError();
-    setKeyInput(e.nativeEvent.text);
+    setKeyInput(text);
   };
 
   const handleRecoveryAccount = async () => {
@@ -96,7 +94,8 @@ function LoginView() {
             placeholder={i18n.t("INSERT_PRIVATE_KEY")}
             secureTextEntry
             multiline={false}
-            onChange={handleChangeInput}
+            onChangeText={handleChangeInput}
+            value={keyInput}
           />
 
           <Feedback show={errors.errorInfo.visible} status={"error"}>
@@ -108,6 +107,14 @@ function LoginView() {
 
         <Flex justify="space-between" align="center">
           <Flex gap={8}>
+            <Button
+              onPress={async () => {
+                let copiedText = await Clipboard.getStringAsync();
+                setKeyInput(copiedText);
+              }}
+            >
+              <Text>{i18n.t("PASTE")}</Text>
+            </Button>
             <Button
               onPress={handleRecoveryAccount}
               disabled={!keyInput.length || loading}

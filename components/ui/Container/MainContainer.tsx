@@ -1,9 +1,13 @@
-import { globalStyles } from "@/utils/constants";
 import React, { ReactNode } from "react";
-import { View } from "react-native";
+import { SafeAreaView, View } from "react-native";
+import { globalStyles } from "./style";
 
 const MainContainer = ({ children }: { children: ReactNode }) => {
-  return <View style={globalStyles.container}>{children}</View>;
+  return (
+    <SafeAreaView style={globalStyles.layout}>
+      <View style={globalStyles.container}>{children}</View>
+    </SafeAreaView>
+  );
 };
 
 export default MainContainer;

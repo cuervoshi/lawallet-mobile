@@ -7,16 +7,16 @@ import { Flex } from "@/components/ui/Flex";
 import { Feedback } from "@/components/ui/Input/Feedback";
 import { LinkSetting } from "@/components/ui/LinkSetting";
 import { Text } from "@/components/ui/Text";
-import { appTheme } from "@/utils/theme";
 import useErrors from "@/hooks/useErrors";
 import { CACHE_BACKUP_KEY, STORAGE_IDENTITY_KEY } from "@/utils/constants";
+import { appTheme } from "@/utils/theme";
 
+import { Icon } from "@/components/ui/Icon/Icon";
+import { CaretRightIcon } from "@/components/ui/Icon/Icons/CaretRightIcon";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { useConfig, useIdentity } from "@lawallet/react";
 import { useRouter } from "expo-router";
 import { Alert } from "react-native";
-import { useTranslations } from "@/i18n/I18nProvider";
-import { Icon } from "@/components/ui/Icon/Icon";
-import { CaretRightIcon } from "@/components/ui/Icon/Icons/CaretRightIcon";
 
 function SettingsView() {
   const { i18n, changeLanguage } = useTranslations();
@@ -75,12 +75,15 @@ function SettingsView() {
         <Text size="small" color={appTheme.colors.gray50}>
           {i18n.t("ACCOUNT")}
         </Text>
+
         <Divider y={8} />
+
         <Flex direction="column" gap={4}>
           <LinkSetting onClick={() => router.push("/settings/cards")}>
             <Text>{i18n.t("MY_CARDS")}</Text>
           </LinkSetting>
         </Flex>
+
         <Divider y={8} />
 
         <Flex direction="column" gap={4}>
@@ -130,14 +133,11 @@ function SettingsView() {
           </Feedback>
         </Flex>
 
-        <Divider y={16} />
-
         <Flex justify="center">
           <Button color="error" variant="bezeled" onPress={logoutSession}>
             <Text color={appTheme.colors.error}>{i18n.t("LOGOUT")}</Text>
           </Button>
         </Flex>
-        <Divider y={16} />
       </Container>
     </MainContainer>
   );

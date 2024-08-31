@@ -151,6 +151,13 @@ const Scan = () => {
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push("/dashboard")}
+          >
+            <Text style={styles.text}>Exit</Text>
+          </TouchableOpacity>
         </View>
       </CameraView>
     </View>
@@ -172,14 +179,16 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignSelf: "center",
     backgroundColor: "transparent",
     margin: 64,
   },
   button: {
-    flex: 1,
-    alignSelf: "flex-end",
+    alignSelf: "center",
     alignItems: "center",
+    margin: 16,
   },
   text: {
     fontSize: 24,

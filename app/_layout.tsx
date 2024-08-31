@@ -8,7 +8,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const config = createConfig({
   storage: AsyncStorage,
@@ -34,7 +33,7 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView>
+    <>
       <StatusBar style="auto" />
       <LaWalletProvider config={config} limits={{ transactionLimits: 50 }}>
         <NativeProvider>
@@ -51,6 +50,6 @@ export default function RootLayout() {
           </I18nProvider>
         </NativeProvider>
       </LaWalletProvider>
-    </GestureHandlerRootView>
+    </>
   );
 }

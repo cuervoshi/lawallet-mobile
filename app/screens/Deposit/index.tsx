@@ -24,6 +24,7 @@ import * as Clipboard from "expo-clipboard";
 import { View } from "react-native";
 import InvoiceSheet from "./components/InvoiceSheet";
 import { useTranslations } from "@/i18n/I18nProvider";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 function DepositView() {
   //   if (EMERGENCY_LOCK_DEPOSIT) {
@@ -58,74 +59,81 @@ function DepositView() {
   }, []);
 
   return (
-    <MainContainer>
-      <Navbar
-        showBackPage={true}
-        overrideBack="/(router)/dashboard"
-        title={i18n.t("DEPOSIT")}
-      />
+    <GestureHandlerRootView>
+      <MainContainer>
+        <Navbar
+          showBackPage={true}
+          overrideBack="/(router)/dashboard"
+          title={i18n.t("DEPOSIT")}
+        />
 
-      <Container>
-        <Flex flex={1} direction="column" justify="space-around" align="center">
-          <View style={{ padding: 8, backgroundColor: "white" }}>
-            <QRCode
-              size={300}
-              logoBorderRadius={30}
-              value={("lightning:" + LNURLEncoded).toUpperCase()}
-            />
-          </View>
+        <Container>
+          <Flex
+            flex={1}
+            direction="column"
+            justify="space-around"
+            align="center"
+          >
+            <View style={{ padding: 8, backgroundColor: "white" }}>
+              <QRCode
+                size={300}
+                logoBorderRadius={30}
+                value={("lightning:" + LNURLEncoded).toUpperCase()}
+              />
+            </View>
 
-          <Flex justify="space-between" align="center">
-            <Flex direction="column" justify="flex-start">
-              <Text size="small" color={appTheme.colors.gray50}>
-                {i18n.t("USER")}
-              </Text>
+            <Flex justify="space-between" align="center">
+              <Flex direction="column" justify="flex-start">
+                <Text size="small" color={appTheme.colors.gray50}>
+                  {i18n.t("USER")}
+                </Text>
 
-              <Text>
-                {identity.lud16
-                  ? identity.lud16
-                  : formatAddress(LNURLEncoded, 20)}
-              </Text>
+                <Text>
+                  {identity.lud16
+                    ? identity.lud16
+                    : formatAddress(LNURLEncoded, 20)}
+                </Text>
+              </Flex>
+
+              <Flex align="center">
+                <Button
+                  size="small"
+                  variant="bezeled"
+                  onPress={() =>
+                    handleCopy(identity.lud16 ? identity.lud16 : LNURLEncoded)
+                  }
+                >
+                  <Text>{i18n.t("COPY")}</Text>
+                </Button>
+              </Flex>
             </Flex>
 
-            <Flex align="center">
+            <Flex>
               <Button
-                size="small"
                 variant="bezeled"
-                onPress={() =>
-                  handleCopy(identity.lud16 ? identity.lud16 : LNURLEncoded)
-                }
+                onPress={() => {
+                  setIsOpenSheet(true);
+                }}
               >
-                <Text>{i18n.t("COPY")}</Text>
+                <Flex flex={1} justify="center" align="center">
+                  <Text>{i18n.t("CREATE_INVOICE")}</Text>
+                </Flex>
               </Button>
             </Flex>
           </Flex>
+        </Container>
 
-          <Flex>
-            <Button
-              variant="bezeled"
-              onPress={() => {
-                setIsOpenSheet(true);
-              }}
-            >
-              <Flex flex={1} justify="center" align="center">
-                <Text>{i18n.t("CREATE_INVOICE")}</Text>
-              </Flex>
-            </Button>
-          </Flex>
-        </Flex>
-      </Container>
-
-      {isOpenSheet && (
-        <InvoiceSheet
-          isOpen={isOpenSheet}
-          handleCopy={handleCopy}
-          onClose={() => {
-            setIsOpenSheet(false);
-          }}
-        />
-      )}
-    </MainContainer>
+        {isOpenSheet && (
+          <InvoiceSheet
+            isOpen={isOpenSheet}
+            handleCopy={handleCopy}
+            onClose={() => {
+              setIsOpenSheet(false);
+            }}
+          />
+        )}
+      </MainContainer>
+    </GestureHandlerRootView>
   );
 }
 

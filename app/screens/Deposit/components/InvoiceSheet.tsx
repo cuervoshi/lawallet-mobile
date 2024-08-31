@@ -27,6 +27,7 @@ import {
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, View } from "react-native";
+import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import QRCode from "react-native-qrcode-svg";
 
 type SheetTypes = "amount" | "qr" | "finished";

@@ -95,23 +95,20 @@ function SettingsView() {
                 : changeLanguage("en");
             }}
           >
-            {i18n.t("LANGUAGE")}
-
-            <Flex flex={1} align="flex-end" justify="flex-end">
-              <Text isBold={true}>{i18n.locale.toUpperCase()}</Text>
-            </Flex>
-
-            <Icon size="small" color={appTheme.colors.gray40}>
-              <CaretRightIcon />
-            </Icon>
+            <Text>
+              {i18n.t("LANGUAGE")} ({i18n.locale.toUpperCase()})
+            </Text>
           </LinkSetting>
         </Flex>
 
         <Divider y={16} />
+
         <Text size="small" color={appTheme.colors.gray50}>
           {i18n.t("SECURITY")}
         </Text>
+
         <Divider y={8} />
+
         <Flex direction="column" gap={4}>
           <LinkSetting onClick={() => router.push("/settings/recovery")}>
             <Text>{i18n.t("BACKUP_ACCOUNT")}</Text>

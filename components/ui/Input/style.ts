@@ -7,7 +7,7 @@ export const InputPrimitive = styled(TextInput)<InputPrimitiveProps>`
   flex: 1;
   min-height: 50px;
   min-width: 100%;
-  width: 100%;
+  max-width: 100%;
   padding: 8px;
   padding-left: 12px;
   background-color: ${(props) => props.theme.colors.gray15};
@@ -80,24 +80,4 @@ export const InputIcon = styled(View)`
   justify-content: center;
   width: 60px;
   height: 100%;
-`;
-
-export const TextareaPrimitive = styled(TextInput)<InputPrimitiveProps>`
-  width: 100%;
-  padding: 8px;
-  padding-left: 12px;
-  background-color: ${(props) => props.theme.colors.gray15};
-  border-radius: 8px;
-  border-width: 1px;
-  border-color: ${(props) =>
-    props.$showValidate
-      ? props.theme.colors.gray20
-      : props.$isSuccess
-      ? props.theme.colors.success
-      : props.theme.colors.error};
-  color: ${(props) => props.theme.colors.text};
-  font-size: 14px;
-  outline: none;
-  resize: none;
-  transition-duration: 0.3s;
 `;

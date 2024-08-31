@@ -41,7 +41,8 @@ export function Textarea(props: TextareaProps) {
 
 const styles = StyleSheet.create({
   textarea: {
-    width: "100%",
+    minWidth: "80%",
+    maxWidth: "80%",
     padding: 8,
     paddingLeft: 12,
     backgroundColor: "#f1f1f1",

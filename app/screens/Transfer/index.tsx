@@ -229,7 +229,7 @@ function TransferView() {
                   <Flex align="center">
                     <RecipientElement lud16={lud16} />
                     <Icon>
-                      <CaretRightIcon />
+                      <CaretRightIcon color="white" />
                     </Icon>
                   </Flex>
                   <Divider y={8} />

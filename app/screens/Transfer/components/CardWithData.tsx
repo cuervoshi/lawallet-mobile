@@ -44,9 +44,9 @@ const CardWithData = ({
           </Text>
         )}
       </Flex>
-      <Button onPress={() => router.push("/transfer")} variant="borderless">
+      {/* <Button onPress={() => router.push("/transfer")} variant="borderless">
         <CrossIcon />
-      </Button>
+      </Button> */}
     </Card>
   );
 };

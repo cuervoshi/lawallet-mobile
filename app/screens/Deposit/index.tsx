@@ -131,7 +131,6 @@ function DepositView() {
 
       {isOpenSheet && (
         <InvoiceSheet
-          isOpen={isOpenSheet}
           handleCopy={handleCopy}
           onClose={() => {
             setIsOpenSheet(false);

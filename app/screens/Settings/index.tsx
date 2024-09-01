@@ -15,13 +15,16 @@ import { useTranslations } from "@/i18n/I18nProvider";
 import { useConfig, useIdentity } from "@lawallet/react";
 import { useRouter } from "expo-router";
 import { Alert } from "react-native";
+import { useState } from "react";
+import LanguageSheet from "./components/LanguageSheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 function SettingsView() {
   const { i18n, changeLanguage } = useTranslations();
   const config = useConfig();
   const identity = useIdentity();
 
-  //   const [sheetLanguage, setSheetLanguage] = useState<boolean>(false);
+  const [sheetLanguage, setSheetLanguage] = useState<boolean>(false);
   const router = useRouter();
   const errors = useErrors();
 
@@ -60,82 +63,81 @@ function SettingsView() {
   };
 
   return (
-    <MainContainer>
-      <Navbar
-        showBackPage={true}
-        title={i18n.t("SETTINGS")}
-        overrideBack="/dashboard"
-      />
-
-      <Divider y={16} />
-
-      <Container>
-        <Text size="small" color={appTheme.colors.gray50}>
-          {i18n.t("ACCOUNT")}
-        </Text>
-
-        <Divider y={8} />
-
-        <Flex direction="column" gap={4}>
-          <LinkSetting onClick={() => router.push("/settings/cards")}>
-            <Text>{i18n.t("MY_CARDS")}</Text>
-          </LinkSetting>
-        </Flex>
-
-        <Divider y={8} />
-
-        <Flex direction="column" gap={4}>
-          <LinkSetting
-            // onPress={() => setSheetLanguage(!sheetLanguage)}
-            onClick={() => {
-              i18n.locale === "en"
-                ? changeLanguage("es")
-                : changeLanguage("en");
-            }}
-          >
-            <Text>
-              {i18n.t("LANGUAGE")} ({i18n.locale.toUpperCase()})
-            </Text>
-          </LinkSetting>
-        </Flex>
+    <GestureHandlerRootView>
+      <MainContainer>
+        <Navbar
+          showBackPage={true}
+          title={i18n.t("SETTINGS")}
+          overrideBack="/dashboard"
+        />
 
         <Divider y={16} />
 
-        <Text size="small" color={appTheme.colors.gray50}>
-          {i18n.t("SECURITY")}
-        </Text>
-
-        <Divider y={8} />
-
-        <Flex direction="column" gap={4}>
-          <LinkSetting onClick={() => router.push("/settings/recovery")}>
-            <Text>{i18n.t("BACKUP_ACCOUNT")}</Text>
-          </LinkSetting>
-        </Flex>
-
-        <Divider y={16} />
-
-        <Flex justify="center">
+        <Container>
           <Text size="small" color={appTheme.colors.gray50}>
-            LaWallet v0.1
+            {i18n.t("ACCOUNT")}
           </Text>
+
+          <Divider y={8} />
+
+          <Flex direction="column" gap={4}>
+            <LinkSetting onClick={() => router.push("/settings/cards")}>
+              <Text>{i18n.t("MY_CARDS")}</Text>
+            </LinkSetting>
+          </Flex>
+
+          <Divider y={8} />
+
+          <Flex direction="column" gap={4}>
+            <LinkSetting onClick={() => setSheetLanguage(true)}>
+              <Text>
+                {i18n.t("LANGUAGE")} ({i18n.locale.toUpperCase()})
+              </Text>
+            </LinkSetting>
+          </Flex>
+
+          <Divider y={16} />
+
+          <Text size="small" color={appTheme.colors.gray50}>
+            {i18n.t("SECURITY")}
+          </Text>
+
+          <Divider y={8} />
+
+          <Flex direction="column" gap={4}>
+            <LinkSetting onClick={() => router.push("/settings/recovery")}>
+              <Text>{i18n.t("BACKUP_ACCOUNT")}</Text>
+            </LinkSetting>
+          </Flex>
+
+          <Divider y={16} />
+
+          <Flex justify="center">
+            <Text size="small" color={appTheme.colors.gray50}>
+              LaWallet v0.1
+            </Text>
+          </Flex>
+
+          <Divider y={16} />
+
+          <Flex align="center" justify="center">
+            <Feedback show={errors.errorInfo.visible} status={"error"}>
+              {errors.errorInfo.text}
+            </Feedback>
+          </Flex>
+        </Container>
+
+        <Flex justify="center" align="center">
+          <Button color="error" variant="bezeled" onPress={logoutSession}>
+            <Text color={appTheme.colors.error}>{i18n.t("LOGOUT")}</Text>
+          </Button>
         </Flex>
+      </MainContainer>
 
-        <Divider y={16} />
-
-        <Flex align="center" justify="center">
-          <Feedback show={errors.errorInfo.visible} status={"error"}>
-            {errors.errorInfo.text}
-          </Feedback>
-        </Flex>
-      </Container>
-
-      <Flex justify="center" align="center">
-        <Button color="error" variant="bezeled" onPress={logoutSession}>
-          <Text color={appTheme.colors.error}>{i18n.t("LOGOUT")}</Text>
-        </Button>
-      </Flex>
-    </MainContainer>
+      {sheetLanguage && (
+        <LanguageSheet onClose={() => setSheetLanguage(false)} />
+      )}
+    </GestureHandlerRootView>
   );
 }
 

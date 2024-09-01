@@ -30,17 +30,11 @@ import {
 import { getPayRequest } from "@lawallet/react/actions";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
 type SheetTypes = "amount" | "qr" | "finished";
 type InvoiceSheetTypes = {
-  isOpen: boolean;
   handleCopy: (text: string) => void;
   onClose: () => void;
 };
@@ -50,7 +44,7 @@ const lnurlwToHttps = (lnurlw: string) => {
   return URLWithdrawRequest;
 };
 
-const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
+const InvoiceSheet = ({ handleCopy, onClose }: InvoiceSheetTypes) => {
   const errors = useErrors();
   const [sheetStep, setSheetStep] = useState<SheetTypes>("amount");
 
@@ -193,190 +187,176 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
         }}
       >
         {sheetStep === "finished" && <Confetti />}
-        <ScrollView>
-          {sheetStep === "amount" && (
-            <View style={{ padding: 24 }}>
-              <Flex direction="column" justify="center" align="center" gap={8}>
-                <Flex align="center" gap={4}>
-                  {currency === "SAT" ? (
-                    <Icon size="small">
-                      <SatoshiV2Icon color="white" />
-                    </Icon>
-                  ) : (
-                    <Text>$</Text>
-                  )}
-
-                  <Heading color="white" align="center">
-                    {formatAmount(
-                      numpadData.intAmount[numpadData.usedCurrency]
-                    )}
-                  </Heading>
-                </Flex>
-
-                <Divider y={8} />
-
-                <TokenList />
-
-                {errors.errorInfo.visible && (
-                  <Feedback show={errors.errorInfo.visible} status={"error"}>
-                    {errors.errorInfo.text}
-                  </Feedback>
+        {sheetStep === "amount" && (
+          <View style={{ padding: 24 }}>
+            <Flex direction="column" justify="center" align="center" gap={8}>
+              <Flex align="center" gap={4}>
+                {currency === "SAT" ? (
+                  <Icon size="small">
+                    <SatoshiV2Icon color="white" />
+                  </Icon>
+                ) : (
+                  <Text>$</Text>
                 )}
 
-                <Divider y={8} />
-
-                <Flex align="center">
-                  <Button
-                    variant="filled"
-                    onPress={handleClick}
-                    disabled={
-                      invoice.loading || numpadData.intAmount["SAT"] === 0
-                    }
-                    loading={invoice.loading}
-                  >
-                    <Flex flex={1} justify="center" align="center">
-                      <Text>{i18n.t("GENERATE")}</Text>
-                    </Flex>
-                  </Button>
-                </Flex>
-
-                <Divider y={24} />
-
-                <Keyboard numpadData={numpadData} />
-              </Flex>
-            </View>
-          )}
-
-          {sheetStep === "qr" && (
-            <Container>
-              <Flex justify="center" align="center">
-                <View
-                  style={{
-                    padding: 8,
-                    backgroundColor: "white",
-                  }}
-                >
-                  <QRCode
-                    size={300}
-                    value={`${invoice.bolt11.toUpperCase()}`}
-                  />
-                </View>
+                <Heading color="white" align="center">
+                  {formatAmount(numpadData.intAmount[numpadData.usedCurrency])}
+                </Heading>
               </Flex>
 
-              <Divider y={24} />
+              <Divider y={8} />
 
-              <Flex direction="column" justify="center" align="center" gap={8}>
-                <ActivityIndicator
-                  size="large"
-                  color={appTheme.colors.primary}
-                />
-                <Text size="small" color={appTheme.colors.gray50}>
-                  {i18n.t("WAITING_PAYMENT_OF")}
-                </Text>
-                <Flex align="center" gap={4}>
-                  {currency === "SAT" ? (
-                    <Icon size="small">
-                      <SatoshiV2Icon />
-                    </Icon>
-                  ) : (
-                    <Text>$</Text>
-                  )}
+              <TokenList />
 
-                  <Heading color="white">
-                    {formatAmount(
-                      numpadData.intAmount[numpadData.usedCurrency]
-                    )}
-                  </Heading>
-
-                  <Text color="white">{currency}</Text>
-                </Flex>
-              </Flex>
-
-              <Divider y={16} />
-
-              {isReading ? (
-                <Flex direction="column" align="center">
-                  <TouchableOpacity onPress={stopReadTag}>
-                    <Text>Stop scan</Text>
-                  </TouchableOpacity>
-                  <Text>Acerque la tarjeta al lector nfc</Text>
-                </Flex>
-              ) : (
-                nfcSupported && (
-                  <Flex direction="column" align="center">
-                    <TouchableOpacity onPress={startReadTag}>
-                      <Text>Scan NFC</Text>
-                    </TouchableOpacity>
-                  </Flex>
-                )
+              {errors.errorInfo.visible && (
+                <Feedback show={errors.errorInfo.visible} status={"error"}>
+                  {errors.errorInfo.text}
+                </Feedback>
               )}
 
+              <Divider y={8} />
+
+              <Flex align="center">
+                <Button
+                  variant="filled"
+                  onPress={handleClick}
+                  disabled={
+                    invoice.loading || numpadData.intAmount["SAT"] === 0
+                  }
+                  loading={invoice.loading}
+                >
+                  <Flex flex={1} justify="center" align="center">
+                    <Text>{i18n.t("GENERATE")}</Text>
+                  </Flex>
+                </Button>
+              </Flex>
+
               <Divider y={24} />
 
-              <Flex justify="center" gap={16}>
-                <Button variant="bezeledGray" onPress={handleCloseSheet}>
-                  <Text>{i18n.t("CANCEL")}</Text>
-                </Button>
-                <Button
-                  variant="bezeled"
-                  onPress={() => handleCopy(invoice.bolt11)}
-                >
-                  <Text>{i18n.t("COPY")}</Text>
-                </Button>
-              </Flex>
-            </Container>
-          )}
+              <Keyboard numpadData={numpadData} />
+            </Flex>
+          </View>
+        )}
 
-          {sheetStep === "finished" && (
-            <>
-              <Flex
-                flex={1}
-                direction="column"
-                justify="center"
-                align="center"
-                gap={16}
+        {sheetStep === "qr" && (
+          <Container>
+            <Flex justify="center" align="center">
+              <View
+                style={{
+                  padding: 8,
+                  backgroundColor: "white",
+                }}
               >
-                <Flex gap={4}>
-                  <Icon color={appTheme.colors.primary}>
-                    <CheckIcon color={appTheme.colors.success} />
+                <QRCode size={300} value={`${invoice.bolt11.toUpperCase()}`} />
+              </View>
+            </Flex>
+
+            <Divider y={24} />
+
+            <Flex direction="column" justify="center" align="center" gap={8}>
+              <ActivityIndicator size="large" color={appTheme.colors.primary} />
+              <Text size="small" color={appTheme.colors.gray50}>
+                {i18n.t("WAITING_PAYMENT_OF")}
+              </Text>
+              <Flex align="center" gap={4}>
+                {currency === "SAT" ? (
+                  <Icon size="small">
+                    <SatoshiV2Icon />
                   </Icon>
+                ) : (
+                  <Text>$</Text>
+                )}
 
-                  <Text>OK</Text>
-                </Flex>
+                <Heading color="white">
+                  {formatAmount(numpadData.intAmount[numpadData.usedCurrency])}
+                </Heading>
 
-                <Divider y={24} />
-
-                <Text size="small" color={appTheme.colors.gray50}>
-                  Pago recibido
-                </Text>
-
-                <Flex align="center">
-                  {currency === "SAT" ? (
-                    <Icon size="small">
-                      <SatoshiV2Icon color={appTheme.colors.text} />
-                    </Icon>
-                  ) : (
-                    <Text>$</Text>
-                  )}
-
-                  <Heading color={appTheme.colors.text}>
-                    {formatAmount(
-                      numpadData.intAmount[numpadData.usedCurrency]
-                    )}
-                  </Heading>
-                </Flex>
-
-                <Divider y={24} />
-
-                <Flex gap={16}>
-                  <Button variant="bezeledGray" onPress={handleCloseSheet}>
-                    <Text>Cerrar</Text>
-                  </Button>
-                </Flex>
+                <Text color="white">{currency}</Text>
               </Flex>
-            </>
-          )}
-        </ScrollView>
+            </Flex>
+
+            <Divider y={16} />
+
+            {isReading ? (
+              <Flex direction="column" align="center">
+                <TouchableOpacity onPress={stopReadTag}>
+                  <Text>Stop scan</Text>
+                </TouchableOpacity>
+                <Text>Acerque la tarjeta al lector nfc</Text>
+              </Flex>
+            ) : (
+              nfcSupported && (
+                <Flex direction="column" align="center">
+                  <TouchableOpacity onPress={startReadTag}>
+                    <Text>Scan NFC</Text>
+                  </TouchableOpacity>
+                </Flex>
+              )
+            )}
+
+            <Divider y={24} />
+
+            <Flex justify="center" gap={16}>
+              <Button variant="bezeledGray" onPress={handleCloseSheet}>
+                <Text>{i18n.t("CANCEL")}</Text>
+              </Button>
+              <Button
+                variant="bezeled"
+                onPress={() => handleCopy(invoice.bolt11)}
+              >
+                <Text>{i18n.t("COPY")}</Text>
+              </Button>
+            </Flex>
+          </Container>
+        )}
+
+        {sheetStep === "finished" && (
+          <>
+            <Flex
+              flex={1}
+              direction="column"
+              justify="center"
+              align="center"
+              gap={16}
+            >
+              <Flex gap={4}>
+                <Icon color={appTheme.colors.primary}>
+                  <CheckIcon color={appTheme.colors.success} />
+                </Icon>
+
+                <Text>OK</Text>
+              </Flex>
+
+              <Divider y={24} />
+
+              <Text size="small" color={appTheme.colors.gray50}>
+                Pago recibido
+              </Text>
+
+              <Flex align="center">
+                {currency === "SAT" ? (
+                  <Icon size="small">
+                    <SatoshiV2Icon color={appTheme.colors.text} />
+                  </Icon>
+                ) : (
+                  <Text>$</Text>
+                )}
+
+                <Heading color={appTheme.colors.text}>
+                  {formatAmount(numpadData.intAmount[numpadData.usedCurrency])}
+                </Heading>
+              </Flex>
+
+              <Divider y={24} />
+
+              <Flex gap={16}>
+                <Button variant="bezeledGray" onPress={handleCloseSheet}>
+                  <Text>Cerrar</Text>
+                </Button>
+              </Flex>
+            </Flex>
+          </>
+        )}
       </BottomSheetView>
     </BottomSheet>
   );

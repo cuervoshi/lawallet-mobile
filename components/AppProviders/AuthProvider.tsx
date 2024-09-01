@@ -1,11 +1,19 @@
-import { STORAGE_IDENTITY_KEY } from "@/utils/constants";
-import { parseContent, useIdentity, useNostr } from "@lawallet/react";
+import { STORAGE_IDENTITY_KEY, STORAGE_LANGUAGE_KEY } from "@/utils/constants";
+import {
+  LanguagesList,
+  parseContent,
+  useConfig,
+  useIdentity,
+  useNostr,
+} from "@lawallet/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SpinnerView } from "../SpinnerView/SpinnerView";
 import { Alert, AppState, AppStateStatus } from "react-native";
+import { useTranslations } from "@/i18n/I18nProvider";
+import { AvailableLanguages } from "@lawallet/react/types";
 
 interface RouterInfo {
   disconnectedPaths: string[]; // Routes that require you to NOT have a connected account
@@ -42,11 +50,14 @@ const isProtectedRoute = (path: string, paths: string[]): boolean => {
 };
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const identity = useIdentity();
   const { validateRelaysStatus, initializeSigner } = useNostr();
+  const identity = useIdentity();
+  const { lng, changeLanguage } = useTranslations();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [appState, setAppState] = useState(AppState.currentState);
+
+  const config = useConfig();
 
   const handleAppStateChange = useCallback(
     (nextAppState: AppStateStatus) => {
@@ -75,7 +86,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = useMemo(() => {
     return route.name;
   }, [route]);
-  const params = route.params || {};
 
   const authenticate = async (privateKey: string) => {
     const initialized = await identity.initializeFromPrivateKey(privateKey);
@@ -85,9 +95,22 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return initialized;
   };
 
-  const loadIdentityFromStorage = async () => {
+  const loadStorage = async () => {
     try {
-      const storageIdentity = await AsyncStorage.getItem(STORAGE_IDENTITY_KEY);
+      const storageLanguage = (await config.storage.getItem(
+        STORAGE_LANGUAGE_KEY
+      )) as AvailableLanguages;
+
+      if (
+        storageLanguage &&
+        storageLanguage !== lng &&
+        LanguagesList.includes(storageLanguage)
+      )
+        changeLanguage(storageLanguage);
+
+      const storageIdentity = await config.storage.getItem(
+        STORAGE_IDENTITY_KEY
+      );
 
       if (storageIdentity) {
         const parsedIdentity: StoragedIdentityInfo[] =
@@ -107,7 +130,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    loadIdentityFromStorage();
+    loadStorage();
   }, []);
 
   const hydrateApp = useMemo(() => {

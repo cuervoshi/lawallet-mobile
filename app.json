@@ -54,9 +54,7 @@
       }
     },
     "owner": "flaken10",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "runtimeVersion": "1.0.0",
     "updates": {
       "url": "https://u.expo.dev/0e74de48-4df7-4428-a1fe-051ee5c161b1"
     }

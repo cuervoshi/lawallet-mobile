@@ -7296,10 +7296,10 @@ react-native-helmet-async@2.0.4:
     react-fast-compare "^3.2.2"
     shallowequal "^1.1.0"
 
-react-native-nfc-manager@^3.15.1:
-  version "3.15.1"
-  resolved "https://registry.yarnpkg.com/react-native-nfc-manager/-/react-native-nfc-manager-3.15.1.tgz#2e4dedd3820c81eb55acfd62b153cb04f5bcfc1d"
-  integrity sha512-By685fhyU531FFOcIWEEdkhEbyq5iDMoN82URqltthPerPYaMkE5ZTKxMH0reuX64znTu96EwoHy4zdTiDGVHQ==
+react-native-nfc-manager@^3.16.0:
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/react-native-nfc-manager/-/react-native-nfc-manager-3.16.0.tgz#e928bcfc7b857aa3b02943f241c391053db0cb6e"
+  integrity sha512-piwkoDhq3UYEH9I6oA5RylM0ZPCxg8shUAMFgTT75C8+UKxwrb5Oss2TGRABQevfUXEIaNqwicYxqGYEuNbMDQ==
   dependencies:
     "@expo/config-plugins" "~8.0.0"
 

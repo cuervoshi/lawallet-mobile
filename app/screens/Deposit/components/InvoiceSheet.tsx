@@ -105,29 +105,32 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
     });
   };
 
-  const handleScanNdef = async (decodedPayload: string) => {
-    if (!decodedPayload.startsWith("lnurlw://")) return;
-    const amountSats: number = numpadData.intAmount["SAT"];
+  const handleScanNdef = useCallback(
+    async (decodedPayload: string) => {
+      if (!decodedPayload.startsWith("lnurlw://")) return;
+      const amount_mSats: number = numpadData.intAmount["SAT"] * 1000;
 
-    const wRequest = await getPayRequest(lnurlwToHttps(decodedPayload));
-    if (
-      !wRequest ||
-      !wRequest.callback ||
-      !wRequest.k1 ||
-      wRequest.maxWithdrawable! < amountSats
-    )
-      return;
+      const wRequest = await getPayRequest(lnurlwToHttps(decodedPayload));
+      if (
+        !wRequest ||
+        !wRequest.callback ||
+        !wRequest.k1 ||
+        wRequest.maxWithdrawable! < amount_mSats
+      )
+        return;
 
-    const claimed: boolean = await claimLNURLw(
-      identity.npub,
-      wRequest.callback,
-      wRequest.k1,
-      amountSats,
-      config
-    );
+      const claimed: boolean = await claimLNURLw(
+        identity.npub,
+        wRequest.callback,
+        wRequest.k1,
+        amount_mSats,
+        config
+      );
 
-    if (claimed) setSheetStep("finished");
-  };
+      if (claimed) setSheetStep("finished");
+    },
+    [sheetStep, identity.npub, numpadData.intAmount]
+  );
 
   const handleScanError = (err?: string) => {
     console.log("error on scan tag: ", err);
@@ -289,24 +292,26 @@ const InvoiceSheet = ({ isOpen, handleCopy, onClose }: InvoiceSheetTypes) => {
                 </Flex>
               </Flex>
 
-              <Divider y={12} />
+              <Divider y={16} />
 
               {isReading ? (
-                <>
+                <Flex direction="column" align="center">
                   <TouchableOpacity onPress={stopReadTag}>
                     <Text>Stop scan</Text>
                   </TouchableOpacity>
                   <Text>Acerque la tarjeta al lector nfc</Text>
-                </>
+                </Flex>
               ) : (
                 nfcSupported && (
-                  <TouchableOpacity onPress={startReadTag}>
-                    <Text>Scan NFC</Text>
-                  </TouchableOpacity>
+                  <Flex direction="column" align="center">
+                    <TouchableOpacity onPress={startReadTag}>
+                      <Text>Scan NFC</Text>
+                    </TouchableOpacity>
+                  </Flex>
                 )
               )}
 
-              <Divider y={12} />
+              <Divider y={24} />
 
               <Flex justify="center" gap={16}>
                 <Button variant="bezeledGray" onPress={handleCloseSheet}>

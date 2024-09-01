@@ -10,6 +10,7 @@ import { Icon } from "../ui/Icon/Icon";
 import { CaretLeftIcon } from "../ui/Icon/Icons/CaretLeftIcon";
 import { Text } from "../ui/Text";
 import { BackButton, Left, Navbar, Right } from "./style";
+import { useTranslations } from "@/i18n/I18nProvider";
 
 interface ComponentProps {
   children?: React.ReactNode;
@@ -20,6 +21,7 @@ interface ComponentProps {
 
 export default function Component(props: ComponentProps) {
   const { children, showBackPage = false, title, overrideBack = "" } = props;
+  const { i18n } = useTranslations();
 
   const navigation = useNavigation();
   const router = useRouter();
@@ -40,7 +42,7 @@ export default function Component(props: ComponentProps) {
                 <Icon size="small">
                   <CaretLeftIcon color={appTheme.colors.success} />
                 </Icon>
-                <Text color={appTheme.colors.success}>Volver</Text>
+                <Text color={appTheme.colors.success}>{i18n.t("BACK")}</Text>
               </BackButton>
             </Left>
           )}

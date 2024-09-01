@@ -19,8 +19,10 @@ const EmptyCards = () => {
       >
         <EmptySvg />
         <Flex direction="column" gap={4} align="center">
-          <Text isBold={true}>{i18n.t("NO_HAVE_CARDS")}</Text>
-          <Text size="small" color={appTheme.colors.gray50}>
+          <Text isBold={true} align="center">
+            {i18n.t("NO_HAVE_CARDS")}
+          </Text>
+          <Text size="small" align="center" color={appTheme.colors.gray50}>
             {i18n.t("NOT_FOUND_CARD")}
           </Text>
         </Flex>

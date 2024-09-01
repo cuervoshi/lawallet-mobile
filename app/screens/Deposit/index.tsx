@@ -60,7 +60,7 @@ function DepositView() {
   }, []);
 
   return (
-    <GestureHandlerRootView>
+    <>
       <MainContainer>
         <Navbar
           showBackPage={true}
@@ -137,7 +137,7 @@ function DepositView() {
           }}
         />
       )}
-    </GestureHandlerRootView>
+    </>
   );
 }
 

@@ -63,7 +63,7 @@ function SettingsView() {
   };
 
   return (
-    <GestureHandlerRootView>
+    <>
       <MainContainer>
         <Navbar
           showBackPage={true}
@@ -137,7 +137,7 @@ function SettingsView() {
       {sheetLanguage && (
         <LanguageSheet onClose={() => setSheetLanguage(false)} />
       )}
-    </GestureHandlerRootView>
+    </>
   );
 }
 

@@ -67,23 +67,7 @@ function RecoveryView() {
                 );
               }}
             />
-            <Divider y={16} />
           </Container>
-
-          <Flex>
-            <Container size="small">
-              <Divider y={16} />
-              <Flex gap={8}>
-                <Button
-                  variant="bezeledGray"
-                  onPress={() => router.push("/dashboard")}
-                >
-                  <Text>{i18n.t("CANCEL")}</Text>
-                </Button>
-              </Flex>
-              <Divider y={32} />
-            </Container>
-          </Flex>
         </>
       ) : (
         <>

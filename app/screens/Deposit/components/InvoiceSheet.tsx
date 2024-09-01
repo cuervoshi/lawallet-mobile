@@ -189,7 +189,7 @@ const InvoiceSheet = ({ handleCopy, onClose }: InvoiceSheetTypes) => {
         {sheetStep === "finished" && <Confetti />}
         {sheetStep === "amount" && (
           <View style={{ padding: 24 }}>
-            <Flex direction="column" justify="center" align="center" gap={8}>
+            <Flex direction="column" justify="center" align="center" gap={24}>
               <Flex align="center" gap={4}>
                 {currency === "SAT" ? (
                   <Icon size="small">

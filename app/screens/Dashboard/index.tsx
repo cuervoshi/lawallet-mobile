@@ -58,207 +58,208 @@ function DashboardView() {
   }, [balance, pricesData, props]);
 
   return (
-    <MainContainer>
-      <ScrollView>
-        <HeroCard maxHeight={"100%"}>
-          <Navbar>
-            <Flex
-              direction="row"
-              justify="space-between"
-              align="center"
-              flex={1}
-            >
-              <Flex align="center" gap={8}>
-                <Avatar>
-                  <Text align="center" color="white" size="small">
-                    {identity.username
-                      ? extractFirstTwoChars(identity.username)
-                      : "AN"}
-                  </Text>
-                </Avatar>
+    <>
+      <ScrollView style={{ backgroundColor: appTheme.colors.background }}>
+        <MainContainer>
+          <HeroCard maxHeight={"100%"}>
+            <Navbar>
+              <Flex
+                direction="row"
+                justify="space-between"
+                align="center"
+                flex={1}
+              >
+                <Flex align="center" gap={8}>
+                  <Avatar>
+                    <Text align="center" color="white" size="small">
+                      {identity.username
+                        ? extractFirstTwoChars(identity.username)
+                        : "AN"}
+                    </Text>
+                  </Avatar>
 
-                <Flex direction="column">
-                  <Text size="small" color={appTheme.colors.gray50}>
-                    {i18n.t("HELLO")},{" "}
-                  </Text>
-                  <Text size="small" color={appTheme.colors.white}>
-                    {identity.loading
-                      ? "--"
-                      : identity.lud16
-                      ? identity.lud16
-                      : i18n.t("ANONYMOUS")}
-                  </Text>
+                  <Flex direction="column">
+                    <Text size="small" color={appTheme.colors.gray50}>
+                      {i18n.t("HELLO")},{" "}
+                    </Text>
+                    <Text size="small" color={appTheme.colors.white}>
+                      {identity.loading
+                        ? "--"
+                        : identity.lud16
+                        ? identity.lud16
+                        : i18n.t("ANONYMOUS")}
+                    </Text>
+                  </Flex>
+                </Flex>
+
+                <Flex direction="row" align="center" gap={8}>
+                  <Button
+                    variant="bezeled"
+                    size="small"
+                    onPress={toggleHideBalance}
+                  >
+                    <Icon size="small">
+                      {props.hideBalance ? (
+                        <HiddenIcon color="white" />
+                      ) : (
+                        <VisibleIcon color="white" />
+                      )}
+                    </Icon>
+                  </Button>
+
+                  <Button
+                    variant="bezeled"
+                    size="small"
+                    onPress={() => router.push("/settings")}
+                  >
+                    <Icon size="small">
+                      <GearIcon color={"white"} />
+                    </Icon>
+                  </Button>
                 </Flex>
               </Flex>
+            </Navbar>
 
-              <Flex direction="row" align="center" gap={8}>
+            <Divider y={12} />
+
+            <Flex direction="column" align="center" justify="center">
+              <Text size="small" color={appTheme.colors.gray50}>
+                {i18n.t("BALANCE")}
+              </Text>
+
+              <Divider y={8} />
+
+              <Flex align="center">
+                {!props.hideBalance ? (
+                  props.currency === "SAT" ? (
+                    <Icon size="small">
+                      <SatoshiV2Icon color="white" />
+                    </Icon>
+                  ) : (
+                    <Text>$</Text>
+                  )
+                ) : null}
+
+                <Heading color="white" align="center" key={convertedBalance}>
+                  {balance.loading ? (
+                    <ActivityIndicator
+                      size="large"
+                      color={appTheme.colors.primary}
+                    />
+                  ) : props.hideBalance ? (
+                    "*****"
+                  ) : (
+                    convertedBalance
+                  )}
+                </Heading>
+              </Flex>
+
+              <Divider y={16} />
+
+              <TokenList />
+            </Flex>
+
+            <Divider y={24} />
+          </HeroCard>
+
+          <Container>
+            <Divider y={24} />
+            <View style={{ maxWidth: "75%", marginHorizontal: "auto" }}>
+              <Flex justify="center" align="center" gap={8}>
                 <Button
-                  variant="bezeled"
-                  size="small"
-                  onPress={toggleHideBalance}
+                  // onClick={() => router.push("/deposit")}
+                  onPress={() => router.push("/(router)/deposit")}
+                  disabled={false}
                 >
-                  <Icon size="small">
-                    {props.hideBalance ? (
-                      <HiddenIcon color="white" />
-                    ) : (
-                      <VisibleIcon color="white" />
-                    )}
-                  </Icon>
+                  <Flex justify="center" align="center">
+                    <Icon>
+                      <ReceiveIcon color={appTheme.colors.gray15} />
+                    </Icon>
+
+                    <Text color={appTheme.colors.gray15} isBold>
+                      {i18n.t("DEPOSIT")}
+                    </Text>
+                  </Flex>
                 </Button>
 
                 <Button
-                  variant="bezeled"
-                  size="small"
-                  onPress={() => router.push("/settings")}
+                  onPress={() => router.push("/(router)/transfer")}
+                  color="secondary"
+                  disabled={false}
                 >
-                  <Icon size="small">
-                    <GearIcon color={"white"} />
-                  </Icon>
+                  <Flex justify="center" align="center">
+                    <Icon>
+                      <SendIcon color={appTheme.colors.gray15} />
+                    </Icon>
+
+                    <Text color={appTheme.colors.gray15} isBold>
+                      {i18n.t("TRANSFER")}
+                    </Text>
+                  </Flex>
                 </Button>
               </Flex>
-            </Flex>
-          </Navbar>
-
-          <Divider y={12} />
-
-          <Flex direction="column" align="center" justify="center">
-            <Text size="small" color={appTheme.colors.gray50}>
-              {i18n.t("BALANCE")}
-            </Text>
-
-            <Divider y={8} />
-
-            <Flex align="center">
-              {!props.hideBalance ? (
-                props.currency === "SAT" ? (
-                  <Icon size="small">
-                    <SatoshiV2Icon color="white" />
-                  </Icon>
-                ) : (
-                  <Text>$</Text>
-                )
-              ) : null}
-
-              <Heading color="white" align="center" key={convertedBalance}>
-                {balance.loading ? (
-                  <ActivityIndicator
-                    size="large"
-                    color={appTheme.colors.primary}
-                  />
-                ) : props.hideBalance ? (
-                  "*****"
-                ) : (
-                  convertedBalance
-                )}
-              </Heading>
-            </Flex>
+            </View>
 
             <Divider y={16} />
 
-            <TokenList />
-          </Flex>
-
-          <Divider y={24} />
-        </HeroCard>
-
-        <Container>
-          <Divider y={24} />
-          <View style={{ maxWidth: "75%", marginHorizontal: "auto" }}>
-            <Flex justify="center" align="center" gap={8}>
-              <Button
-                // onClick={() => router.push("/deposit")}
-                onPress={() => router.push("/(router)/deposit")}
-                disabled={false}
+            {transactions.length === 0 ? (
+              <Flex
+                direction="column"
+                justify="space-between"
+                align="center"
+                gap={16}
               >
-                <Flex justify="center" align="center">
-                  <Icon>
-                    <ReceiveIcon color={appTheme.colors.gray15} />
-                  </Icon>
+                <LottieView
+                  ref={animationRef}
+                  source={require("@/assets/bitcoin-trade.json")}
+                  autoPlay={true}
+                  loop={true}
+                  resizeMode="contain"
+                  style={{
+                    width: 200,
+                    height: 200,
+                  }}
+                />
 
-                  <Text color={appTheme.colors.gray15} isBold>
-                    {i18n.t("DEPOSIT")}
-                  </Text>
-                </Flex>
-              </Button>
+                <Heading as="h4" color="white">
+                  {i18n.t("EMPTY_TRANSACTIONS_TITLE")}
+                </Heading>
 
-              <Button
-                // onClick={() => router.push("/transfer")}
-                onPress={() => router.push("/(router)/transfer")}
-                color="secondary"
-                disabled={false}
-              >
-                <Flex justify="center" align="center">
-                  <Icon>
-                    <SendIcon color={appTheme.colors.gray15} />
-                  </Icon>
-
-                  <Text color={appTheme.colors.gray15} isBold>
-                    {i18n.t("TRANSFER")}
-                  </Text>
-                </Flex>
-              </Button>
-            </Flex>
-          </View>
-
-          <Divider y={16} />
-
-          {transactions.length === 0 ? (
-            <Flex
-              direction="column"
-              justify="space-between"
-              align="center"
-              gap={16}
-            >
-              <LottieView
-                ref={animationRef}
-                source={require("@/assets/bitcoin-trade.json")}
-                autoPlay={true}
-                loop={true}
-                resizeMode="contain"
-                style={{
-                  width: 200,
-                  height: 200,
-                }}
-              />
-
-              <Heading as="h4" color="white">
-                {i18n.t("EMPTY_TRANSACTIONS_TITLE")}
-              </Heading>
-
-              <Divider y={4} />
-              <Text size="small">{i18n.t("EMPTY_TRANSACTIONS_DESC")}</Text>
-            </Flex>
-          ) : (
-            <>
-              <Flex justify="space-between" align="center">
-                <Text size="small" color={appTheme.colors.gray50}>
-                  {i18n.t("LAST_ACTIVITY").toUpperCase()}
-                </Text>
-
-                <Divider y={24} />
-
-                <Button
-                  size="small"
-                  variant="borderless"
-                  onPress={() => router.push("/transactions")}
-                >
-                  <Text color={appTheme.colors.success} isBold>
-                    {i18n.t("SEE_ALL")}
-                  </Text>
-                </Button>
+                <Divider y={4} />
+                <Text size="small">{i18n.t("EMPTY_TRANSACTIONS_DESC")}</Text>
               </Flex>
+            ) : (
+              <>
+                <Flex justify="space-between" align="center">
+                  <Text size="small" color={appTheme.colors.gray50}>
+                    {i18n.t("LAST_ACTIVITY").toUpperCase()}
+                  </Text>
 
-              <Flex direction="column" gap={4}>
-                {transactions.slice(0, 5).map((transaction) => (
-                  <TransactionItem
-                    key={transaction.id}
-                    transaction={transaction}
-                  />
-                ))}
-              </Flex>
-            </>
-          )}
-        </Container>
+                  <Divider y={24} />
+
+                  <Button
+                    size="small"
+                    variant="borderless"
+                    onPress={() => router.push("/transactions")}
+                  >
+                    <Text color={appTheme.colors.success} isBold>
+                      {i18n.t("SEE_ALL")}
+                    </Text>
+                  </Button>
+                </Flex>
+
+                <Flex direction="column" gap={4}>
+                  {transactions.slice(0, 5).map((transaction) => (
+                    <TransactionItem
+                      key={transaction.id}
+                      transaction={transaction}
+                    />
+                  ))}
+                </Flex>
+              </>
+            )}
+          </Container>
+        </MainContainer>
       </ScrollView>
 
       <View
@@ -278,7 +279,7 @@ function DashboardView() {
           <Divider y={16} />
         </ButtonCTA>
       </View>
-    </MainContainer>
+    </>
   );
 }
 

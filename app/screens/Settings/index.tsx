@@ -120,6 +120,7 @@ function SettingsView() {
             LaWallet v0.1
           </Text>
         </Flex>
+
         <Divider y={16} />
 
         <Flex align="center" justify="center">
@@ -127,13 +128,13 @@ function SettingsView() {
             {errors.errorInfo.text}
           </Feedback>
         </Flex>
-
-        <Flex justify="center">
-          <Button color="error" variant="bezeled" onPress={logoutSession}>
-            <Text color={appTheme.colors.error}>{i18n.t("LOGOUT")}</Text>
-          </Button>
-        </Flex>
       </Container>
+
+      <Flex justify="center" align="center">
+        <Button color="error" variant="bezeled" onPress={logoutSession}>
+          <Text color={appTheme.colors.error}>{i18n.t("LOGOUT")}</Text>
+        </Button>
+      </Flex>
     </MainContainer>
   );
 }

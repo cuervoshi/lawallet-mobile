@@ -107,16 +107,13 @@ export const FinishTransfer = ({
 
         <Divider y={24} />
         <Divider y={24} />
-
-        <Flex justify="center" align="center">
-          <Button
-            variant="borderless"
-            onPress={() => router.push("/dashboard")}
-          >
-            <Text align="center">{i18n.t("GO_HOME")}</Text>
-          </Button>
-        </Flex>
       </Container>
+
+      <Flex justify="center" align="center">
+        <Button variant="borderless" onPress={() => router.push("/dashboard")}>
+          <Text align="center">{i18n.t("GO_HOME")}</Text>
+        </Button>
+      </Flex>
     </>
   );
 };

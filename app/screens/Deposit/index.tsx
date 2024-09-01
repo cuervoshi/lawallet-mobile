@@ -25,6 +25,7 @@ import { View } from "react-native";
 import InvoiceSheet from "./components/InvoiceSheet";
 import { useTranslations } from "@/i18n/I18nProvider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Divider } from "@/components/ui/Divider";
 
 function DepositView() {
   //   if (EMERGENCY_LOCK_DEPOSIT) {
@@ -67,12 +68,14 @@ function DepositView() {
           title={i18n.t("DEPOSIT")}
         />
 
+        <Divider y={24} />
+
         <Container>
           <Flex
-            flex={1}
             direction="column"
             justify="space-around"
             align="center"
+            gap={16}
           >
             <View style={{ padding: 8, backgroundColor: "white" }}>
               <QRCode
@@ -81,6 +84,8 @@ function DepositView() {
                 value={("lightning:" + LNURLEncoded).toUpperCase()}
               />
             </View>
+
+            <Divider y={8} />
 
             <Flex justify="space-between" align="center">
               <Flex direction="column" justify="flex-start">
@@ -107,32 +112,32 @@ function DepositView() {
                 </Button>
               </Flex>
             </Flex>
-
-            <Flex>
-              <Button
-                variant="bezeled"
-                onPress={() => {
-                  setIsOpenSheet(true);
-                }}
-              >
-                <Flex flex={1} justify="center" align="center">
-                  <Text>{i18n.t("CREATE_INVOICE")}</Text>
-                </Flex>
-              </Button>
-            </Flex>
           </Flex>
         </Container>
 
-        {isOpenSheet && (
-          <InvoiceSheet
-            isOpen={isOpenSheet}
-            handleCopy={handleCopy}
-            onClose={() => {
-              setIsOpenSheet(false);
+        <Flex justify="center" align="center">
+          <Button
+            variant="bezeled"
+            onPress={() => {
+              setIsOpenSheet(true);
             }}
-          />
-        )}
+          >
+            <Flex flex={1} justify="center" align="center">
+              <Text>{i18n.t("CREATE_INVOICE")}</Text>
+            </Flex>
+          </Button>
+        </Flex>
       </MainContainer>
+
+      {isOpenSheet && (
+        <InvoiceSheet
+          isOpen={isOpenSheet}
+          handleCopy={handleCopy}
+          onClose={() => {
+            setIsOpenSheet(false);
+          }}
+        />
+      )}
     </GestureHandlerRootView>
   );
 }

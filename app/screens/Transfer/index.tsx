@@ -238,26 +238,21 @@ function TransferView() {
             })}
           </View>
         )}
-
-        <Divider y={32} />
-
-        <Flex justify="center" align="center" gap={8}>
-          <Button
-            variant="bezeledGray"
-            onPress={() => router.push("/dashboard")}
-          >
-            <Text>{i18n.t("CANCEL")}</Text>
-          </Button>
-
-          <Button
-            onPress={handleContinue}
-            disabled={loading || inputText.length === 0}
-            loading={loading}
-          >
-            <Text>{i18n.t("CONTINUE")}</Text>
-          </Button>
-        </Flex>
       </Container>
+
+      <Flex justify="center" align="center" gap={8}>
+        <Button variant="bezeledGray" onPress={() => router.push("/dashboard")}>
+          <Text>{i18n.t("CANCEL")}</Text>
+        </Button>
+
+        <Button
+          onPress={handleContinue}
+          disabled={loading || inputText.length === 0}
+          loading={loading}
+        >
+          <Text>{i18n.t("CONTINUE")}</Text>
+        </Button>
+      </Flex>
     </MainContainer>
   );
 }

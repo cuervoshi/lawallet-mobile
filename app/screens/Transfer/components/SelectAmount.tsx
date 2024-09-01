@@ -155,92 +155,89 @@ export const SelectTransferAmount = ({
   });
 
   return (
-    <>
+    <Container>
       <CardWithData type={transferInfo.type} data={transferInfo.data} />
 
-      <Divider y={12} />
-
-      <Container>
-        <View style={{ padding: 24 }}>
-          <Flex direction="column" align="center" gap={8}>
-            <Flex align="center" gap={4}>
-              {userCurrency === "SAT" ? (
-                <Icon size="small">
-                  <SatoshiV2Icon color="white" />
-                </Icon>
-              ) : (
-                <Text color="white">$</Text>
-              )}
-              <Heading color="white">
-                {formatAmount(numpadData.intAmount[numpadData.usedCurrency])}
-              </Heading>
-            </Flex>
-
-            {!hideBalance && (
-              <Flex align="center" gap={4}>
-                <Heading as="h6" color={appTheme.colors.gray50}>
-                  {userCurrency !== "SAT" && "$"}
-                  {formatAmount(maxAvailableAmount)} {i18n.t("AVAILABLE")}.
-                </Heading>
-              </Flex>
+      <View style={{ padding: 24 }}>
+        <Flex direction="column" align="center" gap={8}>
+          <Flex align="center" gap={4}>
+            {userCurrency === "SAT" ? (
+              <Icon size="small">
+                <SatoshiV2Icon color="white" />
+              </Icon>
+            ) : (
+              <Text color="white">$</Text>
             )}
-
-            <Divider y={12} />
-
-            <TokenList />
-
-            <Divider y={12} />
-
-            <Flex align="center">
-              {transferInfo.request && (
-                <Feedback show={true} status={"success"}>
-                  {i18n.t("SENDABLE_AMOUNT", {
-                    minSendable: customFormat({
-                      amount: transferInfo.request.minSendable! / 1000,
-                      currency: "SAT",
-                    }),
-                    maxSendable: customFormat({
-                      amount: transferInfo.request.maxSendable! / 1000,
-                      currency: "SAT",
-                    }),
-                  })}
-                </Feedback>
-              )}
-            </Flex>
-
-            <Divider y={12} />
-
-            <Feedback show={errors.errorInfo.visible} status={"error"}>
-              {errors.errorInfo.text}
-            </Feedback>
-
-            <Flex
-              direction="column"
-              justify="space-between"
-              align="center"
-              gap={16}
-            >
-              <Flex>
-                <Button
-                  onPress={handleClick}
-                  disabled={
-                    loading ||
-                    balance.amount === 0 ||
-                    numpadData.intAmount["SAT"] === 0
-                  }
-                  loading={loading}
-                >
-                  <Text align="center">{i18n.t("CONTINUE")}</Text>
-                </Button>
-              </Flex>
-
-              <Divider y={20} />
-
-              <Keyboard numpadData={numpadData} />
-            </Flex>
+            <Heading color="white">
+              {formatAmount(numpadData.intAmount[numpadData.usedCurrency])}
+            </Heading>
           </Flex>
 
-          {/* <Flex align="center" flex={1}>
+          {!hideBalance && (
+            <Flex align="center" gap={4}>
+              <Heading as="h6" color={appTheme.colors.gray50}>
+                {userCurrency !== "SAT" && "$"}
+                {formatAmount(maxAvailableAmount)} {i18n.t("AVAILABLE")}.
+              </Heading>
+            </Flex>
+          )}
+
+          <Divider y={12} />
+
+          <TokenList />
+
+          <Divider y={12} />
+
+          <Flex align="center">
+            {transferInfo.request && (
+              <Feedback show={true} status={"success"}>
+                {i18n.t("SENDABLE_AMOUNT", {
+                  minSendable: customFormat({
+                    amount: transferInfo.request.minSendable! / 1000,
+                    currency: "SAT",
+                  }),
+                  maxSendable: customFormat({
+                    amount: transferInfo.request.maxSendable! / 1000,
+                    currency: "SAT",
+                  }),
+                })}
+              </Feedback>
+            )}
+          </Flex>
+
+          <Divider y={12} />
+
+          <Feedback show={errors.errorInfo.visible} status={"error"}>
+            {errors.errorInfo.text}
+          </Feedback>
+
+          <Flex
+            direction="column"
+            justify="space-between"
+            align="center"
+            gap={16}
+          >
+            <Flex>
+              <Button
+                onPress={handleClick}
+                disabled={
+                  loading ||
+                  balance.amount === 0 ||
+                  numpadData.intAmount["SAT"] === 0
+                }
+                loading={loading}
+              >
+                <Text align="center">{i18n.t("CONTINUE")}</Text>
+              </Button>
+            </Flex>
+
+            <Divider y={20} />
+
+            <Keyboard numpadData={numpadData} />
+          </Flex>
+        </Flex>
+
+        {/* <Flex align="center" flex={1}>
           <Flex align="center">
             <InputWithLabel
               label="Mensaje"
@@ -253,8 +250,7 @@ export const SelectTransferAmount = ({
             />
           </Flex>
         </Flex> */}
-        </View>
-      </Container>
-    </>
+      </View>
+    </Container>
   );
 };

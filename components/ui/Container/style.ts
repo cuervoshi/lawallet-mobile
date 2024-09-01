@@ -24,5 +24,6 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: appTheme.colors.background,
     width: "100%",
     height: "100%",
+    marginBottom: Constants.statusBarHeight,
   },
 });

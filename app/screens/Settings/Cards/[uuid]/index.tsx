@@ -288,19 +288,19 @@ const ConfigCardView = () => {
             {errors.errorInfo.text}
           </Feedback>
         </Flex>
-
-        <Flex justify="center" align="center" gap={8}>
-          <Button
-            variant="bezeledGray"
-            onPress={() => router.push("/settings/cards")}
-          >
-            <Text>{i18n.t("CANCEL")}</Text>
-          </Button>
-          <Button onPress={handleSaveConfig}>
-            <Text>{i18n.t("SAVE")}</Text>
-          </Button>
-        </Flex>
       </Container>
+
+      <Flex justify="center" align="center" gap={8}>
+        <Button
+          variant="bezeledGray"
+          onPress={() => router.push("/settings/cards")}
+        >
+          <Text>{i18n.t("CANCEL")}</Text>
+        </Button>
+        <Button onPress={handleSaveConfig}>
+          <Text>{i18n.t("SAVE")}</Text>
+        </Button>
+      </Flex>
     </MainContainer>
   );
 };

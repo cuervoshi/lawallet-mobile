@@ -7,6 +7,7 @@ import { ErrorTransfer } from "../components/Error";
 import { FinishTransfer } from "../components/Finish";
 import { Summary } from "../components/Summary";
 import { useTranslations } from "@/i18n/I18nProvider";
+import { Divider } from "@/components/ui/Divider";
 
 const TransferWithInvoice = () => {
   const { i18n } = useTranslations();
@@ -36,34 +37,31 @@ const TransferWithInvoice = () => {
 
   return (
     <MainContainer>
-      {isError || isSuccess ? (
-        <>
-          <Navbar />
-
-          {isError ? (
-            <ErrorTransfer />
-          ) : (
-            <FinishTransfer transferInfo={txInfo} />
-          )}
-        </>
+      {Boolean(!isSuccess && !isError) ? (
+        <Navbar
+          showBackPage={true}
+          title={i18n.t("VALIDATE_INFO")}
+          overrideBack="/transfer"
+        />
       ) : (
-        <>
-          <Navbar
-            showBackPage={true}
-            title={i18n.t("VALIDATE_INFO")}
-            overrideBack="/transfer"
-          />
-          <Summary
-            isLoading={isLoading}
-            isSuccess={isSuccess}
-            isPending={isPending}
-            data={txInfo.data}
-            type={TransferTypes.INVOICE}
-            amount={txInfo.amount}
-            expired={txInfo.expired}
-            onClick={executePayment}
-          />
-        </>
+        <Divider y={32} />
+      )}
+
+      {isError ? (
+        <ErrorTransfer />
+      ) : isSuccess ? (
+        <FinishTransfer transferInfo={txInfo} />
+      ) : (
+        <Summary
+          isLoading={isLoading}
+          isSuccess={isSuccess}
+          isPending={isPending}
+          data={txInfo.data}
+          type={TransferTypes.INVOICE}
+          amount={txInfo.amount}
+          expired={txInfo.expired}
+          onClick={executePayment}
+        />
       )}
     </MainContainer>
   );

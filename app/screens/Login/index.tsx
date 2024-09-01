@@ -18,6 +18,7 @@ import { useRouter } from "expo-router";
 import { getPublicKey } from "nostr-tools";
 import { useState } from "react";
 import * as Clipboard from "expo-clipboard";
+import { Container } from "@/components/ui/Container";
 
 function LoginView() {
   const { initializeSigner } = useNostr();
@@ -82,48 +83,47 @@ function LoginView() {
     <MainContainer>
       <Navbar />
 
-      <Flex direction="column" justify="space-between" align="center">
-        <Flex direction="column" justify="center" align="center">
-          <Heading as="h2" color="white">
-            {i18n.t("LOGIN_TITLE")}
-          </Heading>
+      <Container>
+        <Flex direction="column" justify="space-between" align="center">
+          <Flex direction="column" justify="center" align="center">
+            <Heading as="h2" color="white">
+              {i18n.t("LOGIN_TITLE")}
+            </Heading>
 
-          <Divider y={16} />
+            <Divider y={16} />
 
-          <Textarea
-            placeholder={i18n.t("INSERT_PRIVATE_KEY")}
-            secureTextEntry
-            multiline={false}
-            onChangeText={handleChangeInput}
-            value={keyInput}
-          />
+            <Textarea
+              placeholder={i18n.t("INSERT_PRIVATE_KEY")}
+              secureTextEntry
+              multiline={false}
+              onChangeText={handleChangeInput}
+              value={keyInput}
+            />
 
-          <Feedback show={errors.errorInfo.visible} status={"error"}>
-            {errors.errorInfo.text}
-          </Feedback>
-        </Flex>
-
-        <Divider y={24} />
-
-        <Flex justify="space-between" align="center">
-          <Flex gap={8}>
-            <Button
-              onPress={async () => {
-                let copiedText = await Clipboard.getStringAsync();
-                setKeyInput(copiedText);
-              }}
-            >
-              <Text>{i18n.t("PASTE")}</Text>
-            </Button>
-            <Button
-              onPress={handleRecoveryAccount}
-              disabled={!keyInput.length || loading}
-              loading={loading}
-            >
-              <Text>{i18n.t("LOGIN")}</Text>
-            </Button>
+            <Feedback show={errors.errorInfo.visible} status={"error"}>
+              {errors.errorInfo.text}
+            </Feedback>
           </Flex>
         </Flex>
+      </Container>
+
+      <Flex justify="center" align="center" gap={8}>
+        <Button
+          color="secondary"
+          onPress={async () => {
+            let copiedText = await Clipboard.getStringAsync();
+            setKeyInput(copiedText);
+          }}
+        >
+          <Text>{i18n.t("PASTE")}</Text>
+        </Button>
+        <Button
+          onPress={handleRecoveryAccount}
+          disabled={!keyInput.length || loading}
+          loading={loading}
+        >
+          <Text>{i18n.t("LOGIN")}</Text>
+        </Button>
       </Flex>
     </MainContainer>
   );

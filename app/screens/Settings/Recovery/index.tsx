@@ -141,8 +141,6 @@ function RecoveryView() {
               <Text>{i18n.t("CONFIRM")}</Text>
             </Button>
           </Flex>
-
-          <Divider y={32} />
         </>
       )}
     </MainContainer>

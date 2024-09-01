@@ -12,6 +12,7 @@ import { TouchableOpacity, View } from "react-native";
 import Card from "../Card";
 import { CardImage, ConfigCard } from "./style";
 import { useRouter } from "expo-router";
+import { Divider } from "@/components/ui/Divider";
 // import SettingsSheet from "../Sheets/SettingsSheet";
 
 export type CardProps = {
@@ -90,6 +91,8 @@ export default function Component(props: ComponentProps) {
           </ConfigCard>
         )}
       </Flex>
+
+      <Divider y={24} />
 
       {/* Menu actions by Card */}
       {/* <SettingsSheet

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import nfcManager, { Ndef, NfcTech, TagEvent } from "react-native-nfc-manager";
 
 type UseNdefReturns = {
@@ -16,13 +17,19 @@ type UseNdefParameters = {
 
 export const useNdef = (params: UseNdefParameters): UseNdefReturns => {
   const [nfcSupported, setNfcSupported] = useState<boolean>(false);
+
   const [isReading, setIsReading] = useState<boolean>(false);
   const [scannedPayload, setScannedPayload] = useState<string>("");
 
   const startReadTag = async () => {
+    const nfcStatus: boolean = await validateNfcStatus();
+    if (!nfcStatus) {
+      Alert.alert("Error", "NFC is disabled or not supported");
+      return;
+    }
+
     if (nfcSupported && !isReading) {
       try {
-        console.log("start read");
         setIsReading(true);
         await nfcManager.requestTechnology(NfcTech.Ndef);
 
@@ -38,7 +45,6 @@ export const useNdef = (params: UseNdefParameters): UseNdefReturns => {
         if (params.onScan) params.onScan(decodedPayload);
       } catch (ex) {
         if (ex && Object.keys(ex).length) {
-          console.warn("Oops!", ex);
           if (params.onError) params.onError((ex as Error).message ?? "");
         }
       } finally {
@@ -52,16 +58,22 @@ export const useNdef = (params: UseNdefParameters): UseNdefReturns => {
     nfcManager.cancelTechnologyRequest();
   };
 
+  const validateNfcStatus = async () => {
+    try {
+      const isSupported = await nfcManager.isSupported();
+      setNfcSupported(isSupported);
+      if (!isSupported) return false;
+
+      const isEnabled = await nfcManager.isEnabled();
+      return isSupported && isEnabled;
+    } catch {
+      setNfcSupported(false);
+      return false;
+    }
+  };
+
   useEffect(() => {
-    nfcManager
-      .isSupported()
-      .then((res) => {
-        setNfcSupported(res);
-        if (res) nfcManager.start();
-      })
-      .catch((err) => {
-        setNfcSupported(false);
-      });
+    validateNfcStatus();
   }, []);
 
   return {

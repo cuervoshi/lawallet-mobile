@@ -3,15 +3,11 @@ import "react-native-reanimated";
 
 import { NativeProvider } from "@/components/ui/NativeProvider";
 import { I18nProvider } from "@/i18n/I18nProvider";
-import { createConfig, LaWalletProvider } from "@lawallet/react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LaWalletProvider } from "@lawallet/react";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-
-const config = createConfig({
-  storage: AsyncStorage,
-});
+import { config } from "@/utils/constants";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

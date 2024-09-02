@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n/I18nProvider";
 import { STORAGE_IDENTITY_KEY, STORAGE_LANGUAGE_KEY } from "@/utils/constants";
 import {
   LanguagesList,
@@ -6,14 +7,11 @@ import {
   useIdentity,
   useNostr,
 } from "@lawallet/react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRoute } from "@react-navigation/native";
-import { useRouter } from "expo-router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { SpinnerView } from "../SpinnerView/SpinnerView";
-import { Alert, AppState, AppStateStatus } from "react-native";
-import { useTranslations } from "@/i18n/I18nProvider";
 import { AvailableLanguages } from "@lawallet/react/types";
+import { useRoute } from "@react-navigation/native";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { AppState, AppStateStatus } from "react-native";
+import { SpinnerView } from "../SpinnerView/SpinnerView";
 
 interface RouterInfo {
   disconnectedPaths: string[]; // Routes that require you to NOT have a connected account

@@ -41,7 +41,19 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone"
         }
       ],
-      "react-native-nfc-manager"
+      [
+        "react-native-nfc-manager",
+        {
+          "nfcPermission": "LaWallet NFC Permission",
+          "selectIdentifiers": [
+            "A0000002471001"
+          ],
+          "systemCodes": [
+            "8008"
+          ],
+          "includeNdefEntitlement": false
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

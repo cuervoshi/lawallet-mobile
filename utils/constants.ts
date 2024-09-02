@@ -1,3 +1,6 @@
+import { createConfig } from "@lawallet/react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export const STORAGE_LANGUAGE_KEY = "userlanguage";
 export const STORAGE_IDENTITY_KEY = "identity";
 export const CACHE_TXS_KEY = "cached_txs";
@@ -30,3 +33,7 @@ export const lightningAddresses = [
 // export const EMERGENCY_LOCK_SERVER_DISCLAIMER = 'Test text';
 export const EMERGENCY_LOCK_DEPOSIT = false;
 export const EMERGENCY_LOCK_TRANSFER = false;
+
+export const config = createConfig({
+  storage: AsyncStorage,
+});

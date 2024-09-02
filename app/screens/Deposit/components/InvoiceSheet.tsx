@@ -17,7 +17,6 @@ import { MAX_INVOICE_AMOUNT } from "@/utils/constants";
 import { appTheme } from "@/utils/theme";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import {
-  claimLNURLw,
   useConfig,
   useCurrencyConverter,
   useFormatter,
@@ -26,11 +25,10 @@ import {
   useSettings,
   useZap,
 } from "@lawallet/react";
-import { getPayRequest } from "@lawallet/react/actions";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, TouchableOpacity, View } from "react-native";
-// import QRCode from "react-native-qrcode-svg";
+import { ActivityIndicator, View } from "react-native";
+import QRCode from "react-native-qrcode-svg";
 
 type SheetTypes = "amount" | "qr" | "finished";
 type InvoiceSheetTypes = {
@@ -246,8 +244,7 @@ const InvoiceSheet = ({ handleCopy, onClose }: InvoiceSheetTypes) => {
                   backgroundColor: "white",
                 }}
               >
-                {/* <QRCode size={300} value={`${invoice.bolt11.toUpperCase()}`} /> */}
-                <Text>t</Text>
+                <QRCode size={300} value={`${invoice.bolt11.toUpperCase()}`} />
               </View>
             </Flex>
 
@@ -261,7 +258,7 @@ const InvoiceSheet = ({ handleCopy, onClose }: InvoiceSheetTypes) => {
               <Flex align="center" gap={4}>
                 {currency === "SAT" ? (
                   <Icon size="small">
-                    <SatoshiV2Icon />
+                    <SatoshiV2Icon color="white" />
                   </Icon>
                 ) : (
                   <Text>$</Text>

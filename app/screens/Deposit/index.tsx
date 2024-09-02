@@ -23,6 +23,7 @@ import { useTranslations } from "@/i18n/I18nProvider";
 import { appTheme } from "@/utils/theme";
 import * as Clipboard from "expo-clipboard";
 import { View } from "react-native";
+import QRCode from "react-native-qrcode-svg";
 import InvoiceSheet from "./components/InvoiceSheet";
 
 function DepositView() {
@@ -70,11 +71,11 @@ function DepositView() {
             align="center"
           >
             <View style={{ padding: 8, backgroundColor: "white" }}>
-              {/* <QRCode
+              <QRCode
                 size={300}
                 logoBorderRadius={30}
                 value={("lightning:" + LNURLEncoded).toUpperCase()}
-              /> */}
+              />
             </View>
 
             <Divider y={8} />

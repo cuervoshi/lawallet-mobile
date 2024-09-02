@@ -11,7 +11,6 @@ import {
 
 // Components
 import Navbar from "@/components/Navbar";
-import QRCode from "react-native-qrcode-svg";
 
 // Constans
 import { Button } from "@/components/ui/Button";
@@ -71,11 +70,11 @@ function DepositView() {
             align="center"
           >
             <View style={{ padding: 8, backgroundColor: "white" }}>
-              <QRCode
+              {/* <QRCode
                 size={300}
                 logoBorderRadius={30}
                 value={("lightning:" + LNURLEncoded).toUpperCase()}
-              />
+              /> */}
             </View>
 
             <Divider y={8} />

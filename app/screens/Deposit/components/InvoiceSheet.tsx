@@ -12,7 +12,6 @@ import { Feedback } from "@/components/ui/Input/Feedback";
 import { Keyboard } from "@/components/ui/Keyboard";
 import { Text } from "@/components/ui/Text";
 import useErrors from "@/hooks/useErrors";
-import { useNdef } from "@/hooks/useNdef";
 import { useTranslations } from "@/i18n/I18nProvider";
 import { MAX_INVOICE_AMOUNT } from "@/utils/constants";
 import { appTheme } from "@/utils/theme";
@@ -31,7 +30,7 @@ import { getPayRequest } from "@lawallet/react/actions";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
-import QRCode from "react-native-qrcode-svg";
+// import QRCode from "react-native-qrcode-svg";
 
 type SheetTypes = "amount" | "qr" | "finished";
 type InvoiceSheetTypes = {
@@ -99,41 +98,41 @@ const InvoiceSheet = ({ handleCopy, onClose }: InvoiceSheetTypes) => {
     });
   };
 
-  const handleScanNdef = useCallback(
-    async (decodedPayload: string) => {
-      if (!decodedPayload.startsWith("lnurlw://")) return;
-      const amount_mSats: number = numpadData.intAmount["SAT"] * 1000;
+  // const handleScanNdef = useCallback(
+  //   async (decodedPayload: string) => {
+  //     if (!decodedPayload.startsWith("lnurlw://")) return;
+  //     const amount_mSats: number = numpadData.intAmount["SAT"] * 1000;
 
-      const wRequest = await getPayRequest(lnurlwToHttps(decodedPayload));
-      if (
-        !wRequest ||
-        !wRequest.callback ||
-        !wRequest.k1 ||
-        wRequest.maxWithdrawable! < amount_mSats
-      )
-        return;
+  //     const wRequest = await getPayRequest(lnurlwToHttps(decodedPayload));
+  //     if (
+  //       !wRequest ||
+  //       !wRequest.callback ||
+  //       !wRequest.k1 ||
+  //       wRequest.maxWithdrawable! < amount_mSats
+  //     )
+  //       return;
 
-      const claimed: boolean = await claimLNURLw(
-        identity.npub,
-        wRequest.callback,
-        wRequest.k1,
-        amount_mSats,
-        config
-      );
+  //     const claimed: boolean = await claimLNURLw(
+  //       identity.npub,
+  //       wRequest.callback,
+  //       wRequest.k1,
+  //       amount_mSats,
+  //       config
+  //     );
 
-      if (claimed) setSheetStep("finished");
-    },
-    [sheetStep, identity.npub, numpadData.intAmount]
-  );
+  //     if (claimed) setSheetStep("finished");
+  //   },
+  //   [sheetStep, identity.npub, numpadData.intAmount]
+  // );
 
-  const handleScanError = (err?: string) => {
-    console.log("error on scan tag: ", err);
-  };
+  // const handleScanError = (err?: string) => {
+  //   console.log("error on scan tag: ", err);
+  // };
 
-  const { nfcSupported, startReadTag, stopReadTag, isReading } = useNdef({
-    onScan: handleScanNdef,
-    onError: handleScanError,
-  });
+  // const { nfcSupported, startReadTag, stopReadTag, isReading } = useNdef({
+  //   onScan: handleScanNdef,
+  //   onError: handleScanError,
+  // });
 
   const handleSheetChanges = useCallback((index: number) => {
     if (index === -1) handleCloseSheet();
@@ -247,7 +246,8 @@ const InvoiceSheet = ({ handleCopy, onClose }: InvoiceSheetTypes) => {
                   backgroundColor: "white",
                 }}
               >
-                <QRCode size={300} value={`${invoice.bolt11.toUpperCase()}`} />
+                {/* <QRCode size={300} value={`${invoice.bolt11.toUpperCase()}`} /> */}
+                <Text>t</Text>
               </View>
             </Flex>
 
@@ -277,7 +277,7 @@ const InvoiceSheet = ({ handleCopy, onClose }: InvoiceSheetTypes) => {
 
             <Divider y={16} />
 
-            {isReading ? (
+            {/* {isReading ? (
               <Flex direction="column" align="center">
                 <TouchableOpacity onPress={stopReadTag}>
                   <Text>Stop scan</Text>
@@ -292,7 +292,7 @@ const InvoiceSheet = ({ handleCopy, onClose }: InvoiceSheetTypes) => {
                   </TouchableOpacity>
                 </Flex>
               )
-            )}
+            )} */}
 
             <Divider y={24} />
 

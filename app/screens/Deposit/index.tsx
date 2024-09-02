@@ -1,5 +1,5 @@
 // Libraries
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 // Hooks and utils
 import {
@@ -17,15 +17,14 @@ import QRCode from "react-native-qrcode-svg";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import MainContainer from "@/components/ui/Container/MainContainer";
+import { Divider } from "@/components/ui/Divider";
 import { Flex } from "@/components/ui/Flex";
 import { Text } from "@/components/ui/Text";
+import { useTranslations } from "@/i18n/I18nProvider";
 import { appTheme } from "@/utils/theme";
 import * as Clipboard from "expo-clipboard";
 import { View } from "react-native";
 import InvoiceSheet from "./components/InvoiceSheet";
-import { useTranslations } from "@/i18n/I18nProvider";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Divider } from "@/components/ui/Divider";
 
 function DepositView() {
   //   if (EMERGENCY_LOCK_DEPOSIT) {
@@ -53,12 +52,6 @@ function DepositView() {
     [identity]
   );
 
-  useEffect(() => {
-    return () => {
-      setIsOpenSheet(false);
-    };
-  }, []);
-
   return (
     <>
       <MainContainer>
@@ -72,10 +65,10 @@ function DepositView() {
 
         <Container>
           <Flex
+            flex={1}
             direction="column"
             justify="space-around"
             align="center"
-            gap={16}
           >
             <View style={{ padding: 8, backgroundColor: "white" }}>
               <QRCode
